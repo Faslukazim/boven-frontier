@@ -1,22 +1,91 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import heroProducts from '../data/heroProducts'
 
 function Hero() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const [productVisible, setProductVisible] = useState(true)
+
+  const animationFrame = useRef(null)
 
   const activeProduct = heroProducts[activeIndex]
+
+  /*
+   * ------------------------------------------------------------
+   * PRODUCT CHANGE
+   * ------------------------------------------------------------
+   *
+   * We deliberately avoid using React "key" to force-remount
+   * the image. Safari can occasionally skip or render key-based
+   * CSS entrance animations inconsistently.
+   *
+   * Instead:
+   * 1. Fade product out
+   * 2. Change product
+   * 3. Wait one animation frame
+   * 4. Fade product back in
+   */
+
+  const changeProduct = (nextIndex) => {
+    if (nextIndex === activeIndex) return
+
+    setProductVisible(false)
+
+    if (animationFrame.current) {
+      cancelAnimationFrame(animationFrame.current)
+    }
+
+    animationFrame.current = requestAnimationFrame(() => {
+      setActiveIndex(nextIndex)
+
+      animationFrame.current = requestAnimationFrame(() => {
+        setProductVisible(true)
+      })
+    })
+  }
+
+  /*
+   * ------------------------------------------------------------
+   * AUTO ROTATION
+   * ------------------------------------------------------------
+   */
 
   useEffect(() => {
     if (isPaused || heroProducts.length <= 1) return
 
-    const timer = setInterval(() => {
-      setActiveIndex((current) => (current + 1) % heroProducts.length)
-    }, 2000)
+    const timer = window.setInterval(() => {
+      setProductVisible(false)
 
-    return () => clearInterval(timer)
+      window.setTimeout(() => {
+        setActiveIndex((current) => {
+          return (current + 1) % heroProducts.length
+        })
+
+        window.requestAnimationFrame(() => {
+          setProductVisible(true)
+        })
+      }, 180)
+    }, 4200)
+
+    return () => {
+      window.clearInterval(timer)
+    }
   }, [isPaused])
+
+  /*
+   * ------------------------------------------------------------
+   * CLEANUP
+   * ------------------------------------------------------------
+   */
+
+  useEffect(() => {
+    return () => {
+      if (animationFrame.current) {
+        cancelAnimationFrame(animationFrame.current)
+      }
+    }
+  }, [])
 
   return (
     <section
@@ -30,13 +99,15 @@ function Hero() {
             TOP BRAND LINE
         ===================================================== */}
 
-        <div className="flex h-[64px] items-center border-b border-[#172b3f]/10">
-          <div className="flex items-center gap-4">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#c9a84c]" />
+        <div className="flex h-[68px] items-center border-b border-[#172b3f]/10">
+          <div className="flex items-center gap-3">
 
-            <span className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#172b3f]/50">
+            <span className="h-[5px] w-[5px] shrink-0 rounded-full bg-[#c9a84c]" />
+
+            <span className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#172b3f]/65">
               Boven Frontier International
             </span>
+
           </div>
         </div>
 
@@ -45,133 +116,94 @@ function Hero() {
             HERO
         ===================================================== */}
 
-        <div className="relative grid min-h-[calc(100svh-112px)] grid-cols-1 lg:grid-cols-[0.94fr_1.06fr]">
+        <div className="grid min-h-[calc(100svh-116px)] grid-cols-1 lg:grid-cols-2">
 
 
           {/* ===================================================
               LEFT
           =================================================== */}
 
-          <div className="relative z-20 flex flex-col justify-center py-14 lg:py-0">
+          <div className="relative flex flex-col justify-center py-16 lg:py-10">
 
-            {/* Credibility marker */}
+            <div className="hero-left-content">
 
-            <div className="mb-8 flex items-center gap-3">
+              {/* Credibility marker */}
 
-              <span className="h-px w-9 bg-[#c9a84c]" />
+              <div className="hero-eyebrow mb-7 flex items-center gap-3 pl-[7vw] lg:pl-[5vw]">
 
-              <span className="text-[8px] font-semibold uppercase tracking-[0.28em] text-[#172b3f]/40">
-                Manufactured in India · Export-ready
-              </span>
+                <span className="h-px w-8 bg-[#c9a84c]" />
 
-            </div>
-
-
-            {/* Headline */}
-
-            <h1
-              className="
-                hero-title
-                max-w-[720px]
-                text-[clamp(4rem,7vw,7.2rem)]
-                font-medium
-                leading-[0.84]
-                tracking-[-0.075em]
-              "
-            >
-              <span className="block">
-                Cleaning
-              </span>
-
-              <span className="block pl-[7vw] lg:pl-[5vw]">
-                for
-              </span>
-
-              <span className="block pl-[2vw]">
-                everywhere.
-              </span>
-            </h1>
-
-
-            {/* Description */}
-
-            <div
-              className="
-                hero-description
-                mt-10
-                flex
-                max-w-[510px]
-                items-start
-                gap-5
-                pl-[7vw]
-                lg:mt-12
-                lg:pl-[5vw]
-              "
-            >
-
-              <span className="mt-1 h-[42px] w-px shrink-0 bg-[#c9a84c]" />
-
-              <p className="max-w-[420px] text-[14px] leading-[1.8] tracking-[-0.01em] text-[#172b3f]/55 sm:text-[15px]">
-                Everyday cleaning, made dependable.
-                <br className="hidden sm:block" />
-                Built in India. Ready for everywhere.
-              </p>
-
-            </div>
-
-
-            {/* CTA */}
-
-            <div
-              className="
-                hero-cta
-                mt-9
-                pl-[7vw]
-                lg:mt-10
-                lg:pl-[5vw]
-              "
-            >
-
-              <a
-                href="/products"
-                className="group inline-flex items-center gap-4"
-              >
-
-                <span className="text-[10px] font-semibold uppercase tracking-[0.23em]">
-                  Explore products
+                <span className="text-[9px] font-semibold uppercase tracking-[0.24em] text-[#172b3f]/65">
+                  Manufactured in India · Export-ready
                 </span>
 
-                <span
-                  className="
-                    flex
-                    h-10
-                    w-10
-                    items-center
-                    justify-center
-                    rounded-full
-                    border
-                    border-[#172b3f]/20
-                    transition-all
-                    duration-500
-                    group-hover:bg-[#172b3f]
-                    group-hover:text-white
-                  "
+              </div>
+
+
+              {/* Main headline */}
+
+              <h1 className="hero-title max-w-[760px] text-[clamp(4rem,7vw,7.4rem)] font-medium leading-[0.84] tracking-[-0.075em]">
+
+                <span className="hero-line hero-line-1 block">
+                  Cleaning
+                </span>
+
+                <span className="hero-line hero-line-2 block pl-[7vw] lg:pl-[5vw]">
+                  for
+                </span>
+
+                <span className="hero-line hero-line-3 block pl-[2vw]">
+                  everywhere.
+                </span>
+
+              </h1>
+
+
+              {/* Description */}
+
+              <div className="hero-description mt-9 flex max-w-[500px] items-start gap-5 pl-[7vw] lg:mt-11 lg:pl-[5vw]">
+
+                <span className="mt-1 h-[42px] w-px shrink-0 bg-[#c9a84c]" />
+
+                <p className="max-w-[410px] text-[14px] leading-[1.75] tracking-[-0.01em] text-[#172b3f]/70 sm:text-[15px]">
+
+                  Everyday cleaning, made dependable.
+
+                  <br className="hidden sm:block" />
+
+                  Built in India. Ready for everywhere.
+
+                </p>
+
+              </div>
+
+
+              {/* CTA */}
+
+              <div className="hero-cta mt-9 pl-[7vw] lg:mt-10 lg:pl-[5vw]">
+
+                <a
+                  href="/products"
+                  className="group inline-flex items-center gap-4"
                 >
 
-                  <ArrowUpRight
-                    size={14}
-                    strokeWidth={1.5}
-                    className="
-                      transition-transform
-                      duration-500
-                      group-hover:-translate-y-0.5
-                      group-hover:translate-x-0.5
-                    "
-                  />
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.23em] text-[#172b3f]">
+                    Explore products
+                  </span>
 
-                </span>
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#172b3f]/25 transition-all duration-300 group-hover:bg-[#172b3f] group-hover:text-white">
 
-              </a>
+                    <ArrowUpRight
+                      size={14}
+                      strokeWidth={1.5}
+                      className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    />
+
+                  </span>
+
+                </a>
+
+              </div>
 
             </div>
 
@@ -182,86 +214,90 @@ function Hero() {
               RIGHT PRODUCT AREA
           =================================================== */}
 
-          <div
-            className="
-              relative
-              min-h-[560px]
-              lg:min-h-0
-            "
-          >
+          <div className="relative flex min-h-[560px] flex-col justify-center lg:min-h-0 lg:pl-[3vw]">
 
-            {/* 
-              IMPORTANT:
-              Product stage is positioned relative to the hero,
-              not vertically centered against the entire column.
-            */}
 
-            <div
-              className="
-                absolute
-                left-1/2
-                top-[43%]
-                flex
-                w-[92%]
-                -translate-x-1/2
-                -translate-y-1/2
-                items-center
-                justify-center
-                lg:top-[43%]
-              "
-            >
+            {/* =================================================
+                PRODUCT STAGE
+            ================================================= */}
 
-              {/* Fixed light stage */}
+            <div className="hero-product-stage relative flex min-h-[520px] flex-1 items-center justify-center">
 
-              <div
-                className="
-                  absolute
-                  left-1/2
-                  top-1/2
-                  h-[min(34vw,500px)]
-                  w-[min(34vw,500px)]
-                  -translate-x-1/2
-                  -translate-y-1/2
-                  rounded-full
-                  bg-white
-                "
-              />
+              {/* Fixed background stage */}
+
+              <div className="hero-stage-circle absolute left-1/2 top-1/2 h-[72%] w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f7f7f4]" />
+
+
+              {/* Subtle center glow */}
+
+              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[42%] w-[42%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/70 blur-3xl" />
 
 
               {/* Product canvas */}
 
               <div
-                key={activeProduct.image}
-                className="
-                  hero-product-enter
+                className={`
+                  hero-product-canvas
                   relative
                   z-10
                   flex
-                  h-[min(54vw,590px)]
-                  w-full
-                  items-end
+                  h-[72%]
+                  w-[78%]
+                  items-center
                   justify-center
-                "
+                  ${
+                    productVisible
+                      ? 'hero-product-visible'
+                      : 'hero-product-hidden'
+                  }
+                `}
               >
 
                 <img
                   src={activeProduct.image}
                   alt={`${activeProduct.brand} ${activeProduct.name}`}
+                  draggable="false"
                   style={{
                     transform: `scale(${activeProduct.scale ?? 1})`,
                   }}
                   className="
+                    hero-product-image
                     block
                     h-full
                     w-full
+                    select-none
                     object-contain
                     object-center
                     mix-blend-multiply
-                    drop-shadow-[0_30px_30px_rgba(23,43,63,0.10)]
                   "
                 />
 
               </div>
+
+
+              {/* Ground shadow */}
+
+              <div
+                className={`
+                  hero-product-shadow
+                  pointer-events-none
+                  absolute
+                  bottom-[12%]
+                  left-1/2
+                  z-[5]
+                  h-5
+                  w-[34%]
+                  -translate-x-1/2
+                  rounded-[50%]
+                  bg-[#172b3f]/10
+                  blur-xl
+                  ${
+                    productVisible
+                      ? 'hero-shadow-visible'
+                      : 'hero-shadow-hidden'
+                  }
+                `}
+              />
 
             </div>
 
@@ -270,91 +306,93 @@ function Hero() {
                 PRODUCT INFORMATION
             ================================================= */}
 
-            <div
-              className="
-                absolute
-                bottom-0
-                left-0
-                right-0
-                border-t
-                border-[#172b3f]/10
-                py-5
-              "
-            >
+            <div className="flex items-end justify-between border-t border-[#172b3f]/10 py-5">
 
-              <div className="flex items-end justify-between">
 
-                {/* Product name */}
+              {/* Product */}
 
-                <div
-                  key={`info-${activeIndex}`}
-                  className="hero-info-enter"
-                >
+              <div
+                className={`
+                  hero-product-info
+                  ${
+                    productVisible
+                      ? 'hero-info-visible'
+                      : 'hero-info-hidden'
+                  }
+                `}
+              >
 
-                  <p className="mb-1 text-[8px] font-semibold uppercase tracking-[0.3em] text-[#c9a84c]">
-                    {activeProduct.category}
-                  </p>
+                <p className="mb-1 text-[8px] font-semibold uppercase tracking-[0.3em] text-[#b08d2e]">
+                  {activeProduct.category}
+                </p>
 
-                  <div className="flex items-baseline gap-3">
+                <div className="flex items-baseline gap-3">
 
-                    <h2 className="text-[24px] font-medium tracking-[-0.045em]">
-                      {activeProduct.name}
-                    </h2>
+                  <h2 className="text-[24px] font-medium tracking-[-0.045em] text-[#172b3f]">
+                    {activeProduct.name}
+                  </h2>
 
-                    <span className="text-[8px] uppercase tracking-[0.25em] text-[#172b3f]/35">
-                      {activeProduct.brand}
-                    </span>
-
-                  </div>
+                  <span className="text-[8px] font-medium uppercase tracking-[0.25em] text-[#172b3f]/55">
+                    {activeProduct.brand}
+                  </span>
 
                 </div>
 
+              </div>
 
-                {/* Counter */}
 
-                <div className="flex items-center gap-5">
+              {/* Counter */}
 
-                  <span className="text-[9px] tabular-nums tracking-[0.2em] text-[#172b3f]/40">
-                    {String(activeIndex + 1).padStart(2, '0')}
-                    <span className="mx-1 text-[#172b3f]/20">
-                      /
-                    </span>
-                    {String(heroProducts.length).padStart(2, '0')}
+              <div className="flex items-center gap-5">
+
+                <span className="text-[9px] tabular-nums tracking-[0.2em] text-[#172b3f]/55">
+
+                  {String(activeIndex + 1).padStart(2, '0')}
+
+                  <span className="mx-1 text-[#172b3f]/25">
+                    /
                   </span>
 
+                  {String(heroProducts.length).padStart(2, '0')}
 
-                  {/* Progress */}
+                </span>
 
-                  <div className="hidden items-center gap-1 sm:flex">
 
-                    {heroProducts.map((product, index) => (
+                {/* Progress */}
 
-                      <button
-                        key={product.image}
-                        type="button"
-                        aria-label={`Show ${product.brand} ${product.name}`}
-                        onClick={() => setActiveIndex(index)}
-                        className="group flex h-5 items-center"
-                      >
+                <div className="hidden items-center gap-1 sm:flex">
 
-                        <span
-                          className={`
-                            h-[2px]
-                            transition-all
-                            duration-500
-                            ${
-                              index === activeIndex
-                                ? 'w-7 bg-[#172b3f]'
-                                : 'w-2.5 bg-[#172b3f]/15 group-hover:bg-[#172b3f]/40'
-                            }
-                          `}
-                        />
+                  {heroProducts.map((product, index) => (
 
-                      </button>
+                    <button
+                      key={product.image}
+                      type="button"
+                      aria-label={`Show ${product.brand} ${product.name}`}
+                      aria-current={
+                        index === activeIndex
+                          ? 'true'
+                          : undefined
+                      }
+                      onClick={() => changeProduct(index)}
+                      className="group flex h-5 items-center"
+                    >
 
-                    ))}
+                      <span
+                        className={`
+                          h-[2px]
+                          transition-all
+                          duration-300
+                          ${
+                            index === activeIndex
+                              ? 'w-7 bg-[#172b3f]'
+                              : 'w-2.5 bg-[#172b3f]/20 group-hover:bg-[#172b3f]/45'
+                          }
+                        `}
+                      />
 
-                  </div>
+                    </button>
+
+                  ))}
 
                 </div>
 
@@ -368,25 +406,16 @@ function Hero() {
 
 
         {/* =====================================================
-            BOTTOM INFORMATION
+            BOTTOM LINE
         ===================================================== */}
 
-        <div
-          className="
-            flex
-            h-12
-            items-center
-            justify-between
-            border-t
-            border-[#172b3f]/10
-          "
-        >
+        <div className="flex h-12 items-center justify-between border-t border-[#172b3f]/10">
 
-          <span className="text-[8px] uppercase tracking-[0.3em] text-[#172b3f]/30">
+          <span className="text-[8px] font-medium uppercase tracking-[0.3em] text-[#172b3f]/50">
             Manufactured in India
           </span>
 
-          <span className="text-[8px] uppercase tracking-[0.3em] text-[#172b3f]/30">
+          <span className="text-[8px] font-medium uppercase tracking-[0.3em] text-[#172b3f]/50">
             India · Middle East
           </span>
 
@@ -401,118 +430,285 @@ function Hero() {
 
       <style>{`
 
-        @keyframes heroFadeUp {
-          from {
+        /* =====================================================
+           LEFT HERO
+        ===================================================== */
+
+        @keyframes heroReveal {
+          0% {
             opacity: 0;
-            transform: translateY(24px);
+            transform: translate3d(0, 18px, 0);
           }
 
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-
-        @keyframes heroProductEnter {
-          from {
-            opacity: 0;
-            transform: translateY(18px) scale(0.985);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-
-        @keyframes heroProductFloat {
-          0%,
           100% {
-            transform: translateY(0);
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
           }
+        }
 
-          50% {
-            transform: translateY(-7px);
-          }
+
+        .hero-eyebrow {
+          opacity: 0;
+          animation: heroReveal 600ms cubic-bezier(0.22, 1, 0.36, 1) 80ms forwards;
         }
 
 
         .hero-title {
+          animation: none;
+        }
+
+
+        .hero-line {
+          display: block;
+          opacity: 0;
           animation:
-            heroFadeUp
-            1000ms
-            cubic-bezier(0.16, 1, 0.3, 1)
-            120ms
-            both;
+            heroReveal
+            850ms
+            cubic-bezier(0.22, 1, 0.36, 1)
+            forwards;
+        }
+
+
+        .hero-line-1 {
+          animation-delay: 160ms;
+        }
+
+
+        .hero-line-2 {
+          animation-delay: 230ms;
+        }
+
+
+        .hero-line-3 {
+          animation-delay: 300ms;
         }
 
 
         .hero-description {
+          opacity: 0;
           animation:
-            heroFadeUp
-            800ms
-            cubic-bezier(0.16, 1, 0.3, 1)
-            300ms
-            both;
+            heroReveal
+            700ms
+            cubic-bezier(0.22, 1, 0.36, 1)
+            430ms
+            forwards;
         }
 
 
         .hero-cta {
+          opacity: 0;
           animation:
-            heroFadeUp
-            750ms
-            cubic-bezier(0.16, 1, 0.3, 1)
-            420ms
-            both;
+            heroReveal
+            650ms
+            cubic-bezier(0.22, 1, 0.36, 1)
+            520ms
+            forwards;
         }
 
 
-        .hero-product-enter {
-          animation:
-            heroProductEnter
-            900ms
-            cubic-bezier(0.16, 1, 0.3, 1)
-            both;
+        /* =====================================================
+           PRODUCT STAGE
+        ===================================================== */
+
+        .hero-product-stage {
+          isolation: isolate;
         }
 
 
-        .hero-info-enter {
-          animation:
-            heroFadeUp
-            600ms
-            cubic-bezier(0.16, 1, 0.3, 1)
-            both;
+        .hero-stage-circle {
+          transform-origin: center center;
         }
 
 
-        @media (max-width: 1023px) {
+        /* =====================================================
+           PRODUCT
+        ===================================================== */
 
-          .hero-product-enter {
-            height: min(82vw, 570px);
+        .hero-product-canvas {
+          opacity: 1;
+          transform:
+            translate3d(0, 0, 0)
+            scale(1);
+          transition:
+            opacity 320ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: opacity, transform;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+        }
+
+
+        .hero-product-visible {
+          opacity: 1;
+          transform:
+            translate3d(0, 0, 0)
+            scale(1);
+        }
+
+
+        .hero-product-hidden {
+          opacity: 0;
+          transform:
+            translate3d(0, 10px, 0)
+            scale(0.985);
+        }
+
+
+        .hero-product-image {
+          display: block;
+          max-height: 100%;
+          -webkit-user-drag: none;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+        }
+
+
+        /* =====================================================
+           GROUND SHADOW
+        ===================================================== */
+
+        .hero-product-shadow {
+          opacity: 0.65;
+          transform:
+            translate3d(-50%, 0, 0)
+            scale(1);
+          transition:
+            opacity 350ms ease,
+            transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: opacity, transform;
+        }
+
+
+        .hero-shadow-visible {
+          opacity: 0.65;
+          transform:
+            translate3d(-50%, 0, 0)
+            scale(1);
+        }
+
+
+        .hero-shadow-hidden {
+          opacity: 0;
+          transform:
+            translate3d(-50%, 2px, 0)
+            scale(0.85);
+        }
+
+
+        /* =====================================================
+           PRODUCT INFORMATION
+        ===================================================== */
+
+        .hero-product-info {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+          transition:
+            opacity 220ms ease,
+            transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: opacity, transform;
+        }
+
+
+        .hero-info-visible {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+
+
+        .hero-info-hidden {
+          opacity: 0;
+          transform: translate3d(0, 5px, 0);
+        }
+
+
+        /* =====================================================
+           SAFARI / IOS
+        ===================================================== */
+
+        @supports (-webkit-touch-callout: none) {
+
+          .hero-product-canvas,
+          .hero-product-image,
+          .hero-product-shadow {
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+          }
+
+          .hero-product-image {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
           }
 
         }
 
 
-        @media (max-width: 700px) {
-
-          .hero-product-enter {
-            height: min(92vw, 480px);
-          }
-
-        }
-
+        /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
 
         @media (prefers-reduced-motion: reduce) {
 
-          .hero-title,
+          .hero-eyebrow,
+          .hero-line,
           .hero-description,
-          .hero-cta,
-          .hero-product-enter,
-          .hero-info-enter {
+          .hero-cta {
+            opacity: 1;
             animation: none;
+            transform: none;
+          }
+
+          .hero-product-canvas,
+          .hero-product-shadow,
+          .hero-product-info {
+            transition: none;
+            transform: none;
+          }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 1023px) {
+
+          .hero-product-stage {
+            min-height: 500px;
+          }
+
+          .hero-stage-circle {
+            height: 78%;
+            width: 82%;
+          }
+
+          .hero-product-canvas {
+            height: 78%;
+            width: 84%;
+          }
+
+        }
+
+
+        @media (max-width: 640px) {
+
+          .hero-product-stage {
+            min-height: 430px;
+          }
+
+          .hero-stage-circle {
+            height: 76%;
+            width: 92%;
+          }
+
+          .hero-product-canvas {
+            height: 76%;
+            width: 92%;
+          }
+
+          .hero-product-shadow {
+            bottom: 9%;
+            width: 42%;
           }
 
         }
