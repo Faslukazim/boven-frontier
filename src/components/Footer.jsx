@@ -26,11 +26,14 @@ function Footer() {
           <div className="grid gap-6 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-6">
               <span className="text-xs font-semibold uppercase tracking-wider text-[#c9a84c]">
-                B2B Price List
+                B2B Price List & SKU Bulletins
               </span>
-              <h3 className="mt-1 text-lg sm:text-xl font-semibold tracking-tight">
-                Receive updated wholesale price sheets in your inbox.
+              <h3 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight">
+                Receive updated wholesale price sheets directly in your inbox.
               </h3>
+              <p className="mt-1 text-xs text-white/60">
+                Monthly formulation updates, seasonal bulk discounts, and GCC shipping schedules.
+              </p>
             </div>
 
             <div className="lg:col-span-6">
@@ -86,8 +89,8 @@ function Footer() {
               </div>
             </div>
 
-            <p className="mt-4 max-w-sm text-xs leading-relaxed text-white/60">
-              Commercial cleaning chemicals, detergents, and disinfection products manufactured in India for retail chains and export partners.
+            <p className="mt-6 max-w-sm text-xs leading-6 text-white/65">
+              Certified manufacturer of professional cleaning chemicals, detergents, and disinfection products in India. Supplying regional retail chains and GCC container import partners.
             </p>
 
             <div className="mt-6 rounded-lg border border-white/10 bg-white/5 p-4 text-xs">

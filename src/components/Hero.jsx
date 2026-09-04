@@ -13,6 +13,7 @@ function Hero() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [productVisible, setProductVisible] = useState(true)
+  const [parallax, setParallax] = useState({ x: 0, y: 0 })
 
   const heroSectionRef = useRef(null)
   const transitionTimeout = useRef(null)
@@ -55,6 +56,20 @@ function Hero() {
   const handlePrev = () => {
     const prev = (safeIndex - 1 + featuredProducts.length) % featuredProducts.length
     changeProduct(prev)
+  }
+
+  // Interactive Mouse Parallax (Desktop)
+  const handleMouseMove = (e) => {
+    if (window.innerWidth < 1024 || !heroSectionRef.current) return
+    const rect = heroSectionRef.current.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    setParallax({ x, y })
+  }
+
+  const handleMouseLeave = () => {
+    setIsPaused(false)
+    setParallax({ x: 0, y: 0 })
   }
 
   // Mobile Touch Swipe Handling
@@ -122,7 +137,8 @@ function Hero() {
       ref={heroSectionRef}
       className="relative overflow-hidden bg-white text-[#172b3f]"
       onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -130,29 +146,34 @@ function Hero() {
         {/* =====================================================
             HERO CONTENT: MINIMAL, AIRY & ELEGANT
         ===================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-10 lg:gap-12 py-10 sm:py-16 lg:py-20">
+        <div className="grid min-h-0 lg:min-h-[calc(100svh-90px)] grid-cols-1 lg:grid-cols-12 items-center gap-8 lg:gap-12 py-6 sm:py-10 lg:py-6">
           {/* LEFT: MINIMAL EDITORIAL TEXT */}
-          <div className="lg:col-span-7 flex flex-col justify-center text-center lg:text-left items-center lg:items-start">
+          <div className="lg:col-span-7 flex flex-col justify-center">
             {/* Simple, understated eyebrow */}
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-3">
-              B2B Wholesale · Made in India
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-2 sm:mb-3">
+              Manufactured in India · Factory Direct
             </p>
 
             {/* Clean, confident headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-[3.5rem] font-medium tracking-tight text-[#172b3f] leading-[1.1] max-w-2xl">
-              Factory-Direct Cleaning Solutions.
+            <h1 className="text-3xl sm:text-5xl lg:text-[3.6rem] font-medium tracking-tight text-[#172b3f] leading-[1.08] max-w-2xl">
+              Direct-from-factory cleaning solutions.
             </h1>
 
-            {/* Quiet, concise prose (reduced by >50%) */}
-            <p className="mt-3 sm:mt-5 text-sm sm:text-base text-gray-500 max-w-lg leading-relaxed">
-              Certified commercial cleaning formulations & contract bottling for wholesale distributors and export partners.
+            {/* Mobile: concise 1-sentence text */}
+            <p className="block sm:hidden mt-3 text-xs text-gray-500 leading-relaxed font-normal">
+              Commercial cleaning chemicals & contract manufacturing in India for wholesale distributors.
+            </p>
+
+            {/* Desktop: full approved prose */}
+            <p className="hidden sm:block mt-4 sm:mt-6 text-sm sm:text-base text-gray-500 max-w-xl leading-relaxed font-normal">
+              Certified laundry, surface, and disinfection chemical formulations manufactured in India. Direct container-load supply for regional distributors, institutional facilities, and GCC export.
             </p>
 
             {/* Clean CTA buttons */}
-            <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+            <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-3.5">
               <a
                 href="#products"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#172b3f] px-6 py-3 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-black shadow-xs"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#172b3f] px-5 sm:px-6 py-2.5 sm:py-3 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-black shadow-xs"
               >
                 <span>Explore Products</span>
                 <ArrowUpRight size={14} />
@@ -160,87 +181,106 @@ function Hero() {
 
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 text-xs font-semibold uppercase tracking-wider text-[#172b3f] transition hover:border-[#172b3f] shadow-2xs"
+                className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 sm:px-6 py-2.5 sm:py-3 text-xs font-semibold uppercase tracking-wider text-[#172b3f] transition hover:border-[#172b3f] shadow-2xs"
               >
                 Wholesale Enquiry
               </Link>
             </div>
 
-            {/* Muted trust line */}
-            <div className="mt-6 sm:mt-8 flex items-center justify-center lg:justify-start gap-3 text-xs text-gray-400">
-              <span>50+ Case MOQ</span>
+            {/* Mobile: compact trust line */}
+            <div className="flex sm:hidden mt-5 items-center gap-2 text-[11px] text-gray-400">
+              <span>50+ Cases MOQ</span>
               <span>·</span>
               <span>7–14d Export Dispatch</span>
               <span>·</span>
               <span>Direct Supply</span>
             </div>
+
+            {/* Desktop: full approved trust note */}
+            <div className="hidden sm:flex mt-8 sm:mt-10 flex-wrap items-center gap-x-6 gap-y-2 text-xs text-gray-400 font-normal">
+              <span>Min. Order: 50 Cases</span>
+              <span>·</span>
+              <span>7–14 Day Export Dispatch</span>
+              <span>·</span>
+              <span>Direct Factory Supply</span>
+            </div>
           </div>
 
-          {/* RIGHT: BULLETPROOF PRODUCT SHOWCASE */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-center w-full">
-            {/* PRODUCT STAGE CONTAINER */}
-            <div className="relative w-full max-w-[340px] sm:max-w-[400px] flex flex-col items-center">
-              {/* Circular Stage with Product Inside (Guaranteed no overlap) */}
-              <div className="relative flex w-64 h-64 sm:w-80 sm:h-80 lg:w-[380px] lg:h-[380px] items-center justify-center rounded-full bg-[#f6f6f3] shadow-inner p-6">
-                {/* Product Image */}
+          {/* RIGHT: ELEVATED PRODUCT SHOWCASE */}
+          <div className="lg:col-span-5 flex flex-col items-center justify-center">
+            {/* PRODUCT STAGE (ROBUST ON MOBILE, FULL PARALLAX ON DESKTOP) */}
+            <div className="relative flex h-[280px] sm:h-[360px] lg:h-[420px] w-full items-center justify-center overflow-hidden lg:overflow-visible">
+              {/* Soft, neutral circular pedestal */}
+              <div
+                className="absolute left-1/2 top-1/2 w-64 h-64 sm:w-80 sm:h-80 lg:w-[390px] lg:h-[390px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f6f6f3] transition-transform duration-300 ease-out"
+                style={{
+                  transform: `translate(calc(-50% + ${parallax.x * 16}px), calc(-50% + ${parallax.y * 16}px))`,
+                }}
+              />
+
+              {/* Product Bottle Canvas */}
+              <div
+                className="relative z-10 flex h-[85%] w-[85%] items-center justify-center transition-all duration-300 ease-out"
+                style={{
+                  transform: `translate(${parallax.x * -18}px, ${parallax.y * -18}px)`,
+                }}
+              >
                 <img
                   src={activeProduct.image}
                   alt={`${activeProduct.brand} ${activeProduct.name}`}
                   draggable="false"
                   style={{
-                    transform: `scale(${(activeProduct.scale || 0.88) * (productVisible ? 1 : 0.96)})`,
+                    transform: `scale(${(activeProduct.scale || 0.85) * (productVisible ? 1 : 0.97)})`,
                   }}
-                  className={`max-h-[85%] max-w-[85%] select-none object-contain mix-blend-multiply drop-shadow-md transition-all duration-300 ease-out ${
+                  className={`block h-full w-full select-none object-contain object-center mix-blend-multiply drop-shadow-md transition-all duration-300 ease-out ${
                     productVisible ? 'opacity-100' : 'opacity-0'
                   }`}
                 />
-
-                {/* Prev / Next Chevrons on Stage */}
-                <button
-                  onClick={handlePrev}
-                  type="button"
-                  aria-label="Previous product"
-                  className="absolute -left-2 sm:left-2 flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-700 shadow-md transition hover:scale-105 active:scale-95 border border-gray-100"
-                >
-                  <ChevronLeft size={16} />
-                </button>
-                <button
-                  onClick={handleNext}
-                  type="button"
-                  aria-label="Next product"
-                  className="absolute -right-2 sm:right-2 flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-700 shadow-md transition hover:scale-105 active:scale-95 border border-gray-100"
-                >
-                  <ChevronRight size={16} />
-                </button>
               </div>
 
-              {/* PRODUCT TITLE & SLIDE INDICATORS */}
-              <div className="w-full mt-4 flex items-center justify-between px-2">
-                <div className="text-left">
-                  <p className="text-xs font-semibold text-gray-900 truncate">
-                    {activeProduct.name}
-                  </p>
-                  <p className="text-[11px] text-gray-400">
-                    {activeProduct.brand} · {Array.isArray(activeProduct.variants) ? activeProduct.variants.join(', ') : '500ml, 1L, 5L'}
-                  </p>
-                </div>
+              {/* Prev / Next Chevrons on Mobile */}
+              <button
+                onClick={handlePrev}
+                aria-label="Previous product"
+                className="absolute left-1 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-sm transition hover:bg-white sm:hidden"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                onClick={handleNext}
+                aria-label="Next product"
+                className="absolute right-1 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-sm transition hover:bg-white sm:hidden"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
 
-                {/* Dots */}
-                <div className="flex items-center gap-1.5 shrink-0 ml-3">
-                  {featuredProducts.map((_, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      aria-label={`Slide ${index + 1}`}
-                      onClick={() => changeProduct(index)}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${
-                        index === safeIndex
-                          ? 'w-5 bg-[#172b3f]'
-                          : 'w-1.5 bg-gray-200 hover:bg-gray-400'
-                      }`}
-                    />
-                  ))}
-                </div>
+            {/* PRODUCT TITLE & SLIDE INDICATOR (CLEAN & SUBTLE) */}
+            <div className="w-full max-w-[360px] mt-2 flex items-center justify-between border-t border-gray-100 pt-3 text-left">
+              <div>
+                <p className="text-xs font-semibold text-gray-900 truncate">
+                  {activeProduct.name}
+                </p>
+                <p className="text-[11px] text-gray-400">
+                  {activeProduct.brand} · {Array.isArray(activeProduct.variants) ? activeProduct.variants.join(', ') : '500ml, 1L, 5L'}
+                </p>
+              </div>
+
+              {/* Dots / Indicators */}
+              <div className="flex items-center gap-1.5 shrink-0 ml-3">
+                {featuredProducts.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    aria-label={`Slide ${index + 1}`}
+                    onClick={() => changeProduct(index)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      index === safeIndex
+                        ? 'w-5 bg-[#172b3f]'
+                        : 'w-1.5 bg-gray-200 hover:bg-gray-400'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>

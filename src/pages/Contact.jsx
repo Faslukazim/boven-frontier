@@ -18,8 +18,8 @@ function Contact() {
             Connect With Our Team
           </h1>
 
-          <p className="mt-3 max-w-lg text-xs sm:text-sm text-white/70">
-            Direct wholesale, institutional, and container export inquiries.
+          <p className="mt-4 max-w-xl text-sm sm:text-base text-white/70">
+            For retail distributorship, bulk institutional purchase, or Middle East export inquiries, contact our management desk directly.
           </p>
         </div>
       </section>

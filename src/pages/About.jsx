@@ -68,8 +68,12 @@ function About() {
               Reliable chemistry for everyday homes and commercial spaces.
             </h2>
 
-            <p className="text-xs sm:text-sm leading-relaxed text-gray-600">
-              Boven Frontier combines automated chemical blending in India with deep supply-chain integration, manufacturing high-stability cleaning liquids, powders, and gels for commercial distribution and container export.
+            <p className="text-sm leading-relaxed text-gray-600">
+              Founded with a clear mission to elevate cleaning product standards in India and the GCC corridor, Boven Frontier combines state-of-the-art chemical blending with deep supply-chain integration.
+            </p>
+
+            <p className="text-sm leading-relaxed text-gray-600">
+              Our manufacturing facility in India handles complete raw material synthesis, viscosity optimization, foaming testing, quality control, bottle blow-moulding inspection, and automated capping across liquids, powders, and gel detergents.
             </p>
 
             <div className="pt-4 grid grid-cols-2 gap-4 border-t border-gray-100">

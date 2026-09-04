@@ -19,8 +19,8 @@ function Products() {
               Wholesale & Export Products
             </h1>
 
-            <p className="mt-2 max-w-lg text-xs sm:text-sm text-white/70">
-              Commercial laundry care, surface cleaners, and bulk disinfectant drums for wholesale and export supply.
+            <p className="mt-3 max-w-xl text-xs sm:text-sm text-white/70 leading-relaxed">
+              Full specification laundry detergents, disinfectant solutions, surface cleaners, and bulk commercial drums available for distributor and container supply.
             </p>
           </div>
 
