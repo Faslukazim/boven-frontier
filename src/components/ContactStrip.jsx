@@ -1,39 +1,75 @@
+import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import {
   ArrowUpRight,
   Mail,
   MessageCircle,
   Phone,
+  CheckCircle,
 } from 'lucide-react'
+import { useStore } from '../context/useStore'
 
 function ContactStrip() {
+  const [searchParams] = useSearchParams()
+  const { products } = useStore()
+
+  const [formData, setFormData] = useState(() => ({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    region: '',
+    buyerType: '',
+    product: searchParams.get('product') || '',
+    message: '',
+  }))
+
+  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setLoading(true)
+
+    // Simulate enquiry registration / store
+    setTimeout(() => {
+      setLoading(false)
+      setSubmitted(true)
+    }, 600)
+  }
+
+  const handleWhatsAppDirect = () => {
+    const text = `*New B2B Enquiry - Boven Frontier Web*\n\n*Name:* ${formData.name || 'Not specified'}\n*Company:* ${formData.company || 'Not specified'}\n*Email:* ${formData.email || 'Not specified'}\n*Phone:* ${formData.phone || 'Not specified'}\n*Region:* ${formData.region || 'Not specified'}\n*Buyer Type:* ${formData.buyerType || 'Not specified'}\n*Product Interest:* ${formData.product || 'General Products'}\n*Message:* ${formData.message || 'I would like more information on bulk/export pricing.'}`
+
+    window.open(
+      `https://wa.me/919207577242?text=${encodeURIComponent(text)}`,
+      '_blank'
+    )
+  }
+
   return (
     <section
       id="contact"
       className="relative overflow-hidden bg-[#f3f1ec] text-[#172b3f]"
     >
-      {/* Subtle background detail */}
-      <div className="pointer-events-none absolute right-[-120px] top-[-120px] h-[360px] w-[360px] rounded-full border border-[#172b3f]/5" />
-      <div className="pointer-events-none absolute right-[-70px] top-[-70px] h-[260px] w-[260px] rounded-full border border-[#c9a84c]/10" />
+      {/* Subtle Background Circles */}
+      <div className="pointer-events-none absolute -right-28 -top-28 h-96 w-96 rounded-full border border-[#172b3f]/5" />
+      <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full border border-[#c9a84c]/10" />
 
-      <div className="mx-auto max-w-[1600px] px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
-
+      <div className="mx-auto max-w-[1600px] px-5 sm:px-10 lg:px-16 py-16 sm:py-24">
         {/* =====================================================
-            HEADER
+            HEADER & QUICK CONTACTS
         ===================================================== */}
-
-        <div className="grid gap-12 lg:grid-cols-12">
-
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
-
             <div className="flex items-center gap-3">
               <span className="h-[5px] w-[5px] rounded-full bg-[#c9a84c]" />
-
-              <span className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#172b3f]/45">
+              <span className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#172b3f]/50">
                 Start a conversation
               </span>
             </div>
 
-            <h2 className="mt-8 max-w-[760px] text-[clamp(3.2rem,6vw,6.5rem)] font-medium leading-[0.9] tracking-[-0.065em]">
+            <h2 className="mt-6 max-w-[760px] text-[clamp(2.5rem,5.5vw,5.5rem)] font-medium leading-[0.92] tracking-[-0.065em]">
               Let's build
               <br />
               something
@@ -41,396 +77,378 @@ function ContactStrip() {
               <span className="text-[#c9a84c]">together.</span>
             </h2>
 
-            <p className="mt-8 max-w-lg text-sm leading-7 text-[#172b3f]/55 sm:text-base">
-              Whether you're looking for products, distribution opportunities,
-              or export supply, speak directly with the Boven Frontier team.
+            <p className="mt-6 max-w-lg text-sm sm:text-base leading-relaxed text-[#172b3f]/60">
+              Whether you are an institutional buyer, domestic distributor, or looking for container-load export supply to the Middle East, speak directly with the Boven Frontier team.
             </p>
-
           </div>
 
-
-          {/* ===================================================
-              CONTACT DETAILS
-          =================================================== */}
-
+          {/* Quick Contact Cards */}
           <div className="flex flex-col justify-end lg:col-span-5">
-
             <div className="border-t border-[#172b3f]/10">
-
               {/* Phone */}
               <a
                 href="tel:+917012777495"
-                className="group flex items-center justify-between border-b border-[#172b3f]/10 py-5 transition-colors duration-300 hover:bg-white/50"
+                className="group flex items-center justify-between border-b border-[#172b3f]/10 py-4 sm:py-5 transition-colors hover:bg-white/40 px-2"
               >
                 <div className="flex items-center gap-4">
-
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#172b3f]/10 transition-all duration-300 group-hover:border-[#c9a84c]">
-                    <Phone
-                      size={16}
-                      strokeWidth={1.5}
-                    />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#172b3f]/10 bg-white transition group-hover:border-[#c9a84c]">
+                    <Phone size={16} />
                   </div>
-
                   <div>
-                    <p className="text-[8px] uppercase tracking-[0.25em] text-[#172b3f]/35">
-                      Phone
+                    <p className="text-[8px] uppercase tracking-[0.25em] text-[#172b3f]/40">
+                      Direct Phone
                     </p>
-
-                    <p className="mt-1 text-sm font-medium">
+                    <p className="mt-0.5 text-sm font-semibold">
                       +91 70127 77495
                     </p>
                   </div>
-
                 </div>
-
                 <ArrowUpRight
                   size={16}
-                  strokeWidth={1.5}
-                  className="text-[#172b3f]/30 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+                  className="text-[#172b3f]/30 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                 />
               </a>
-
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/919207577242"
+                href="https://wa.me/919207577242?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry%20regarding%20products."
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-center justify-between border-b border-[#172b3f]/10 py-5 transition-colors duration-300 hover:bg-white/50"
+                className="group flex items-center justify-between border-b border-[#172b3f]/10 py-4 sm:py-5 transition-colors hover:bg-white/40 px-2"
               >
                 <div className="flex items-center gap-4">
-
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#172b3f]/10 transition-all duration-300 group-hover:border-[#c9a84c]">
-                    <MessageCircle
-                      size={16}
-                      strokeWidth={1.5}
-                    />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#172b3f]/10 bg-white transition group-hover:border-[#c9a84c]">
+                    <MessageCircle size={16} className="text-emerald-600" />
                   </div>
-
                   <div>
-                    <p className="text-[8px] uppercase tracking-[0.25em] text-[#172b3f]/35">
-                      WhatsApp
+                    <p className="text-[8px] uppercase tracking-[0.25em] text-[#172b3f]/40">
+                      WhatsApp Quick Chat
                     </p>
-
-                    <p className="mt-1 text-sm font-medium">
+                    <p className="mt-0.5 text-sm font-semibold">
                       +91 92075 77242
                     </p>
                   </div>
-
                 </div>
-
                 <ArrowUpRight
                   size={16}
-                  strokeWidth={1.5}
-                  className="text-[#172b3f]/30 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+                  className="text-[#172b3f]/30 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                 />
               </a>
-
 
               {/* Email */}
               <a
                 href="mailto:info@bovenfrontier.co.in"
-                className="group flex items-center justify-between border-b border-[#172b3f]/10 py-5 transition-colors duration-300 hover:bg-white/50"
+                className="group flex items-center justify-between border-b border-[#172b3f]/10 py-4 sm:py-5 transition-colors hover:bg-white/40 px-2"
               >
                 <div className="flex items-center gap-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#172b3f]/10 bg-white transition group-hover:border-[#c9a84c]">
+                    <Mail size={16} />
+                  </div>
+                  <div>
+                    <p className="text-[8px] uppercase tracking-[0.25em] text-[#172b3f]/40">
+                      Official Email
+                    </p>
+                    <p className="mt-0.5 text-sm font-semibold">
+                      info@bovenfrontier.co.in
+                    </p>
+                  </div>
+                </div>
+                <ArrowUpRight
+                  size={16}
+                  className="text-[#172b3f]/30 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
 
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#172b3f]/10 transition-all duration-300 group-hover:border-[#c9a84c]">
-                    <Mail
-                      size={16}
-                      strokeWidth={1.5}
+        {/* =====================================================
+            ENQUIRY FORM
+        ===================================================== */}
+        <div className="mt-14 sm:mt-20 grid overflow-hidden border border-[#172b3f]/10 bg-white shadow-sm lg:grid-cols-12">
+          {/* Information Panel */}
+          <div className="relative bg-[#172b3f] p-8 text-white sm:p-12 lg:col-span-5 flex flex-col justify-between">
+            <div>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#c9a84c]">
+                B2B & Export Desk
+              </p>
+
+              <h3 className="mt-5 text-2xl sm:text-3xl font-medium tracking-tight">
+                Tell us your requirement.
+              </h3>
+
+              <p className="mt-4 text-xs sm:text-sm text-white/60 leading-relaxed">
+                Wholesale supply, private label (OEM) formulation, custom bottle packaging, or bulk freight export.
+              </p>
+            </div>
+
+            <div className="mt-10 space-y-4 border-t border-white/10 pt-6 text-xs text-white/80">
+              <div className="flex justify-between">
+                <span className="text-white/40 text-[9px] uppercase tracking-wider">
+                  Origin
+                </span>
+                <span>Kozhikode, India</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/40 text-[9px] uppercase tracking-wider">
+                  Target Regions
+                </span>
+                <span>India · UAE · Saudi Arabia · GCC</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white/40 text-[9px] uppercase tracking-wider">
+                  Response Time
+                </span>
+                <span className="text-[#c9a84c]">Within 24 Hours</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Form */}
+          <div className="p-6 sm:p-10 lg:col-span-7">
+            {submitted ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-4">
+                  <CheckCircle size={28} />
+                </div>
+                <h4 className="text-xl font-medium text-gray-900">
+                  Enquiry Received
+                </h4>
+                <p className="mt-2 text-xs sm:text-sm text-gray-500 max-w-sm">
+                  Thank you, <strong>{formData.name}</strong>. Our export and distribution team will review your requirement and reach out shortly.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3 justify-center">
+                  <button
+                    onClick={handleWhatsAppDirect}
+                    className="inline-flex items-center gap-2 bg-emerald-600 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:bg-emerald-700"
+                  >
+                    <MessageCircle size={14} />
+                    Follow up on WhatsApp
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSubmitted(false)
+                      setFormData({
+                        name: '',
+                        company: '',
+                        email: '',
+                        phone: '',
+                        region: '',
+                        buyerType: '',
+                        product: '',
+                        message: '',
+                      })
+                    }}
+                    className="border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50"
+                  >
+                    Send Another Enquiry
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="contact-name"
+                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1"
+                    >
+                      Your Name *
+                    </label>
+                    <input
+                      id="contact-name"
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      placeholder="e.g. Rahul Sharma"
+                      className="w-full border-b border-[#172b3f]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#172b3f]"
                     />
                   </div>
 
                   <div>
-                    <p className="text-[8px] uppercase tracking-[0.25em] text-[#172b3f]/35">
-                      Email
-                    </p>
+                    <label
+                      htmlFor="contact-company"
+                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1"
+                    >
+                      Company / Organization
+                    </label>
+                    <input
+                      id="contact-company"
+                      type="text"
+                      value={formData.company}
+                      onChange={(e) =>
+                        setFormData({ ...formData, company: e.target.value })
+                      }
+                      placeholder="e.g. Gulf Trading LLC"
+                      className="w-full border-b border-[#172b3f]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#172b3f]"
+                    />
+                  </div>
+                </div>
 
-                    <p className="mt-1 text-sm font-medium">
-                      info@bovenfrontier.co.in
-                    </p>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="contact-email"
+                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1"
+                    >
+                      Email Address *
+                    </label>
+                    <input
+                      id="contact-email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      placeholder="you@company.com"
+                      className="w-full border-b border-[#172b3f]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#172b3f]"
+                    />
                   </div>
 
+                  <div>
+                    <label
+                      htmlFor="contact-phone"
+                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1"
+                    >
+                      Phone / WhatsApp Number
+                    </label>
+                    <input
+                      id="contact-phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) =>
+                        setFormData({ ...formData, phone: e.target.value })
+                      }
+                      placeholder="+91 / +971..."
+                      className="w-full border-b border-[#172b3f]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#172b3f]"
+                    />
+                  </div>
                 </div>
 
-                <ArrowUpRight
-                  size={16}
-                  strokeWidth={1.5}
-                  className="text-[#172b3f]/30 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
-                />
-              </a>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="contact-region"
+                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1"
+                    >
+                      Country / Region
+                    </label>
+                    <input
+                      id="contact-region"
+                      type="text"
+                      value={formData.region}
+                      onChange={(e) =>
+                        setFormData({ ...formData, region: e.target.value })
+                      }
+                      placeholder="e.g. UAE, Saudi Arabia, India..."
+                      className="w-full border-b border-[#172b3f]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#172b3f]"
+                    />
+                  </div>
 
-            </div>
+                  <div>
+                    <label
+                      htmlFor="contact-buyer-type"
+                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1"
+                    >
+                      Buyer Profile
+                    </label>
+                    <select
+                      id="contact-buyer-type"
+                      value={formData.buyerType}
+                      onChange={(e) =>
+                        setFormData({ ...formData, buyerType: e.target.value })
+                      }
+                      className="w-full border-b border-[#172b3f]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#172b3f]"
+                    >
+                      <option value="">Select Buyer Type</option>
+                      <option value="Export Importer">Export Importer / Trader</option>
+                      <option value="Distributor">FMCG / Retail Distributor</option>
+                      <option value="Wholesaler">Wholesaler</option>
+                      <option value="Institutional Buyer">Hotel / Hospital / Facility Buyer</option>
+                      <option value="Private Label OEM">Private Label / Brand Owner</option>
+                      <option value="Other">Other Requirement</option>
+                    </select>
+                  </div>
+                </div>
 
+                <div>
+                  <label
+                    htmlFor="contact-product"
+                    className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1"
+                  >
+                    Product Interest
+                  </label>
+                  <select
+                    id="contact-product"
+                    value={formData.product}
+                    onChange={(e) =>
+                      setFormData({ ...formData, product: e.target.value })
+                    }
+                    className="w-full border-b border-[#172b3f]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#172b3f]"
+                  >
+                    <option value="">Select product or general range</option>
+                    <option value="All Products Portfolio">Complete Portfolio (Container Load)</option>
+                    <option value="Laundry Range">Laundry Detergents (Powder & Liquids)</option>
+                    <option value="Floor Care Range">Floor Cleaners & Perfumed Phenyl</option>
+                    <option value="Disinfection & Hygiene">Disinfectants & Handwash</option>
+                    {products.map((p) => (
+                      <option key={p.id} value={`${p.brand} ${p.name}`}>
+                        {p.brand} - {p.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-message"
+                    className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1"
+                  >
+                    Estimated Quantity & Requirements
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    rows={3}
+                    value={formData.message}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
+                    placeholder="Tell us about order volumes, destination port, or specific variants needed..."
+                    className="w-full resize-none border-b border-[#172b3f]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#172b3f]"
+                  />
+                </div>
+
+                {/* Submit Actions */}
+                <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
+                  <button
+                    type="button"
+                    onClick={handleWhatsAppDirect}
+                    className="inline-flex items-center justify-center gap-2 rounded border border-emerald-600 bg-emerald-50 px-5 py-3.5 text-xs font-semibold text-emerald-800 transition hover:bg-emerald-100"
+                  >
+                    <MessageCircle size={15} />
+                    Send via WhatsApp
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="group inline-flex items-center justify-center gap-3 bg-[#172b3f] px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-[#c9a84c] hover:text-[#172b3f] disabled:opacity-50"
+                  >
+                    <span>{loading ? 'Submitting...' : 'Submit Enquiry'}</span>
+                    <ArrowUpRight
+                      size={14}
+                      className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    />
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
-
         </div>
-
-
-        {/* =====================================================
-            ENQUIRY AREA
-        ===================================================== */}
-
-        <div className="mt-20 grid overflow-hidden border border-[#172b3f]/10 bg-white lg:mt-28 lg:grid-cols-12">
-
-          {/* Left information */}
-          <div className="relative bg-[#172b3f] p-8 text-white sm:p-10 lg:col-span-5 lg:p-14">
-
-            <div className="absolute bottom-0 right-0 h-40 w-40 translate-x-1/3 translate-y-1/3 rounded-full border border-white/5" />
-
-            <p className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#c9a84c]">
-              B2B Enquiries
-            </p>
-
-            <h3 className="mt-6 max-w-md text-3xl font-medium leading-tight tracking-[-0.04em] sm:text-4xl">
-              Tell us what
-              <br />
-              you're looking for.
-            </h3>
-
-            <p className="mt-6 max-w-sm text-sm leading-7 text-white/50">
-              Product supply, distribution partnerships, private
-              requirements, or export opportunities.
-            </p>
-
-            <div className="mt-12 space-y-4 border-t border-white/10 pt-6">
-
-              <div className="flex items-center justify-between">
-                <span className="text-[8px] uppercase tracking-[0.25em] text-white/35">
-                  Manufacturing
-                </span>
-
-                <span className="text-xs text-white/70">
-                  India
-                </span>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-[8px] uppercase tracking-[0.25em] text-white/35">
-                  Markets
-                </span>
-
-                <span className="text-xs text-white/70">
-                  India · Middle East
-                </span>
-              </div>
-
-            </div>
-
-          </div>
-
-
-          {/* Form */}
-          <div className="p-8 sm:p-10 lg:col-span-7 lg:p-14">
-
-            <form className="space-y-7">
-
-              {/* Name + Company */}
-              <div className="grid gap-6 sm:grid-cols-2">
-
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="mb-2 block text-[8px] font-semibold uppercase tracking-[0.25em] text-navy/60"
-                  >
-                    Your name *
-                  </label>
-
-                  <input
-                    id="name"
-                    type="text"
-                    required
-                    placeholder="Name"
-                    className="w-full border-b border-[#172b3f]/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-[#172b3f]/25 focus:border-[#172b3f]"
-                  />
-                </div>
-
-
-                <div>
-                  <label
-                    htmlFor="company"
-                    className="mb-2 block text-[8px] font-semibold uppercase tracking-[0.25em] text-navy/60"
-                  >
-                    Company
-                  </label>
-
-                  <input
-                    id="company"
-                    type="text"
-                    placeholder="Company name"
-                    className="w-full border-b border-[#172b3f]/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-[#172b3f]/25 focus:border-[#172b3f]"
-                  />
-                </div>
-
-              </div>
-
-
-              {/* Email + Region */}
-              <div className="grid gap-6 sm:grid-cols-2">
-
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="mb-2 block text-[8px] font-semibold uppercase tracking-[0.25em] text-navy/60"
-                  >
-                    Email *
-                  </label>
-
-                  <input
-                    id="email"
-                    type="email"
-                    required
-                    placeholder="you@company.com"
-                    className="w-full border-b border-[#172b3f]/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-[#172b3f]/25 focus:border-[#172b3f]"
-                  />
-                </div>
-
-
-                <div>
-                  <label
-                    htmlFor="region"
-                    className="mb-2 block text-[8px] font-semibold uppercase tracking-[0.25em] text-navy/60"
-                  >
-                    Region
-                  </label>
-
-                  <input
-                    id="region"
-                    type="text"
-                    placeholder="Country / region"
-                    className="w-full border-b border-[#172b3f]/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-[#172b3f]/25 focus:border-[#172b3f]"
-                  />
-                </div>
-
-              </div>
-
-
-              {/* Buyer type */}
-              <div>
-
-                <label
-                  htmlFor="buyer-type"
-                  className="mb-2 block text-[8px] font-semibold uppercase tracking-[0.25em] text-navy/60"
-                >
-                  I am a
-                </label>
-
-                <select
-                  id="buyer-type"
-                  defaultValue=""
-                  className="w-full border-b border-[#172b3f]/15 bg-transparent px-0 py-3 text-sm text-[#172b3f] outline-none transition-colors focus:border-[#172b3f]"
-                >
-                  <option value="" disabled>
-                    Select buyer type
-                  </option>
-                  <option>Distributor</option>
-                  <option>Wholesaler</option>
-                  <option>Retailer</option>
-                  <option>Institutional buyer</option>
-                  <option>Export buyer</option>
-                  <option>Other</option>
-                </select>
-
-              </div>
-
-
-              {/* Product interest */}
-              <div>
-
-                <label
-                  htmlFor="product"
-                  className="mb-2 block text-[8px] font-semibold uppercase tracking-[0.25em] text-navy/60"
-                >
-                  Product interest
-                </label>
-
-                <select
-                  id="product"
-                  defaultValue=""
-                  className="w-full border-b border-[#172b3f]/15 bg-transparent px-0 py-3 text-sm text-[#172b3f] outline-none transition-colors focus:border-[#172b3f]"
-                >
-                  <option value="" disabled>
-                    Select a brand / category
-                  </option>
-                  <option>LEXONE</option>
-                  <option>FABIE PLUS</option>
-                  <option>KARE</option>
-                  <option>Multiple products</option>
-                  <option>Not sure yet</option>
-                </select>
-
-              </div>
-
-
-              {/* Message */}
-              <div>
-
-                <label
-                  htmlFor="message"
-                  className="mb-2 block text-[8px] font-semibold uppercase tracking-[0.25em] text-navy/60"
-                >
-                  Message
-                </label>
-
-                <textarea
-                  id="message"
-                  rows="3"
-                  placeholder="Tell us about your requirement..."
-                  className="w-full resize-none border-b border-[#172b3f]/15 bg-transparent px-0 py-3 text-sm outline-none transition-colors placeholder:text-[#172b3f]/25 focus:border-[#172b3f]"
-                />
-
-              </div>
-
-
-              {/* Submit */}
-              <div className="flex flex-col gap-5 pt-2 sm:flex-row sm:items-center sm:justify-between">
-
-                <p className="max-w-xs text-[9px] leading-5 text-[#172b3f]/35">
-                  We use your information only to respond to your enquiry.
-                </p>
-
-                <button
-                  type="submit"
-                  className="group inline-flex items-center justify-center gap-4 bg-[#172b3f] px-7 py-4 text-[9px] font-semibold uppercase tracking-[0.23em] text-white transition-all duration-300 hover:bg-[#c9a84c] hover:text-[#172b3f]"
-                >
-                  Start an enquiry
-
-                  <ArrowUpRight
-                    size={14}
-                    strokeWidth={1.5}
-                    className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  />
-                </button>
-
-              </div>
-
-            </form>
-
-          </div>
-
-        </div>
-
-
-        {/* =====================================================
-            BOTTOM CREDIBILITY LINE
-        ===================================================== */}
-
-        <div className="mt-10 flex flex-col gap-3 border-t border-[#172b3f]/10 pt-5 text-[8px] uppercase tracking-[0.25em] text-[#172b3f]/30 sm:flex-row sm:items-center sm:justify-between">
-
-          <span>
-            Boven Frontier International LLP
-          </span>
-
-          <span>
-            Manufactured in Kerala · India
-          </span>
-
-          <span>
-            India · Middle East
-          </span>
-
-        </div>
-
       </div>
     </section>
   )

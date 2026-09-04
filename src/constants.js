@@ -3,7 +3,7 @@ export const COMPANY = {
   brand: 'ZENY DETERGENTS™',
   llpId: 'ACE-5349',
   address:
-    'Room No. OP 7/452, Manakkadavu, Kozhikode, Kerala 673019, India',
+    'Room No. OP 7/452, Manakkadavu, Kozhikode 673019, India',
   phone1: '+91 70127 77495',
   phone2: '+91 92075 77242',
   email1: 'info@bovenfrontier.co.in',

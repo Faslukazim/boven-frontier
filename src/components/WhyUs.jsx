@@ -1,206 +1,127 @@
 import {
+  Factory,
+  Sparkles,
+  Ship,
   ShieldCheck,
-  Globe2,
-  Package,
   CheckCircle2,
 } from 'lucide-react'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 
-const items = [
+const wholesalePillars = [
   {
     number: '01',
-    icon: ShieldCheck,
-    title: 'Manufacturer-direct',
-    text: 'An India-based cleaning-products manufacturer serving retail, institutional and export requirements.',
+    icon: Factory,
+    title: 'Direct Factory Margins',
+    subtitle: 'Zero middleman markups',
+    text: 'Source directly from our automated blending and bottling facility in India. Enjoy pure factory-level pricing that protects your wholesale and retail margins.',
   },
   {
     number: '02',
-    icon: Globe2,
-    title: 'India · Middle East',
-    text: 'Manufactured in Kerala with a product portfolio positioned for domestic and Gulf markets.',
+    icon: Sparkles,
+    title: 'Contract OEM & Private Label',
+    subtitle: 'Custom formulation & bottling',
+    text: 'We manufacture tailored formulations matching your required surfactant concentration, viscosity, and proprietary fragrance profiles with custom branded labels.',
   },
   {
     number: '03',
-    icon: Package,
-    title: 'Multiple product categories',
-    text: 'A growing range of powders, liquids and cleaning solutions across multiple brands and SKUs.',
+    icon: Ship,
+    title: 'Container-Load Logistics',
+    subtitle: 'Palletized 20ft / 40ft FCL',
+    text: 'Strategically located for Cochin Port dispatch to GCC trade hubs including Jebel Ali (Dubai), Dammam, and Muscat with complete customs and bill of lading documentation.',
   },
   {
     number: '04',
-    icon: CheckCircle2,
-    title: 'Traceable products',
-    text: 'Barcoded products and documented product information designed to support professional distribution.',
+    icon: ShieldCheck,
+    title: 'Certified Formulation Quality',
+    subtitle: 'Induction sealed & lab tested',
+    text: 'Every batch is quality verified for pH balance and active matter. All bottles feature induction heat-sealed foil liners to ensure zero transit leakage during ocean shipping.',
   },
 ]
 
 function WhyUs() {
+  const sectionRef = useScrollReveal()
+
   return (
-    <section className="relative overflow-hidden bg-white px-6 py-24 sm:px-10 lg:px-16 lg:py-32">
-
+    <section
+      id="why-us"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-white px-6 py-20 sm:px-10 lg:px-16 lg:py-28 border-t border-[#172b3f]/10"
+    >
       <div className="mx-auto max-w-[1600px]">
-
         {/* =====================================================
             HEADER
         ===================================================== */}
-
-        <div className="grid gap-10 lg:grid-cols-12">
-
+        <div className="grid gap-10 lg:grid-cols-12 reveal-on-scroll">
           <div className="lg:col-span-4">
-
             <div className="flex items-center gap-3">
-
-              <span className="h-[5px] w-[5px] rounded-full bg-[#c9a84c]" />
-
-              <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#172b3f]/45">
-                Why Boven Frontier
+              <span className="h-[5px] w-[5px] rounded-full bg-[#c9a84c] animate-ping" />
+              <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#c9a84c]">
+                The Boven Wholesale Advantage
               </p>
-
             </div>
-
           </div>
-
 
           <div className="lg:col-span-7 lg:col-start-5">
-
-            <h2 className="max-w-[850px] text-[clamp(2.8rem,5.5vw,6rem)] font-medium leading-[0.9] tracking-[-0.065em] text-[#172b3f]">
-
-              Built for
+            <h2 className="max-w-[850px] text-[clamp(2.4rem,4.8vw,5rem)] font-bold leading-[0.94] tracking-[-0.05em] text-[#172b3f]">
+              Direct manufacturing.
               <br />
-
-              <span className="ml-[5vw]">
-                everyday demand.
+              <span className="text-[#c9a84c]">
+                Dependable wholesale scale.
               </span>
-
             </h2>
 
-            <p className="mt-8 max-w-xl text-[14px] leading-7 tracking-[-0.01em] text-[#172b3f]/55 sm:text-[15px]">
-
-              From Kerala to markets beyond India, Boven Frontier
-              brings together multiple cleaning brands and product
-              categories under one manufacturing partner.
-
+            <p className="mt-6 max-w-xl text-sm leading-relaxed text-[#172b3f]/70 sm:text-[15px]">
+              Whether you are stocking regional supermarket shelves or importing full shipping containers into the Gulf, Boven Frontier delivers consistency, compliance, and competitive factory pricing.
             </p>
-
           </div>
-
         </div>
 
-
         {/* =====================================================
-            CREDIBILITY GRID
+            B2B ADVANTAGE GRID (SHOPIFY B2B STYLE)
         ===================================================== */}
-
-        <div className="mt-20 border-t border-[#172b3f]/10">
-
-          {items.map((item) => {
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {wholesalePillars.map((item, idx) => {
             const Icon = item.icon
+            const staggerClass = `stagger-${idx + 1}`
 
             return (
               <div
                 key={item.number}
-                className="
-                  group
-                  grid
-                  gap-6
-                  border-b
-                  border-[#172b3f]/10
-                  py-8
-                  transition-colors
-                  duration-500
-                  lg:grid-cols-12
-                  lg:items-center
-                  lg:py-10
-                  hover:bg-[#f8f7f3]
-                "
+                className={`reveal-on-scroll ${staggerClass} group flex flex-col justify-between rounded-xl border border-gray-200/80 bg-[#fbfbf9] p-6 transition-all duration-300 hover:bg-white hover:border-[#c9a84c]/50 hover:shadow-lg`}
               >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white border border-gray-200 text-[#172b3f] shadow-2xs transition-transform duration-300 group-hover:scale-110 group-hover:border-[#c9a84c] group-hover:text-[#c9a84c]">
+                      <Icon size={22} strokeWidth={1.75} />
+                    </div>
 
-                {/* Number */}
-
-                <div className="lg:col-span-1">
-
-                  <span className="text-[9px] font-medium tabular-nums tracking-[0.2em] text-[#172b3f]/30">
-                    {item.number}
-                  </span>
-
-                </div>
-
-
-                {/* Icon */}
-
-                <div className="lg:col-span-1">
-
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#172b3f]/10 text-[#172b3f]/65 transition-all duration-500 group-hover:border-[#c9a84c] group-hover:text-[#c9a84c]">
-
-                    <Icon
-                      size={17}
-                      strokeWidth={1.4}
-                    />
-
+                    <span className="text-xs font-bold tabular-nums tracking-wider text-[#172b3f]/30 group-hover:text-[#c9a84c]">
+                      {item.number}
+                    </span>
                   </div>
 
-                </div>
-
-
-                {/* Title */}
-
-                <div className="lg:col-span-3">
-
-                  <h3 className="text-[16px] font-medium tracking-[-0.025em] text-[#172b3f] sm:text-[18px]">
-
+                  <h3 className="mt-6 text-base font-bold tracking-tight text-[#172b3f] group-hover:text-[#c9a84c] transition-colors">
                     {item.title}
-
                   </h3>
 
-                </div>
-
-
-                {/* Description */}
-
-                <div className="lg:col-span-6 lg:col-start-7">
-
-                  <p className="max-w-lg text-[13px] leading-6 text-[#172b3f]/50 sm:text-[14px]">
-
-                    {item.text}
-
+                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#b08d2e]">
+                    {item.subtitle}
                   </p>
 
+                  <p className="mt-3 text-xs leading-relaxed text-[#172b3f]/65">
+                    {item.text}
+                  </p>
                 </div>
 
+                <div className="mt-6 pt-4 border-t border-gray-200/60 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-[#172b3f]/60 group-hover:text-[#172b3f]">
+                  <CheckCircle2 size={13} className="text-emerald-600" />
+                  <span>Guaranteed SLA</span>
+                </div>
               </div>
             )
           })}
-
         </div>
-
-
-        {/* =====================================================
-            BOTTOM STATEMENT
-        ===================================================== */}
-
-        <div className="mt-16 flex flex-col gap-6 border-t border-[#172b3f]/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
-
-          <p className="max-w-md text-[10px] uppercase leading-5 tracking-[0.22em] text-[#172b3f]/35">
-
-            Manufactured in
-            <span className="mx-2 text-[#c9a84c]">·</span>
-            Kerala
-            <span className="mx-2 text-[#c9a84c]">·</span>
-            India
-
-          </p>
-
-
-          <p className="text-[10px] uppercase tracking-[0.22em] text-[#172b3f]/35">
-
-            India
-            <span className="mx-2 text-[#c9a84c]">·</span>
-            Middle East
-
-          </p>
-
-        </div>
-
       </div>
-
     </section>
   )
 }

@@ -1,48 +1,92 @@
 import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight } from 'lucide-react'
-import heroProducts from '../data/heroProducts'
+import { Link } from 'react-router-dom'
+import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useStore } from '../context/useStore'
 
 function Hero() {
+  const { products, topBadge } = useStore()
+  const featuredProducts =
+    products.filter((p) => p.is_featured).length > 0
+      ? products.filter((p) => p.is_featured)
+      : products
+
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [productVisible, setProductVisible] = useState(true)
+  const [parallax, setParallax] = useState({ x: 0, y: 0 })
 
-  const animationFrame = useRef(null)
+  const heroSectionRef = useRef(null)
+  const transitionTimeout = useRef(null)
+  const touchStartX = useRef(null)
 
-  const activeProduct = heroProducts[activeIndex]
-
-  /*
-   * ------------------------------------------------------------
-   * PRODUCT CHANGE
-   * ------------------------------------------------------------
-   *
-   * We deliberately avoid using React "key" to force-remount
-   * the image. Safari can occasionally skip or render key-based
-   * CSS entrance animations inconsistently.
-   *
-   * Instead:
-   * 1. Fade product out
-   * 2. Change product
-   * 3. Wait one animation frame
-   * 4. Fade product back in
-   */
+  // Bounds safety
+  const safeIndex =
+    activeIndex < featuredProducts.length ? activeIndex : 0
+  const activeProduct = featuredProducts[safeIndex] || {
+    name: 'Boven Cleaning Products',
+    brand: 'LEXONE',
+    category: 'CLEANING CARE',
+    image: '/assets/products/lexoneliquiddetergent.png',
+    scale: 0.85,
+  }
 
   const changeProduct = (nextIndex) => {
-    if (nextIndex === activeIndex) return
+    if (nextIndex === safeIndex) return
+
+    if (transitionTimeout.current) {
+      clearTimeout(transitionTimeout.current)
+    }
 
     setProductVisible(false)
 
-    if (animationFrame.current) {
-      cancelAnimationFrame(animationFrame.current)
-    }
-
-    animationFrame.current = requestAnimationFrame(() => {
+    transitionTimeout.current = setTimeout(() => {
       setActiveIndex(nextIndex)
 
-      animationFrame.current = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
         setProductVisible(true)
       })
-    })
+    }, 200)
+  }
+
+  const handleNext = () => {
+    const next = (safeIndex + 1) % featuredProducts.length
+    changeProduct(next)
+  }
+
+  const handlePrev = () => {
+    const prev = (safeIndex - 1 + featuredProducts.length) % featuredProducts.length
+    changeProduct(prev)
+  }
+
+  // Interactive Mouse Parallax (Desktop)
+  const handleMouseMove = (e) => {
+    if (window.innerWidth < 1024 || !heroSectionRef.current) return
+    const rect = heroSectionRef.current.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    setParallax({ x, y })
+  }
+
+  const handleMouseLeave = () => {
+    setIsPaused(false)
+    setParallax({ x: 0, y: 0 })
+  }
+
+  // Mobile Touch Swipe Handling
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return
+    const touchEndX = e.changedTouches[0].clientX
+    const diff = touchStartX.current - touchEndX
+    if (diff > 45) {
+      handleNext()
+    } else if (diff < -45) {
+      handlePrev()
+    }
+    touchStartX.current = null
   }
 
   /*
@@ -50,671 +94,288 @@ function Hero() {
    * AUTO ROTATION
    * ------------------------------------------------------------
    */
-
   useEffect(() => {
-    if (isPaused || heroProducts.length <= 1) return
+    if (isPaused || featuredProducts.length <= 1) return
 
     const timer = window.setInterval(() => {
       setProductVisible(false)
 
-      window.setTimeout(() => {
+      transitionTimeout.current = window.setTimeout(() => {
         setActiveIndex((current) => {
-          return (current + 1) % heroProducts.length
+          return (current + 1) % featuredProducts.length
         })
 
         window.requestAnimationFrame(() => {
           setProductVisible(true)
         })
-      }, 180)
-    }, 4200)
+      }, 200)
+    }, 4500)
 
     return () => {
       window.clearInterval(timer)
+      if (transitionTimeout.current) {
+        clearTimeout(transitionTimeout.current)
+      }
     }
-  }, [isPaused])
+  }, [isPaused, featuredProducts.length])
 
   /*
    * ------------------------------------------------------------
    * CLEANUP
    * ------------------------------------------------------------
    */
-
   useEffect(() => {
     return () => {
-      if (animationFrame.current) {
-        cancelAnimationFrame(animationFrame.current)
+      if (transitionTimeout.current) {
+        clearTimeout(transitionTimeout.current)
       }
     }
   }, [])
 
   return (
     <section
+      ref={heroSectionRef}
       className="relative overflow-hidden bg-white text-[#172b3f]"
       onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
-      <div className="mx-auto max-w-[1600px] px-6 sm:px-10 lg:px-14 xl:px-16">
-
+      <div className="mx-auto max-w-[1600px] px-5 sm:px-10 lg:px-14 xl:px-16">
         {/* =====================================================
             TOP BRAND LINE
         ===================================================== */}
-
-        <div className="flex h-[68px] items-center border-b border-[#172b3f]/10">
-          <div className="flex items-center gap-3">
-
-            <span className="h-[5px] w-[5px] shrink-0 rounded-full bg-[#c9a84c]" />
-
-            <span className="text-[9px] font-medium uppercase tracking-[0.3em] text-[#172b3f]/65">
+        <div className="flex h-11 sm:h-13 items-center justify-between border-b border-[#172b3f]/10">
+          <div className="flex items-center gap-2.5">
+            <span className="h-[5px] w-[5px] shrink-0 rounded-full bg-[#c9a84c] animate-ping" />
+            <span className="text-[9px] sm:text-[10px] font-medium uppercase tracking-[0.3em] text-[#172b3f]/65">
               Boven Frontier International
             </span>
-
           </div>
+
+          <span className="hidden sm:inline text-[9px] uppercase tracking-[0.25em] text-[#172b3f]/40">
+            LLP Reg: ACE-5349 · India
+          </span>
         </div>
 
-
         {/* =====================================================
-            HERO
+            HERO CONTENT
         ===================================================== */}
-
-        <div className="grid min-h-[calc(100svh-116px)] grid-cols-1 lg:grid-cols-2">
-
-
-          {/* ===================================================
-              LEFT
-          =================================================== */}
-
-          <div className="relative flex flex-col justify-center py-16 lg:py-10">
-
+        <div className="grid min-h-[calc(100svh-140px)] grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-10 py-4 sm:py-6 lg:py-4">
+          {/* LEFT: TEXT & HEADINGS */}
+          <div className="relative flex flex-col justify-center py-2 sm:py-6 lg:py-2">
             <div className="hero-left-content">
-
-              {/* Credibility marker */}
-
-              <div className="hero-eyebrow mb-7 flex items-center gap-3 pl-[7vw] lg:pl-[5vw]">
-
-                <span className="h-px w-8 bg-[#c9a84c]" />
-
-                <span className="text-[9px] font-semibold uppercase tracking-[0.24em] text-[#172b3f]/65">
-                  Manufactured in India · Export-ready
-                </span>
-
+              {/* Eyebrow / Editable Hero Badge */}
+              <div className="hero-eyebrow mb-3 sm:mb-4 pl-1 sm:pl-[1.5vw]">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#c9a84c]/40 bg-[#fefbf3] px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#b08d2e] shadow-2xs">
+                  <span className="h-2 w-2 rounded-full bg-[#c9a84c] animate-ping" />
+                  {topBadge?.heroBadge || 'Manufactured in India · Direct Factory Supply'}
+                </div>
               </div>
 
-
-              {/* Main headline */}
-
-              <h1 className="hero-title max-w-[760px] text-[clamp(4rem,7vw,7.4rem)] font-medium leading-[0.84] tracking-[-0.075em]">
-
-                <span className="hero-line hero-line-1 block">
-                  Cleaning
+              {/* Kinetic Masked Main Headline */}
+              <h1 className="hero-title max-w-[720px] pl-1 sm:pl-[1.5vw] text-[clamp(2.4rem,4.4vw,4.6rem)] font-bold leading-[0.98] tracking-[-0.04em] text-[#172b3f]">
+                <span className="block">Direct-from-Factory</span>
+                <span className="block text-[#c9a84c]">Cleaning Solutions</span>
+                <span className="block text-xl sm:text-2xl lg:text-3xl font-medium tracking-tight text-[#172b3f]/70 mt-2">
+                  for Distributors & Global Importers.
                 </span>
-
-                <span className="hero-line hero-line-2 block pl-[7vw] lg:pl-[5vw]">
-                  for
-                </span>
-
-                <span className="hero-line hero-line-3 block pl-[2vw]">
-                  everywhere.
-                </span>
-
               </h1>
 
-
               {/* Description */}
-
-              <div className="hero-description mt-9 flex max-w-[500px] items-start gap-5 pl-[7vw] lg:mt-11 lg:pl-[5vw]">
-
-                <span className="mt-1 h-[42px] w-px shrink-0 bg-[#c9a84c]" />
-
-                <p className="max-w-[410px] text-[14px] leading-[1.75] tracking-[-0.01em] text-[#172b3f]/70 sm:text-[15px]">
-
-                  Everyday cleaning, made dependable.
-
-                  <br className="hidden sm:block" />
-
-                  Built in India. Ready for everywhere.
-
+              <div className="hero-fade-in hero-description mt-4 sm:mt-5 flex max-w-[540px] items-start gap-3.5 pl-1 sm:pl-[1.5vw]">
+                <span className="mt-1 h-[42px] w-[2px] shrink-0 bg-[#c9a84c]" />
+                <p className="text-xs sm:text-sm leading-[1.65] text-[#172b3f]/75">
+                  Eliminate broker markups. Source certified laundry, surface, and disinfection chemical formulations directly from our manufacturing facility in India. Ready for domestic supermarket supply and GCC container export.
                 </p>
-
               </div>
 
-
-              {/* CTA */}
-
-              <div className="hero-cta mt-9 pl-[7vw] lg:mt-10 lg:pl-[5vw]">
-
+              {/* Action Buttons */}
+              <div className="hero-fade-in hero-cta mt-6 sm:mt-7 flex flex-wrap items-center gap-3 pl-1 sm:pl-[1.5vw]">
                 <a
-                  href="/products"
-                  className="group inline-flex items-center gap-4"
+                  href="#products"
+                  className="group relative inline-flex items-center gap-2 rounded-lg bg-[#172b3f] px-5 sm:px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition-all duration-300 hover:bg-[#c9a84c] hover:text-[#172b3f] hover:shadow-lg"
                 >
-
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.23em] text-[#172b3f]">
-                    Explore products
-                  </span>
-
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#172b3f]/25 transition-all duration-300 group-hover:bg-[#172b3f] group-hover:text-white">
-
-                    <ArrowUpRight
-                      size={14}
-                      strokeWidth={1.5}
-                      className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                    />
-
-                  </span>
-
+                  <span>Explore Products</span>
+                  <ArrowUpRight
+                    size={14}
+                    strokeWidth={2}
+                    className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
                 </a>
 
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 rounded-lg border-2 border-[#172b3f] bg-white px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#172b3f] transition-all hover:bg-gray-50 shadow-xs"
+                >
+                  Wholesale Enquiry
+                </Link>
               </div>
 
+              {/* B2B Assurance Metrics */}
+              <div className="mt-7 sm:mt-8 border-t border-[#172b3f]/10 pt-5 pl-1 sm:pl-[1.5vw]">
+                <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-[480px]">
+                  <div>
+                    <span className="text-lg sm:text-xl font-bold tracking-tight text-[#172b3f]">
+                      50 Cases
+                    </span>
+                    <p className="text-[9px] font-semibold uppercase tracking-wider text-[#172b3f]/55 mt-0.5">
+                      Min. Order Quantity
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-lg sm:text-xl font-bold tracking-tight text-[#172b3f]">
+                      7–14 Days
+                    </span>
+                    <p className="text-[9px] font-semibold uppercase tracking-wider text-[#172b3f]/55 mt-0.5">
+                      Export Dispatch
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-lg sm:text-xl font-bold tracking-tight text-[#c9a84c]">
+                      100% Direct
+                    </span>
+                    <p className="text-[9px] font-semibold uppercase tracking-wider text-[#172b3f]/55 mt-0.5">
+                      Factory Pricing
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-
           </div>
 
-
-          {/* ===================================================
-              RIGHT PRODUCT AREA
-          =================================================== */}
-
-          <div className="relative flex min-h-[560px] flex-col justify-center lg:min-h-0 lg:pl-[3vw]">
-
-
-            {/* =================================================
-                PRODUCT STAGE
-            ================================================= */}
-
-            <div className="hero-product-stage relative flex min-h-[520px] flex-1 items-center justify-center">
-
-              {/* Fixed background stage */}
-
-              <div className="hero-stage-circle absolute left-1/2 top-1/2 h-[72%] w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f7f7f4]" />
-
-
-              {/* Subtle center glow */}
-
-              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[42%] w-[42%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/70 blur-3xl" />
-
-
-              {/* Product canvas */}
-
+          {/* RIGHT: PRODUCT SHOWCASE WITH 3D PARALLAX */}
+          <div className="relative flex flex-col justify-center lg:pl-[2vw] py-2 sm:py-4 lg:-translate-y-2 xl:-translate-y-4">
+            {/* PRODUCT STAGE */}
+            <div className="hero-product-stage relative flex h-[350px] sm:h-[420px] lg:h-[460px] xl:h-[490px] w-full items-center justify-center">
+              {/* Background Circle with Parallax */}
               <div
-                className={`
-                  hero-product-canvas
-                  relative
-                  z-10
-                  flex
-                  h-[72%]
-                  w-[78%]
-                  items-center
-                  justify-center
-                  ${
-                    productVisible
-                      ? 'hero-product-visible'
-                      : 'hero-product-hidden'
-                  }
-                `}
-              >
+                className="hero-stage-circle absolute left-1/2 top-1/2 h-[90%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f7f7f4] transition-transform duration-300 ease-out shadow-xs"
+                style={{
+                  transform: `translate(calc(-50% + ${parallax.x * 18}px), calc(-50% + ${parallax.y * 18}px))`,
+                }}
+              />
 
+              {/* Pulsing Center Glow */}
+              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[45%] w-[45%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/80 blur-3xl animate-pulse-glow" />
+
+              {/* Active Product Image with Counter Parallax */}
+              <div
+                className="hero-product-canvas relative z-10 flex h-[88%] w-[88%] items-center justify-center transition-all duration-300 ease-out"
+                style={{
+                  transform: `translate(${parallax.x * -20}px, ${parallax.y * -20}px)`,
+                }}
+              >
                 <img
                   src={activeProduct.image}
                   alt={`${activeProduct.brand} ${activeProduct.name}`}
                   draggable="false"
                   style={{
-                    transform: `scale(${activeProduct.scale ?? 1})`,
+                    transform: `scale(${(activeProduct.scale || 0.85) * (productVisible ? 1 : 0.97)})`,
                   }}
-                  className="
-                    hero-product-image
-                    block
-                    h-full
-                    w-full
-                    select-none
-                    object-contain
-                    object-center
-                    mix-blend-multiply
-                  "
+                  className={`hero-product-image block h-full w-full select-none object-contain object-center mix-blend-multiply drop-shadow-xl transition-all duration-300 ease-out ${
+                    productVisible
+                      ? 'opacity-100'
+                      : 'opacity-0'
+                  }`}
                 />
-
               </div>
 
+              {/* Prev / Next Chevrons on Mobile */}
+              <button
+                onClick={handlePrev}
+                aria-label="Previous product"
+                className="absolute left-2 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-[#172b3f] shadow-sm backdrop-blur-xs transition hover:bg-white sm:hidden"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                onClick={handleNext}
+                aria-label="Next product"
+                className="absolute right-2 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-[#172b3f] shadow-sm backdrop-blur-xs transition hover:bg-white sm:hidden"
+              >
+                <ChevronRight size={18} />
+              </button>
 
               {/* Ground shadow */}
-
               <div
-                className={`
-                  hero-product-shadow
-                  pointer-events-none
-                  absolute
-                  bottom-[12%]
-                  left-1/2
-                  z-[5]
-                  h-5
-                  w-[34%]
-                  -translate-x-1/2
-                  rounded-[50%]
-                  bg-[#172b3f]/10
-                  blur-xl
-                  ${
-                    productVisible
-                      ? 'hero-shadow-visible'
-                      : 'hero-shadow-hidden'
-                  }
-                `}
+                className={`hero-product-shadow pointer-events-none absolute bottom-[6%] left-1/2 z-[5] h-4 w-[40%] -translate-x-1/2 rounded-[50%] bg-[#172b3f]/10 blur-xl transition-opacity duration-300 ${
+                  productVisible ? 'opacity-100' : 'opacity-0'
+                }`}
               />
-
             </div>
 
-
-            {/* =================================================
-                PRODUCT INFORMATION
-            ================================================= */}
-
-            <div className="flex items-end justify-between border-t border-[#172b3f]/10 py-5">
-
-
-              {/* Product */}
-
-              <div
-                className={`
-                  hero-product-info
-                  ${
+            {/* PRODUCT INFORMATION & COUNTER */}
+            <div className="border-t border-[#172b3f]/10 pt-3.5 sm:pt-4 space-y-2">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2.5">
+                <div
+                  className={`hero-product-info transition-all duration-300 ${
                     productVisible
-                      ? 'hero-info-visible'
-                      : 'hero-info-hidden'
-                  }
-                `}
-              >
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-2'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#b08d2e]">
+                      {activeProduct.category}
+                    </span>
+                    <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/50">
+                      · {activeProduct.brand}
+                    </span>
+                  </div>
 
-                <p className="mb-1 text-[8px] font-semibold uppercase tracking-[0.3em] text-[#b08d2e]">
-                  {activeProduct.category}
-                </p>
-
-                <div className="flex items-baseline gap-3">
-
-                  <h2 className="text-[24px] font-medium tracking-[-0.045em] text-[#172b3f]">
+                  <h2 className="text-lg sm:text-xl font-bold tracking-tight text-[#172b3f]">
                     {activeProduct.name}
                   </h2>
 
-                  <span className="text-[8px] font-medium uppercase tracking-[0.25em] text-[#172b3f]/55">
-                    {activeProduct.brand}
-                  </span>
-
+                  <p className="mt-0.5 text-xs text-[#172b3f]/65">
+                    Manufactured in India · Available in {Array.isArray(activeProduct.variants) ? activeProduct.variants.join(' · ') : '500ml · 1L · 5L'}
+                  </p>
                 </div>
 
-              </div>
-
-
-              {/* Counter */}
-
-              <div className="flex items-center gap-5">
-
-                <span className="text-[9px] tabular-nums tracking-[0.2em] text-[#172b3f]/55">
-
-                  {String(activeIndex + 1).padStart(2, '0')}
-
-                  <span className="mx-1 text-[#172b3f]/25">
-                    /
+                {/* Counter and Navigation Dots */}
+                <div className="flex items-center gap-3 sm:gap-4 self-end sm:self-auto">
+                  <span className="text-[10px] tabular-nums tracking-[0.2em] text-[#172b3f]/55">
+                    {String(safeIndex + 1).padStart(2, '0')}
+                    <span className="mx-1 text-[#172b3f]/25">/</span>
+                    {String(featuredProducts.length).padStart(2, '0')}
                   </span>
 
-                  {String(heroProducts.length).padStart(2, '0')}
-
-                </span>
-
-
-                {/* Progress */}
-
-                <div className="hidden items-center gap-1 sm:flex">
-
-                  {heroProducts.map((product, index) => (
-
-                    <button
-                      key={product.image}
-                      type="button"
-                      aria-label={`Show ${product.brand} ${product.name}`}
-                      aria-current={
-                        index === activeIndex
-                          ? 'true'
-                          : undefined
-                      }
-                      onClick={() => changeProduct(index)}
-                      className="group flex h-5 items-center"
-                    >
-
-                      <span
-                        className={`
-                          h-[2px]
-                          transition-all
-                          duration-300
-                          ${
-                            index === activeIndex
-                              ? 'w-7 bg-[#172b3f]'
-                              : 'w-2.5 bg-[#172b3f]/20 group-hover:bg-[#172b3f]/45'
-                          }
-                        `}
-                      />
-
-                    </button>
-
-                  ))}
-
+                  {/* Dots / Bars */}
+                  <div className="flex items-center gap-1">
+                    {featuredProducts.map((product, index) => (
+                      <button
+                        key={product.id || index}
+                        type="button"
+                        aria-label={`Show ${product.brand} ${product.name}`}
+                        onClick={() => changeProduct(index)}
+                        className="group flex h-5 items-center p-0.5"
+                      >
+                        <span
+                          className={`h-[2px] transition-all duration-300 ${
+                            index === safeIndex
+                              ? 'w-5 sm:w-7 bg-[#172b3f]'
+                              : 'w-2 sm:w-2.5 bg-[#172b3f]/20 group-hover:bg-[#172b3f]/50'
+                          }`}
+                        />
+                      </button>
+                    ))}
+                  </div>
                 </div>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
 
         {/* =====================================================
             BOTTOM LINE
         ===================================================== */}
-
-        <div className="flex h-12 items-center justify-between border-t border-[#172b3f]/10">
-
-          <span className="text-[8px] font-medium uppercase tracking-[0.3em] text-[#172b3f]/50">
-            Manufactured in India
-          </span>
-
-          <span className="text-[8px] font-medium uppercase tracking-[0.3em] text-[#172b3f]/50">
-            India · Middle East
-          </span>
-
+        <div className="flex h-11 items-center justify-between border-t border-[#172b3f]/10 text-[9px] font-medium uppercase tracking-[0.25em] text-[#172b3f]/50">
+          <span>Corporate Office: Kozhikode, India</span>
+          <span>Quality Formulations · Container Dispatch</span>
         </div>
-
       </div>
-
-
-      {/* =====================================================
-          ANIMATION
-      ===================================================== */}
-
-      <style>{`
-
-        /* =====================================================
-           LEFT HERO
-        ===================================================== */
-
-        @keyframes heroReveal {
-          0% {
-            opacity: 0;
-            transform: translate3d(0, 18px, 0);
-          }
-
-          100% {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-          }
-        }
-
-
-        .hero-eyebrow {
-          opacity: 0;
-          animation: heroReveal 600ms cubic-bezier(0.22, 1, 0.36, 1) 80ms forwards;
-        }
-
-
-        .hero-title {
-          animation: none;
-        }
-
-
-        .hero-line {
-          display: block;
-          opacity: 0;
-          animation:
-            heroReveal
-            850ms
-            cubic-bezier(0.22, 1, 0.36, 1)
-            forwards;
-        }
-
-
-        .hero-line-1 {
-          animation-delay: 160ms;
-        }
-
-
-        .hero-line-2 {
-          animation-delay: 230ms;
-        }
-
-
-        .hero-line-3 {
-          animation-delay: 300ms;
-        }
-
-
-        .hero-description {
-          opacity: 0;
-          animation:
-            heroReveal
-            700ms
-            cubic-bezier(0.22, 1, 0.36, 1)
-            430ms
-            forwards;
-        }
-
-
-        .hero-cta {
-          opacity: 0;
-          animation:
-            heroReveal
-            650ms
-            cubic-bezier(0.22, 1, 0.36, 1)
-            520ms
-            forwards;
-        }
-
-
-        /* =====================================================
-           PRODUCT STAGE
-        ===================================================== */
-
-        .hero-product-stage {
-          isolation: isolate;
-        }
-
-
-        .hero-stage-circle {
-          transform-origin: center center;
-        }
-
-
-        /* =====================================================
-           PRODUCT
-        ===================================================== */
-
-        .hero-product-canvas {
-          opacity: 1;
-          transform:
-            translate3d(0, 0, 0)
-            scale(1);
-          transition:
-            opacity 320ms cubic-bezier(0.22, 1, 0.36, 1),
-            transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
-          will-change: opacity, transform;
-          backface-visibility: hidden;
-          -webkit-backface-visibility: hidden;
-        }
-
-
-        .hero-product-visible {
-          opacity: 1;
-          transform:
-            translate3d(0, 0, 0)
-            scale(1);
-        }
-
-
-        .hero-product-hidden {
-          opacity: 0;
-          transform:
-            translate3d(0, 10px, 0)
-            scale(0.985);
-        }
-
-
-        .hero-product-image {
-          display: block;
-          max-height: 100%;
-          -webkit-user-drag: none;
-          backface-visibility: hidden;
-          -webkit-backface-visibility: hidden;
-        }
-
-
-        /* =====================================================
-           GROUND SHADOW
-        ===================================================== */
-
-        .hero-product-shadow {
-          opacity: 0.65;
-          transform:
-            translate3d(-50%, 0, 0)
-            scale(1);
-          transition:
-            opacity 350ms ease,
-            transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
-          will-change: opacity, transform;
-        }
-
-
-        .hero-shadow-visible {
-          opacity: 0.65;
-          transform:
-            translate3d(-50%, 0, 0)
-            scale(1);
-        }
-
-
-        .hero-shadow-hidden {
-          opacity: 0;
-          transform:
-            translate3d(-50%, 2px, 0)
-            scale(0.85);
-        }
-
-
-        /* =====================================================
-           PRODUCT INFORMATION
-        ===================================================== */
-
-        .hero-product-info {
-          opacity: 1;
-          transform: translate3d(0, 0, 0);
-          transition:
-            opacity 220ms ease,
-            transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
-          will-change: opacity, transform;
-        }
-
-
-        .hero-info-visible {
-          opacity: 1;
-          transform: translate3d(0, 0, 0);
-        }
-
-
-        .hero-info-hidden {
-          opacity: 0;
-          transform: translate3d(0, 5px, 0);
-        }
-
-
-        /* =====================================================
-           SAFARI / IOS
-        ===================================================== */
-
-        @supports (-webkit-touch-callout: none) {
-
-          .hero-product-canvas,
-          .hero-product-image,
-          .hero-product-shadow {
-            -webkit-transform-style: preserve-3d;
-            transform-style: preserve-3d;
-          }
-
-          .hero-product-image {
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-          }
-
-        }
-
-
-        /* =====================================================
-           REDUCED MOTION
-        ===================================================== */
-
-        @media (prefers-reduced-motion: reduce) {
-
-          .hero-eyebrow,
-          .hero-line,
-          .hero-description,
-          .hero-cta {
-            opacity: 1;
-            animation: none;
-            transform: none;
-          }
-
-          .hero-product-canvas,
-          .hero-product-shadow,
-          .hero-product-info {
-            transition: none;
-            transform: none;
-          }
-
-        }
-
-
-        /* =====================================================
-           MOBILE
-        ===================================================== */
-
-        @media (max-width: 1023px) {
-
-          .hero-product-stage {
-            min-height: 500px;
-          }
-
-          .hero-stage-circle {
-            height: 78%;
-            width: 82%;
-          }
-
-          .hero-product-canvas {
-            height: 78%;
-            width: 84%;
-          }
-
-        }
-
-
-        @media (max-width: 640px) {
-
-          .hero-product-stage {
-            min-height: 430px;
-          }
-
-          .hero-stage-circle {
-            height: 76%;
-            width: 92%;
-          }
-
-          .hero-product-canvas {
-            height: 76%;
-            width: 92%;
-          }
-
-          .hero-product-shadow {
-            bottom: 9%;
-            width: 42%;
-          }
-
-        }
-
-      `}</style>
-
     </section>
   )
 }
