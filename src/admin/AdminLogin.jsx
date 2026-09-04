@@ -43,27 +43,27 @@ function AdminLogin() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#172b3f] px-4 py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center bg-[#104360] px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-2xl sm:p-10">
         <div className="text-center">
           <Link to="/" className="inline-flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded bg-[#172b3f] text-[#c9a84c]">
+            <div className="flex h-10 w-10 items-center justify-center rounded bg-[#104360] text-[#EF2034]">
               <ShieldCheck size={22} />
             </div>
             <div className="text-left">
-              <span className="block text-sm font-semibold tracking-[0.1em] text-[#172b3f]">
+              <span className="block text-sm font-semibold tracking-[0.1em] text-[#104360]">
                 BOVEN FRONTIER
               </span>
-              <span className="block text-[8px] tracking-[0.25em] text-[#c9a84c]">
+              <span className="block text-[8px] tracking-[0.25em] text-[#EF2034]">
                 ADMIN PORTAL
               </span>
             </div>
           </Link>
 
-          <h2 className="mt-6 text-2xl font-medium tracking-tight text-[#172b3f]">
+          <h2 className="mt-6 text-2xl font-medium tracking-tight text-[#104360]">
             Sign in to Dashboard
           </h2>
-          <p className="mt-2 text-xs text-[#172b3f]/60">
+          <p className="mt-2 text-xs text-[#104360]/60">
             Manage product catalog, inventory status, and announcement banners.
           </p>
         </div>
@@ -79,12 +79,12 @@ function AdminLogin() {
             <div>
               <label
                 htmlFor="admin-email"
-                className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70"
+                className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70"
               >
                 Email Address
               </label>
               <div className="relative mt-1">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-[#172b3f]/40">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-[#104360]/40">
                   <Mail size={16} />
                 </div>
                 <input
@@ -94,7 +94,7 @@ function AdminLogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="admin@bovenfrontier.co.in"
-                  className="w-full border border-gray-200 py-3 pl-10 pr-3 text-sm text-[#172b3f] placeholder-gray-400 outline-none transition focus:border-[#172b3f] focus:ring-1 focus:ring-[#172b3f]"
+                  className="w-full border border-gray-200 py-3 pl-10 pr-3 text-sm text-[#104360] placeholder-gray-400 outline-none transition focus:border-[#104360] focus:ring-1 focus:ring-[#104360]"
                 />
               </div>
             </div>
@@ -102,12 +102,12 @@ function AdminLogin() {
             <div>
               <label
                 htmlFor="admin-password"
-                className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70"
+                className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70"
               >
                 Password
               </label>
               <div className="relative mt-1">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-[#172b3f]/40">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-[#104360]/40">
                   <Lock size={16} />
                 </div>
                 <input
@@ -117,7 +117,7 @@ function AdminLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full border border-gray-200 py-3 pl-10 pr-3 text-sm text-[#172b3f] placeholder-gray-400 outline-none transition focus:border-[#172b3f] focus:ring-1 focus:ring-[#172b3f]"
+                  className="w-full border border-gray-200 py-3 pl-10 pr-3 text-sm text-[#104360] placeholder-gray-400 outline-none transition focus:border-[#104360] focus:ring-1 focus:ring-[#104360]"
                 />
               </div>
             </div>
@@ -127,7 +127,7 @@ function AdminLogin() {
             <button
               type="button"
               onClick={fillDemoCredentials}
-              className="text-[10px] uppercase tracking-wider text-[#c9a84c] underline hover:text-[#b08d2e]"
+              className="text-[10px] uppercase tracking-wider text-[#EF2034] underline hover:text-[#EF2034]"
             >
               Fill Demo Credentials
             </button>
@@ -137,7 +137,7 @@ function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="group relative flex w-full justify-center bg-[#172b3f] py-3.5 px-4 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-all hover:bg-[#c9a84c] hover:text-[#172b3f] disabled:opacity-50"
+            className="group relative flex w-full justify-center bg-[#104360] py-3.5 px-4 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-all hover:bg-[#EF2034] hover:text-[#104360] disabled:opacity-50"
           >
             {loading ? 'Authenticating...' : 'Sign In'}
             {!loading && (
@@ -152,7 +152,7 @@ function AdminLogin() {
         <div className="text-center">
           <Link
             to="/"
-            className="text-[11px] text-[#172b3f]/60 hover:text-[#172b3f]"
+            className="text-[11px] text-[#104360]/60 hover:text-[#104360]"
           >
             ← Return to public website
           </Link>

@@ -50,7 +50,7 @@ function AdminDashboard() {
   const activeBannersCount = banners.filter((b) => b.is_active).length
 
   return (
-    <div className="flex min-h-screen bg-[#f8f9fa] text-[#172b3f]">
+    <div className="flex min-h-screen bg-[#f8f9fa] text-[#104360]">
       {/* =======================================================
           MOBILE SIDEBAR OVERLAY
       ======================================================= */}
@@ -65,7 +65,7 @@ function AdminDashboard() {
           SIDEBAR (DESKTOP & MOBILE DRAWER)
       ======================================================= */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-[#172b3f] text-white transition-transform duration-300 lg:static lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-[#104360] text-white transition-transform duration-300 lg:static lg:translate-x-0 ${
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -75,14 +75,14 @@ function AdminDashboard() {
             to="/"
             className="flex items-center gap-2.5 font-medium tracking-tight"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded bg-[#c9a84c] text-[#172b3f]">
+            <div className="flex h-8 w-8 items-center justify-center rounded bg-[#EF2034] text-[#104360]">
               <ShieldCheck size={18} />
             </div>
             <div>
               <span className="block text-xs font-semibold tracking-wider">
                 BOVEN FRONTIER
               </span>
-              <span className="block text-[7px] tracking-[0.2em] text-[#c9a84c]">
+              <span className="block text-[7px] tracking-[0.2em] text-[#EF2034]">
                 ADMIN CONSOLE
               </span>
             </div>
@@ -105,7 +105,7 @@ function AdminDashboard() {
             }}
             className={`flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 transition ${
               activeTab === 'products'
-                ? 'bg-[#c9a84c] text-[#172b3f] font-semibold'
+                ? 'bg-[#EF2034] text-[#104360] font-semibold'
                 : 'text-white/70 hover:bg-white/10 hover:text-white'
             }`}
           >
@@ -125,7 +125,7 @@ function AdminDashboard() {
             }}
             className={`flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 transition ${
               activeTab === 'banners'
-                ? 'bg-[#c9a84c] text-[#172b3f] font-semibold'
+                ? 'bg-[#EF2034] text-[#104360] font-semibold'
                 : 'text-white/70 hover:bg-white/10 hover:text-white'
             }`}
           >
@@ -145,7 +145,7 @@ function AdminDashboard() {
             }}
             className={`flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 transition ${
               activeTab === 'overview'
-                ? 'bg-[#c9a84c] text-[#172b3f] font-semibold'
+                ? 'bg-[#EF2034] text-[#104360] font-semibold'
                 : 'text-white/70 hover:bg-white/10 hover:text-white'
             }`}
           >
@@ -173,7 +173,7 @@ function AdminDashboard() {
               <p className="text-[11px] font-medium text-white truncate">
                 admin@bovenfrontier.co.in
               </p>
-              <p className="text-[9px] uppercase tracking-wider text-[#c9a84c]">
+              <p className="text-[9px] uppercase tracking-wider text-[#EF2034]">
                 Administrator
               </p>
             </div>
@@ -220,7 +220,7 @@ function AdminDashboard() {
 
             <Link
               to="/"
-              className="inline-flex items-center gap-1.5 bg-[#172b3f] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white transition hover:bg-[#c9a84c] hover:text-[#172b3f]"
+              className="inline-flex items-center gap-1.5 bg-[#104360] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white transition hover:bg-[#EF2034] hover:text-[#104360]"
             >
               <span className="hidden sm:inline">Live Site</span>
               <ExternalLink size={12} />
@@ -246,7 +246,7 @@ function AdminDashboard() {
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">
                     Total Products (SKUs)
                   </span>
-                  <div className="mt-2 text-3xl font-bold text-[#172b3f]">
+                  <div className="mt-2 text-3xl font-bold text-[#104360]">
                     {products.length}
                   </div>
                   <span className="text-[11px] text-emerald-600 font-medium mt-1 inline-block">
@@ -258,7 +258,7 @@ function AdminDashboard() {
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">
                     Active Brands
                   </span>
-                  <div className="mt-2 text-3xl font-bold text-[#172b3f]">
+                  <div className="mt-2 text-3xl font-bold text-[#104360]">
                     {activeBrands.length}
                   </div>
                   <span className="text-[11px] text-gray-500 mt-1 inline-block truncate">
@@ -270,7 +270,7 @@ function AdminDashboard() {
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">
                     Featured on Hero
                   </span>
-                  <div className="mt-2 text-3xl font-bold text-[#c9a84c]">
+                  <div className="mt-2 text-3xl font-bold text-[#EF2034]">
                     {featuredCount}
                   </div>
                   <span className="text-[11px] text-gray-500 mt-1 inline-block">
@@ -282,7 +282,7 @@ function AdminDashboard() {
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">
                     Active Banners
                   </span>
-                  <div className="mt-2 text-3xl font-bold text-[#172b3f]">
+                  <div className="mt-2 text-3xl font-bold text-[#104360]">
                     {activeBannersCount}
                   </div>
                   <span className="text-[11px] text-gray-500 mt-1 inline-block">
@@ -293,7 +293,7 @@ function AdminDashboard() {
 
               {/* Quick Actions Card */}
               <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
-                <h3 className="text-base font-semibold text-[#172b3f]">
+                <h3 className="text-base font-semibold text-[#104360]">
                   Quick Management Actions
                 </h3>
                 <p className="mt-1 text-xs text-gray-500">
@@ -303,13 +303,13 @@ function AdminDashboard() {
                 <div className="mt-6 grid gap-4 sm:grid-cols-2">
                   <button
                     onClick={() => setActiveTab('products')}
-                    className="flex items-start gap-4 rounded-lg border border-gray-200 p-4 text-left transition hover:border-[#172b3f] hover:bg-gray-50/50"
+                    className="flex items-start gap-4 rounded-lg border border-gray-200 p-4 text-left transition hover:border-[#104360] hover:bg-gray-50/50"
                   >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#172b3f] text-white">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#104360] text-white">
                       <Package size={20} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-[#172b3f]">
+                      <h4 className="text-sm font-semibold text-[#104360]">
                         Manage Products & SKUs
                       </h4>
                       <p className="mt-1 text-xs text-gray-500">
@@ -320,13 +320,13 @@ function AdminDashboard() {
 
                   <button
                     onClick={() => setActiveTab('banners')}
-                    className="flex items-start gap-4 rounded-lg border border-gray-200 p-4 text-left transition hover:border-[#172b3f] hover:bg-gray-50/50"
+                    className="flex items-start gap-4 rounded-lg border border-gray-200 p-4 text-left transition hover:border-[#104360] hover:bg-gray-50/50"
                   >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#c9a84c] text-[#172b3f]">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EF2034] text-[#104360]">
                       <Megaphone size={20} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-[#172b3f]">
+                      <h4 className="text-sm font-semibold text-[#104360]">
                         Edit Top Badge & Announcement
                       </h4>
                       <p className="mt-1 text-xs text-gray-500">

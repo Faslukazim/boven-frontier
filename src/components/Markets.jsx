@@ -3,14 +3,14 @@ import { ArrowUpRight, MapPin, Plane, Navigation } from 'lucide-react'
 
 function Markets() {
   return (
-    <section className="relative overflow-hidden bg-[#172b3f] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28">
+    <section className="relative overflow-hidden bg-[#0c354d] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28">
       <div className="mx-auto max-w-[1600px]">
         {/* =====================================================
             HEADER
         ===================================================== */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-white/10">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#c9a84c] mb-2">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#EF2034] mb-2">
               Logistics & Distribution
             </p>
             <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-white">
@@ -32,17 +32,17 @@ function Markets() {
         <div className="relative mt-12">
           {/* Middle Route Badge */}
           <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 items-center justify-center pointer-events-none">
-            <div className="flex items-center gap-2 rounded-full border border-white/15 bg-[#122334]/90 px-4 py-1.5 shadow-xl backdrop-blur-md">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#c9a84c]" />
+            <div className="flex items-center gap-2 rounded-full border border-white/15 bg-[#104360]/90 px-4 py-1.5 shadow-xl backdrop-blur-md">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#EF2034]" />
               <span className="text-[11px] font-medium tracking-wide text-white/90">
                 Direct Export Corridor
               </span>
-              <Navigation size={12} className="text-[#c9a84c] rotate-90" />
+              <Navigation size={12} className="text-[#EF2034] rotate-90" />
             </div>
           </div>
 
           {/* Route Connecting Line */}
-          <div className="hidden lg:block absolute left-[20%] right-[20%] top-1/2 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/30 to-transparent" />
+          <div className="hidden lg:block absolute left-[20%] right-[20%] top-1/2 h-px bg-gradient-to-r from-transparent via-[#EF2034]/30 to-transparent" />
 
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-0">
             {/* =================================================
@@ -55,11 +55,11 @@ function Markets() {
                     01
                   </span>
 
-                  <div className="mt-4 sm:mt-6 flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-colors group-hover:border-[#c9a84c]/50">
+                  <div className="mt-4 sm:mt-6 flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-colors group-hover:border-[#EF2034]/50">
                     <MapPin
                       size={18}
                       strokeWidth={1.75}
-                      className="text-[#c9a84c]"
+                      className="text-[#EF2034]"
                     />
                   </div>
                 </div>
@@ -74,7 +74,7 @@ function Markets() {
                 </div>
               </div>
 
-              <h3 className="mt-6 sm:mt-8 text-2xl sm:text-3xl font-semibold tracking-tight text-white group-hover:text-[#c9a84c] transition-colors">
+              <h3 className="mt-6 sm:mt-8 text-2xl sm:text-3xl font-semibold tracking-tight text-white group-hover:text-[#EF2034] transition-colors">
                 Domestic Supply Network
               </h3>
 
@@ -83,7 +83,7 @@ function Markets() {
               </p>
 
               <div className="mt-6 sm:mt-8 flex items-center gap-2 text-xs text-white/50">
-                <span className="h-1 w-1 rounded-full bg-[#c9a84c]" />
+                <span className="h-1 w-1 rounded-full bg-[#EF2034]" />
                 <span>Pan-India surface freight & dispatch</span>
               </div>
             </div>
@@ -98,17 +98,17 @@ function Markets() {
                     02
                   </span>
 
-                  <div className="mt-4 sm:mt-6 flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 bg-[#c9a84c]/10 transition-colors group-hover:border-[#c9a84c]">
+                  <div className="mt-4 sm:mt-6 flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 bg-[#EF2034]/10 transition-colors group-hover:border-[#EF2034]">
                     <Plane
                       size={18}
                       strokeWidth={1.75}
-                      className="text-[#c9a84c]"
+                      className="text-[#EF2034]"
                     />
                   </div>
                 </div>
 
                 <div className="text-right">
-                  <span className="block text-[11px] font-medium text-[#c9a84c] uppercase tracking-wider">
+                  <span className="block text-[11px] font-medium text-[#EF2034] uppercase tracking-wider">
                     Ocean & Air Freight
                   </span>
                   <span className="block text-xs font-medium text-white/80 mt-0.5">
@@ -117,7 +117,7 @@ function Markets() {
                 </div>
               </div>
 
-              <h3 className="mt-6 sm:mt-8 text-2xl sm:text-3xl font-semibold tracking-tight text-white group-hover:text-[#c9a84c] transition-colors">
+              <h3 className="mt-6 sm:mt-8 text-2xl sm:text-3xl font-semibold tracking-tight text-white group-hover:text-[#EF2034] transition-colors">
                 Middle East & GCC Export
               </h3>
 
@@ -128,7 +128,7 @@ function Markets() {
               <div className="mt-6 sm:mt-8">
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 text-xs font-medium text-white hover:text-[#c9a84c] transition-colors"
+                  className="inline-flex items-center gap-2 text-xs font-medium text-white hover:text-[#EF2034] transition-colors"
                 >
                   <span>Inquire for export container pricing</span>
                   <ArrowUpRight size={14} />

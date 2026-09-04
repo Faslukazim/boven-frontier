@@ -25,7 +25,7 @@ function ScrollProgress() {
       aria-hidden="true"
     >
       <div
-        className="h-full bg-gradient-to-r from-[#b08d2e] via-[#c9a84c] to-[#e4c979] transition-all duration-75 ease-out"
+        className="h-full bg-gradient-to-r from-[#104360] via-[#EF2034] to-[#EF2034] transition-all duration-75 ease-out"
         style={{ width: `${scrollWidth}%` }}
       />
     </div>

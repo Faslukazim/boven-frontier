@@ -170,10 +170,10 @@ function BannerManager() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-gray-200 pb-5">
         <div>
           <div className="flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#172b3f] text-[#c9a84c]">
+            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#104360] text-[#EF2034]">
               <Megaphone size={14} />
             </span>
-            <h2 className="text-xl font-bold tracking-tight text-[#172b3f]">
+            <h2 className="text-xl font-bold tracking-tight text-[#104360]">
               Top Announcement & Hero Badge
             </h2>
           </div>
@@ -197,7 +197,7 @@ function BannerManager() {
             href="/"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg bg-[#172b3f] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[#c9a84c] hover:text-[#172b3f] transition shadow-2xs"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-[#104360] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[#EF2034] hover:text-[#104360] transition shadow-2xs"
           >
             <Eye size={13} />
             View Live
@@ -211,7 +211,7 @@ function BannerManager() {
       <div className="rounded-2xl border border-gray-200/90 bg-white p-6 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Eye size={15} className="text-[#c9a84c]" />
+            <Eye size={15} className="text-[#EF2034]" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-700">
               Live Preview (As Seen on Website)
             </h3>
@@ -238,17 +238,17 @@ function BannerManager() {
             <div
               className={`flex flex-wrap items-center justify-between gap-3 rounded-lg px-4 py-2.5 text-xs transition-colors shadow-2xs ${
                 badgeForm.theme === 'gold'
-                  ? 'bg-[#c9a84c] text-[#172b3f]'
+                  ? 'bg-[#EF2034] text-[#104360]'
                   : badgeForm.theme === 'dark'
                   ? 'bg-gray-900 text-white'
-                  : 'bg-[#172b3f] text-white'
+                  : 'bg-[#104360] text-white'
               }`}
             >
               <div className="flex flex-1 items-center justify-center gap-2 text-center text-[11px] sm:text-xs min-w-0">
                 <Megaphone
                   size={13}
                   className={`shrink-0 ${
-                    badgeForm.theme === 'gold' ? 'text-[#172b3f]' : 'text-[#c9a84c]'
+                    badgeForm.theme === 'gold' ? 'text-[#104360]' : 'text-[#EF2034]'
                   }`}
                 />
                 <span className="font-bold truncate">
@@ -285,8 +285,8 @@ function BannerManager() {
           </p>
 
           <div className="rounded-lg bg-[#fbfbfa] border border-gray-200/80 p-4 flex items-center justify-start">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#c9a84c]/40 bg-[#fefbf3] px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#b08d2e] shadow-2xs">
-              <span className="h-2 w-2 rounded-full bg-[#c9a84c] animate-ping" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#EF2034]/40 bg-[#fefbf3] px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#EF2034] shadow-2xs">
+              <span className="h-2 w-2 rounded-full bg-[#EF2034] animate-ping" />
               {badgeForm.heroBadge || 'Manufactured in India · Direct Factory Supply'}
             </div>
           </div>
@@ -301,7 +301,7 @@ function BannerManager() {
         <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xs space-y-5">
           <div className="flex items-center justify-between border-b border-gray-100 pb-3">
             <div>
-              <h3 className="text-sm font-bold text-[#172b3f]">
+              <h3 className="text-sm font-bold text-[#104360]">
                 Top Announcement Bar Settings
               </h3>
               <p className="text-[11px] text-gray-500">
@@ -351,7 +351,7 @@ function BannerManager() {
                   setBadgeForm({ ...badgeForm, title: e.target.value })
                 }
                 placeholder="e.g. Direct Factory Wholesale · Manufactured in India · Export Ready to UAE, KSA, GCC"
-                className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-xs text-gray-900 outline-none focus:border-[#172b3f] focus:ring-1 focus:ring-[#172b3f]"
+                className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-xs text-gray-900 outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360]"
               />
               <p className="mt-1 text-[10px] text-gray-400">
                 Keep this clear and concise for maximum readability across mobile and desktop.
@@ -370,7 +370,7 @@ function BannerManager() {
                   setBadgeForm({ ...badgeForm, subtitle: e.target.value })
                 }
                 placeholder="e.g. Min. Order: 50 Cartons · Direct Factory Pricing"
-                className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-xs text-gray-900 outline-none focus:border-[#172b3f] focus:ring-1 focus:ring-[#172b3f]"
+                className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-xs text-gray-900 outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360]"
               />
               <p className="mt-1 text-[10px] text-gray-400">
                 Appears on tablet & desktop screens next to the headline.
@@ -390,7 +390,7 @@ function BannerManager() {
                     setBadgeForm({ ...badgeForm, ctaText: e.target.value })
                   }
                   placeholder="e.g. Export Desk, WhatsApp Us, Enquire Now"
-                  className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-xs text-gray-900 outline-none focus:border-[#172b3f] focus:ring-1 focus:ring-[#172b3f]"
+                  className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-xs text-gray-900 outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360]"
                 />
               </div>
 
@@ -405,7 +405,7 @@ function BannerManager() {
                     setBadgeForm({ ...badgeForm, ctaLink: e.target.value })
                   }
                   placeholder="e.g. https://wa.me/919207577242 or /contact"
-                  className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-xs text-gray-900 outline-none focus:border-[#172b3f] focus:ring-1 focus:ring-[#172b3f]"
+                  className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-xs text-gray-900 outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360]"
                 />
               </div>
             </div>
@@ -423,11 +423,11 @@ function BannerManager() {
                   onClick={() => setBadgeForm({ ...badgeForm, theme: 'navy' })}
                   className={`flex items-center gap-3 rounded-xl border p-3.5 text-left transition ${
                     badgeForm.theme === 'navy'
-                      ? 'border-[#172b3f] bg-slate-50 ring-2 ring-[#172b3f]/20'
+                      ? 'border-[#104360] bg-slate-50 ring-2 ring-[#104360]/20'
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <span className="h-6 w-6 rounded-full bg-[#172b3f] shadow-xs shrink-0 flex items-center justify-center text-white text-[10px]">
+                  <span className="h-6 w-6 rounded-full bg-[#104360] shadow-xs shrink-0 flex items-center justify-center text-white text-[10px]">
                     {badgeForm.theme === 'navy' && <Check size={12} />}
                   </span>
                   <div>
@@ -442,11 +442,11 @@ function BannerManager() {
                   onClick={() => setBadgeForm({ ...badgeForm, theme: 'gold' })}
                   className={`flex items-center gap-3 rounded-xl border p-3.5 text-left transition ${
                     badgeForm.theme === 'gold'
-                      ? 'border-[#c9a84c] bg-amber-50/50 ring-2 ring-[#c9a84c]/30'
+                      ? 'border-[#EF2034] bg-amber-50/50 ring-2 ring-[#EF2034]/30'
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  <span className="h-6 w-6 rounded-full bg-[#c9a84c] shadow-xs shrink-0 flex items-center justify-center text-[#172b3f] text-[10px]">
+                  <span className="h-6 w-6 rounded-full bg-[#EF2034] shadow-xs shrink-0 flex items-center justify-center text-[#104360] text-[10px]">
                     {badgeForm.theme === 'gold' && <Check size={12} />}
                   </span>
                   <div>
@@ -481,7 +481,7 @@ function BannerManager() {
         {/* SECTION 2: Hero Pill Badge */}
         <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xs space-y-4">
           <div className="border-b border-gray-100 pb-3">
-            <h3 className="text-sm font-bold text-[#172b3f]">
+            <h3 className="text-sm font-bold text-[#104360]">
               Homepage Hero Pill Badge
             </h3>
             <p className="text-[11px] text-gray-500">
@@ -501,7 +501,7 @@ function BannerManager() {
                 setBadgeForm({ ...badgeForm, heroBadge: e.target.value })
               }
               placeholder="e.g. Manufactured in India · Direct Factory Supply"
-              className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-xs text-gray-900 outline-none focus:border-[#172b3f] focus:ring-1 focus:ring-[#172b3f]"
+              className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-xs text-gray-900 outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360]"
             />
             <p className="mt-1 text-[10px] text-gray-400">
               Keep &ldquo;Manufactured in India&rdquo; prominent to comply with export and branding standards.
@@ -512,13 +512,13 @@ function BannerManager() {
         {/* Save Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl bg-gray-50 border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-xs text-gray-600">
-            <Sparkles size={16} className="text-[#c9a84c] shrink-0" />
+            <Sparkles size={16} className="text-[#EF2034] shrink-0" />
             <span>Changes take effect immediately across all site visitors once saved.</span>
           </div>
 
           <button
             type="submit"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-[#172b3f] px-6 py-3 text-xs font-bold uppercase tracking-wider text-white shadow-sm hover:bg-[#c9a84c] hover:text-[#172b3f] transition"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-[#104360] px-6 py-3 text-xs font-bold uppercase tracking-wider text-white shadow-sm hover:bg-[#EF2034] hover:text-[#104360] transition"
           >
             <Check size={16} />
             Save & Publish to Website
@@ -532,7 +532,7 @@ function BannerManager() {
       <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-sm font-bold text-[#172b3f]">
+            <h3 className="text-sm font-bold text-[#104360]">
               Additional Promotional Banners
             </h3>
             <p className="text-[11px] text-gray-500">
@@ -555,7 +555,7 @@ function BannerManager() {
               <button
                 type="button"
                 onClick={handleOpenAddPromo}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-[#172b3f] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[#c9a84c] hover:text-[#172b3f] transition"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-[#104360] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[#EF2034] hover:text-[#104360] transition"
               >
                 <Plus size={14} />
                 Create New Banner
@@ -630,7 +630,7 @@ function BannerManager() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
           <div className="relative w-full max-w-md rounded-2xl bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 bg-[#f8f9fa]">
-              <h3 className="font-bold text-sm text-[#172b3f]">
+              <h3 className="font-bold text-sm text-[#104360]">
                 {editingPromo ? 'Edit Promotional Banner' : 'Create New Promotional Banner'}
               </h3>
               <button
@@ -654,7 +654,7 @@ function BannerManager() {
                     setPromoForm({ ...promoForm, title: e.target.value })
                   }
                   placeholder="e.g. Private Label Bottling Available"
-                  className="w-full rounded-lg border border-gray-300 p-2.5 text-xs outline-none focus:border-[#172b3f]"
+                  className="w-full rounded-lg border border-gray-300 p-2.5 text-xs outline-none focus:border-[#104360]"
                 />
               </div>
 
@@ -669,7 +669,7 @@ function BannerManager() {
                     setPromoForm({ ...promoForm, subtitle: e.target.value })
                   }
                   placeholder="e.g. Container-load dispatch direct from India manufacturing plant..."
-                  className="w-full rounded-lg border border-gray-300 p-2.5 text-xs outline-none focus:border-[#172b3f]"
+                  className="w-full rounded-lg border border-gray-300 p-2.5 text-xs outline-none focus:border-[#104360]"
                 />
               </div>
 
@@ -684,7 +684,7 @@ function BannerManager() {
                     onChange={(e) =>
                       setPromoForm({ ...promoForm, ctaText: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 p-2 text-xs outline-none focus:border-[#172b3f]"
+                    className="w-full rounded-lg border border-gray-300 p-2 text-xs outline-none focus:border-[#104360]"
                   />
                 </div>
                 <div>
@@ -697,7 +697,7 @@ function BannerManager() {
                     onChange={(e) =>
                       setPromoForm({ ...promoForm, ctaLink: e.target.value })
                     }
-                    className="w-full rounded-lg border border-gray-300 p-2 text-xs outline-none focus:border-[#172b3f]"
+                    className="w-full rounded-lg border border-gray-300 p-2 text-xs outline-none focus:border-[#104360]"
                   />
                 </div>
               </div>
@@ -712,7 +712,7 @@ function BannerManager() {
                 </button>
                 <button
                   type="submit"
-                  className="rounded-lg bg-[#172b3f] px-5 py-2 text-xs font-semibold text-white hover:bg-[#c9a84c] hover:text-[#172b3f]"
+                  className="rounded-lg bg-[#104360] px-5 py-2 text-xs font-semibold text-white hover:bg-[#EF2034] hover:text-[#104360]"
                 >
                   {editingPromo ? 'Save Changes' : 'Create Banner'}
                 </button>
@@ -772,7 +772,7 @@ function BannerManager() {
               </button>
               <button
                 onClick={handleResetBadge}
-                className="rounded-lg bg-[#172b3f] px-4 py-1.5 text-xs font-semibold text-white hover:bg-[#c9a84c] hover:text-[#172b3f]"
+                className="rounded-lg bg-[#104360] px-4 py-1.5 text-xs font-semibold text-white hover:bg-[#EF2034] hover:text-[#104360]"
               >
                 Restore Defaults
               </button>

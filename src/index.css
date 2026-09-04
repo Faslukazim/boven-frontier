@@ -2,14 +2,15 @@
 @import "tailwindcss";
 
 :root {
-  --navy: #1A2E44;
-  --gold: #C9A84C;
+  --navy: #104360;
+  --red: #EF2034;
+  --charcoal: #4D4B4C;
   --white: #FFFFFF;
   --surface: #F8F9FA;
   --border: #E9ECEF;
-  --text: #0F172A;
-  --second: #475569;
-  --muted: #435466;
+  --text: #104360;
+  --second: #4D4B4C;
+  --muted: #595758;
   --success: #16A34A;
 }
 
@@ -34,11 +35,11 @@ body {
   background: #f8f9fa;
 }
 ::-webkit-scrollbar-thumb {
-  background: #172b3f;
+  background: #104360;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #c9a84c;
+  background: #EF2034;
 }
 
 /* Scroll Reveal Utilities */
@@ -130,7 +131,7 @@ body {
 .products-section {
   position: relative;
   background: #ffffff;
-  color: #172b3f;
+  color: #104360;
   padding: clamp(90px, 11vw, 180px) 0;
   overflow: hidden;
 }
@@ -164,7 +165,7 @@ body {
 
   margin-bottom: 30px;
 
-  color: rgba(23, 43, 63, 0.45);
+  color: rgba(16, 67, 96, 0.45);
 
   font-size: 9px;
   font-weight: 600;
@@ -175,7 +176,7 @@ body {
 .products-eyebrow span {
   width: 34px;
   height: 1px;
-  background: #c9a84c;
+  background: #EF2034;
   flex-shrink: 0;
 }
 
@@ -184,7 +185,7 @@ body {
 
   max-width: 850px;
 
-  color: #172b3f;
+  color: #104360;
 
   font-size: clamp(3.4rem, 6.2vw, 7rem);
   font-weight: 500;
@@ -204,7 +205,7 @@ body {
 .products-intro p {
   margin: 0;
 
-  color: rgba(23, 43, 63, 0.58);
+  color: rgba(16, 67, 96, 0.58);
 
   font-size: 14px;
   line-height: 1.8;
@@ -219,7 +220,7 @@ body {
   width: 1px;
   height: 46px;
 
-  background: #c9a84c;
+  background: #EF2034;
 }
 
 
@@ -285,17 +286,17 @@ body {
   width: 0;
   height: 2px;
 
-  background: #c9a84c;
+  background: #EF2034;
 
   transition: width 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .products-brand-button:hover {
-  color: #172b3f;
+  color: #104360;
 }
 
 .products-brand-button.is-active {
-  color: #172b3f;
+  color: #104360;
 }
 
 .products-brand-button.is-active::after {
@@ -451,7 +452,7 @@ body {
 
   background: rgba(255, 255, 255, 0.85);
 
-  color: #172b3f;
+  color: #104360;
 
   opacity: 0;
 
@@ -469,7 +470,7 @@ body {
 }
 
 .product-card-arrow:hover {
-  background: #172b3f;
+  background: #104360;
   color: white;
 }
 
@@ -491,7 +492,7 @@ body {
 .product-category {
   margin: 0 0 6px;
 
-  color: #c9a84c;
+  color: #EF2034;
 
   font-size: 8px;
   font-weight: 600;
@@ -503,7 +504,7 @@ body {
 .product-name {
   margin: 0;
 
-  color: #172b3f;
+  color: #104360;
 
   font-size: clamp(18px, 1.6vw, 23px);
   font-weight: 500;
@@ -516,7 +517,7 @@ body {
 
   padding-top: 2px;
 
-  color: rgba(23, 43, 63, 0.32);
+  color: rgba(16, 67, 96, 0.32);
 
   font-size: 8px;
   font-weight: 500;
@@ -537,13 +538,13 @@ body {
   margin-top: 100px;
   padding-top: 22px;
 
-  border-top: 1px solid rgba(23, 43, 63, 0.1);
+  border-top: 1px solid rgba(16, 67, 96, 0.1);
 }
 
 .products-bottom p {
   margin: 0;
 
-  color: rgba(23, 43, 63, 0.3);
+  color: rgba(16, 67, 96, 0.3);
 
   font-size: 8px;
   font-weight: 500;
@@ -555,7 +556,7 @@ body {
   align-items: center;
   gap: 14px;
 
-  color: #172b3f;
+  color: #104360;
 
   text-decoration: none;
 
@@ -573,7 +574,7 @@ body {
   width: 40px;
   height: 40px;
 
-  border: 1px solid rgba(23, 43, 63, 0.18);
+  border: 1px solid rgba(16, 67, 96, 0.18);
   border-radius: 50%;
 
   transition:
@@ -582,7 +583,7 @@ body {
 }
 
 .products-enquire:hover .products-enquire-icon {
-  background: #172b3f;
+  background: #104360;
   color: #ffffff;
 }
 

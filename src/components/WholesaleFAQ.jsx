@@ -37,19 +37,19 @@ export default function WholesaleFAQ() {
   }
 
   return (
-    <section className="bg-white py-16 sm:py-24 border-t border-[#172b3f]/10">
+    <section className="bg-white py-16 sm:py-24 border-t border-[#104360]/10">
       <div className="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-16">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16 items-start">
           {/* Left Column: Heading & Support Desk */}
           <div className="lg:col-span-4">
             <div className="flex items-center gap-2 mb-2">
-              <HelpCircle size={16} className="text-[#b08d2e]" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e]">
+              <HelpCircle size={16} className="text-[#EF2034]" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#EF2034]">
                 Wholesale Knowledge Base
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#172b3f] leading-tight">
+            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#104360] leading-tight">
               Frequently Asked Questions for B2B Buyers.
             </h2>
 
@@ -57,11 +57,11 @@ export default function WholesaleFAQ() {
               Find quick answers regarding our minimum order volumes, private label capabilities, international shipping corridors, and compliance standards.
             </p>
 
-            <div className="mt-8 rounded-xl border border-[#172b3f]/10 bg-[#f8f8f6] p-6">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#172b3f]">
+            <div className="mt-8 rounded-xl border border-[#104360]/10 bg-[#f4f7f9] p-6">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#104360]">
                 Need a Custom Formulation or Pricing?
               </h3>
-              <p className="mt-2 text-xs text-[#172b3f]/70 leading-relaxed">
+              <p className="mt-2 text-xs text-[#4D4B4C] leading-relaxed">
                 Speak directly with our B2B Export Desk for custom container pricing, bulk drums (20L/200L), and OEM packaging schedules.
               </p>
 
@@ -78,7 +78,7 @@ export default function WholesaleFAQ() {
 
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-[#172b3f]/20 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#172b3f] hover:bg-gray-50 transition"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-[#104360]/20 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#104360] hover:border-[#EF2034] hover:text-[#EF2034] transition"
                 >
                   Contact Form
                   <ArrowUpRight size={13} />
@@ -88,7 +88,7 @@ export default function WholesaleFAQ() {
           </div>
 
           {/* Right Column: Accordion Items */}
-          <div className="lg:col-span-8 divide-y divide-[#172b3f]/10 rounded-xl border border-[#172b3f]/10 bg-white overflow-hidden shadow-xs">
+          <div className="lg:col-span-8 divide-y divide-[#104360]/10 rounded-xl border border-[#104360]/10 bg-white overflow-hidden shadow-xs">
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index
               return (
@@ -98,12 +98,12 @@ export default function WholesaleFAQ() {
                     onClick={() => toggle(index)}
                     className="flex w-full items-center justify-between gap-4 p-5 sm:p-6 text-left hover:bg-gray-50/70 transition"
                   >
-                    <span className="text-sm sm:text-base font-semibold text-[#172b3f]">
+                    <span className="text-sm sm:text-base font-semibold text-[#104360]">
                       {faq.q}
                     </span>
                     <span
                       className={`shrink-0 flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 text-gray-500 transition-transform duration-300 ${
-                        isOpen ? 'rotate-180 bg-[#172b3f] text-white border-[#172b3f]' : ''
+                        isOpen ? 'rotate-180 bg-[#104360] text-white border-[#104360]' : ''
                       }`}
                     >
                       <ChevronDown size={15} />
@@ -111,7 +111,7 @@ export default function WholesaleFAQ() {
                   </button>
 
                   {isOpen && (
-                    <div className="px-5 pb-6 sm:px-6 text-xs sm:text-sm leading-relaxed text-[#172b3f]/75 border-t border-gray-100 bg-gray-50/40 animate-in fade-in duration-200">
+                    <div className="px-5 pb-6 sm:px-6 text-xs sm:text-sm leading-relaxed text-[#4D4B4C] border-t border-gray-100 bg-gray-50/40 animate-in fade-in duration-200">
                       {faq.a}
                     </div>
                   )}

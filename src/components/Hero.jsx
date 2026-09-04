@@ -135,7 +135,7 @@ function Hero() {
   return (
     <section
       ref={heroSectionRef}
-      className="relative overflow-hidden bg-white text-[#172b3f]"
+      className="relative overflow-hidden bg-white text-[#104360]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -149,13 +149,13 @@ function Hero() {
         <div className="grid min-h-0 lg:min-h-[calc(100svh-90px)] grid-cols-1 lg:grid-cols-12 items-center gap-8 lg:gap-12 py-6 sm:py-10 lg:py-6">
           {/* LEFT: MINIMAL EDITORIAL TEXT */}
           <div className="lg:col-span-7 flex flex-col justify-center">
-            {/* Simple, understated eyebrow */}
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-2 sm:mb-3">
+            {/* Simple, understated eyebrow in Brand Red */}
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#EF2034] mb-2 sm:mb-3">
               Manufactured in India · Factory Direct
             </p>
 
-            {/* Clean, confident headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-[3.6rem] font-medium tracking-tight text-[#172b3f] leading-[1.08] max-w-2xl">
+            {/* Clean, confident headline in Brand Deep Blue */}
+            <h1 className="text-3xl sm:text-5xl lg:text-[3.6rem] font-medium tracking-tight text-[#104360] leading-[1.08] max-w-2xl">
               Direct-from-factory cleaning solutions.
             </h1>
 
@@ -173,7 +173,7 @@ function Hero() {
             <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-3.5">
               <a
                 href="#products"
-                className="inline-flex items-center gap-2 rounded-lg bg-[#172b3f] px-5 sm:px-6 py-2.5 sm:py-3 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-black shadow-xs"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#104360] px-5 sm:px-6 py-2.5 sm:py-3 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-[#EF2034] shadow-xs"
               >
                 <span>Explore Products</span>
                 <ArrowUpRight size={14} />
@@ -181,7 +181,7 @@ function Hero() {
 
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 sm:px-6 py-2.5 sm:py-3 text-xs font-semibold uppercase tracking-wider text-[#172b3f] transition hover:border-[#172b3f] shadow-2xs"
+                className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 sm:px-6 py-2.5 sm:py-3 text-xs font-semibold uppercase tracking-wider text-[#104360] transition hover:border-[#104360] hover:text-[#EF2034] shadow-2xs"
               >
                 Wholesale Enquiry
               </Link>
@@ -212,7 +212,7 @@ function Hero() {
             <div className="relative flex h-[280px] sm:h-[360px] lg:h-[420px] w-full items-center justify-center overflow-hidden lg:overflow-visible">
               {/* Soft, neutral circular pedestal */}
               <div
-                className="absolute left-1/2 top-1/2 w-64 h-64 sm:w-80 sm:h-80 lg:w-[390px] lg:h-[390px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f6f6f3] transition-transform duration-300 ease-out"
+                className="absolute left-1/2 top-1/2 w-64 h-64 sm:w-80 sm:h-80 lg:w-[390px] lg:h-[390px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#f4f7f9] transition-transform duration-300 ease-out"
                 style={{
                   transform: `translate(calc(-50% + ${parallax.x * 16}px), calc(-50% + ${parallax.y * 16}px))`,
                 }}
@@ -242,14 +242,14 @@ function Hero() {
               <button
                 onClick={handlePrev}
                 aria-label="Previous product"
-                className="absolute left-1 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-sm transition hover:bg-white sm:hidden"
+                className="absolute left-1 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-[#104360] shadow-sm transition hover:bg-white sm:hidden"
               >
                 <ChevronLeft size={16} />
               </button>
               <button
                 onClick={handleNext}
                 aria-label="Next product"
-                className="absolute right-1 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-sm transition hover:bg-white sm:hidden"
+                className="absolute right-1 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-[#104360] shadow-sm transition hover:bg-white sm:hidden"
               >
                 <ChevronRight size={16} />
               </button>
@@ -258,7 +258,7 @@ function Hero() {
             {/* PRODUCT TITLE & SLIDE INDICATOR (CLEAN & SUBTLE) */}
             <div className="w-full max-w-[360px] mt-2 flex items-center justify-between border-t border-gray-100 pt-3 text-left">
               <div>
-                <p className="text-xs font-semibold text-gray-900 truncate">
+                <p className="text-xs font-semibold text-[#104360] truncate">
                   {activeProduct.name}
                 </p>
                 <p className="text-[11px] text-gray-400">
@@ -276,8 +276,8 @@ function Hero() {
                     onClick={() => changeProduct(index)}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
                       index === safeIndex
-                        ? 'w-5 bg-[#172b3f]'
-                        : 'w-1.5 bg-gray-200 hover:bg-gray-400'
+                        ? 'w-5 bg-[#104360]'
+                        : 'w-1.5 bg-gray-200 hover:bg-[#EF2034]'
                     }`}
                   />
                 ))}

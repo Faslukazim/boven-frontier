@@ -17,7 +17,7 @@ function Footer() {
   }
 
   return (
-    <footer className="bg-[#172b3f] text-white">
+    <footer className="bg-[#104360] text-white">
       <div className="mx-auto max-w-[1600px] px-6 sm:px-10 lg:px-16">
         {/* =====================================================
             TOP NEWSLETTER / WHOLESALE CATALOG SIGNUP
@@ -25,7 +25,7 @@ function Footer() {
         <div className="border-b border-white/10 py-12">
           <div className="grid gap-6 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-6">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#c9a84c]">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#EF2034]">
                 B2B Price List & SKU Bulletins
               </span>
               <h3 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight">
@@ -50,11 +50,11 @@ function Footer() {
                     placeholder="Enter distributor / company email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-xs text-white placeholder-white/40 focus:border-[#c9a84c] focus:outline-hidden"
+                    className="flex-1 rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-xs text-white placeholder-white/40 focus:border-[#EF2034] focus:outline-hidden"
                   />
                   <button
                     type="submit"
-                    className="rounded-lg bg-[#c9a84c] px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#172b3f] hover:bg-white transition whitespace-nowrap shadow-xs"
+                    className="rounded-lg bg-[#EF2034] px-6 py-3 text-xs font-bold uppercase tracking-wider text-white hover:bg-white hover:text-[#104360] transition whitespace-nowrap shadow-xs"
                   >
                     Subscribe
                   </button>
@@ -83,7 +83,7 @@ function Footer() {
                 <p className="text-[13px] font-bold tracking-[0.08em]">
                   BOVEN FRONTIER
                 </p>
-                <p className="mt-0.5 text-[8px] font-semibold tracking-[0.25em] text-[#c9a84c]">
+                <p className="mt-0.5 text-[8px] font-semibold tracking-[0.25em] text-[#EF2034]">
                   INTERNATIONAL LLP · REG: ACE-5349
                 </p>
               </div>
@@ -94,7 +94,7 @@ function Footer() {
             </p>
 
             <div className="mt-6 rounded-lg border border-white/10 bg-white/5 p-4 text-xs">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-[#c9a84c]">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-[#EF2034]">
                 Operations & Facility
               </p>
               <p className="mt-1 text-white/80">
@@ -108,7 +108,7 @@ function Footer() {
 
           {/* CATALOG */}
           <div className="lg:col-span-2">
-            <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#c9a84c]">
+            <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#EF2034]">
               Product Catalog
             </p>
 
@@ -133,7 +133,7 @@ function Footer() {
 
           {/* B2B SERVICES */}
           <div className="lg:col-span-3">
-            <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#c9a84c]">
+            <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#EF2034]">
               Wholesale Services
             </p>
 
@@ -158,7 +158,7 @@ function Footer() {
 
           {/* EXPORT DESK CONTACT */}
           <div className="lg:col-span-3">
-            <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#c9a84c]">
+            <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#EF2034]">
               B2B Export Desk
             </p>
 
@@ -208,7 +208,7 @@ function Footer() {
 
           <div className="flex items-center justify-center gap-4">
             <span>Incoterms: FOB Indian Ports · CIF Jebel Ali / Dammam</span>
-            <span className="h-1 w-1 rounded-full bg-[#c9a84c]" />
+            <span className="h-1 w-1 rounded-full bg-[#EF2034]" />
             <span>T/T & L/C Accepted</span>
           </div>
         </div>

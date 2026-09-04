@@ -4,12 +4,12 @@ import Footer from '../components/Footer'
 
 function Contact() {
   return (
-    <main className="bg-white text-[#172b3f]">
+    <main className="bg-white text-[#104360]">
       {/* Contact Header */}
-      <section className="bg-[#172b3f] px-6 py-20 text-white sm:py-24">
+      <section className="bg-[#104360] px-6 py-20 text-white sm:py-24">
         <div className="mx-auto max-w-[1600px] px-2 sm:px-10">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#c9a84c]">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#EF2034]">
               Direct Communication
             </span>
           </div>
@@ -28,7 +28,7 @@ function Contact() {
       <section className="border-b border-gray-200 bg-[#f8f9fa] py-12 px-6 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-[1600px] grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex items-start gap-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white shadow-xs border border-gray-200 text-[#c9a84c]">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white shadow-xs border border-gray-200 text-[#EF2034]">
               <MapPin size={18} />
             </div>
             <div>
@@ -42,7 +42,7 @@ function Contact() {
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white shadow-xs border border-gray-200 text-[#c9a84c]">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white shadow-xs border border-gray-200 text-[#EF2034]">
               <Phone size={18} />
             </div>
             <div>
@@ -58,7 +58,7 @@ function Contact() {
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white shadow-xs border border-gray-200 text-[#c9a84c]">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white shadow-xs border border-gray-200 text-[#EF2034]">
               <Mail size={18} />
             </div>
             <div>
@@ -74,7 +74,7 @@ function Contact() {
           </div>
 
           <div className="flex items-start gap-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white shadow-xs border border-gray-200 text-[#c9a84c]">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white shadow-xs border border-gray-200 text-[#EF2034]">
               <ShieldCheck size={18} />
             </div>
             <div>

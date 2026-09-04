@@ -150,17 +150,17 @@ function ProductManager() {
       {/* Top Header & Actions */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-xl font-medium tracking-tight text-[#172b3f]">
+          <h2 className="text-xl font-medium tracking-tight text-[#104360]">
             Product Catalog
           </h2>
-          <p className="text-xs text-[#172b3f]/60">
+          <p className="text-xs text-[#104360]/60">
             {products.length} total SKUs across {uniqueBrands.length - 1} brands.
           </p>
         </div>
 
         <button
           onClick={handleOpenAdd}
-          className="inline-flex items-center justify-center gap-2 bg-[#172b3f] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-[#c9a84c] hover:text-[#172b3f]"
+          className="inline-flex items-center justify-center gap-2 bg-[#104360] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-[#EF2034] hover:text-[#104360]"
         >
           <Plus size={15} />
           Add Product
@@ -179,7 +179,7 @@ function ProductManager() {
             placeholder="Search by product name, brand or keyword..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full border border-gray-200 py-2 pl-9 pr-3 text-xs outline-none focus:border-[#172b3f]"
+            className="w-full border border-gray-200 py-2 pl-9 pr-3 text-xs outline-none focus:border-[#104360]"
           />
         </div>
 
@@ -187,7 +187,7 @@ function ProductManager() {
           <select
             value={selectedBrand}
             onChange={(e) => setSelectedBrand(e.target.value)}
-            className="w-full border border-gray-200 py-2 px-3 text-xs outline-none focus:border-[#172b3f]"
+            className="w-full border border-gray-200 py-2 px-3 text-xs outline-none focus:border-[#104360]"
           >
             {uniqueBrands.map((b) => (
               <option key={b} value={b}>
@@ -201,7 +201,7 @@ function ProductManager() {
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full border border-gray-200 py-2 px-3 text-xs outline-none focus:border-[#172b3f]"
+            className="w-full border border-gray-200 py-2 px-3 text-xs outline-none focus:border-[#104360]"
           >
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>
@@ -216,7 +216,7 @@ function ProductManager() {
       <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
         {/* Desktop View */}
         <div className="hidden md:block overflow-x-auto">
-          <table className="w-full text-left text-xs text-[#172b3f]">
+          <table className="w-full text-left text-xs text-[#104360]">
             <thead className="border-b border-gray-200 bg-[#f8f9fa] text-[9px] uppercase tracking-wider text-gray-500">
               <tr>
                 <th className="py-3.5 pl-4 pr-2">Product</th>
@@ -262,7 +262,7 @@ function ProductManager() {
                       </span>
                     </td>
                     <td className="px-3 py-3">
-                      <span className="text-[10px] font-medium text-[#b08d2e]">
+                      <span className="text-[10px] font-medium text-[#EF2034]">
                         {product.category}
                       </span>
                     </td>
@@ -293,7 +293,7 @@ function ProductManager() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => handleOpenEdit(product)}
-                          className="rounded p-1.5 text-gray-500 transition hover:bg-gray-100 hover:text-[#172b3f]"
+                          className="rounded p-1.5 text-gray-500 transition hover:bg-gray-100 hover:text-[#104360]"
                           title="Edit Product"
                         >
                           <Edit2 size={14} />
@@ -333,7 +333,7 @@ function ProductManager() {
                       />
                     </div>
                     <div>
-                      <span className="inline-block text-[8px] font-bold uppercase tracking-wider text-[#b08d2e]">
+                      <span className="inline-block text-[8px] font-bold uppercase tracking-wider text-[#EF2034]">
                         {product.brand} · {product.category}
                       </span>
                       <h4 className="font-medium text-sm text-gray-900">
@@ -392,8 +392,8 @@ function ProductManager() {
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/60 p-4 backdrop-blur-xs">
           <div className="relative w-full max-w-2xl rounded-xl bg-white shadow-2xl overflow-hidden my-8">
             <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 bg-[#f8f9fa]">
-              <div className="flex items-center gap-2 text-[#172b3f]">
-                <Layers size={18} className="text-[#c9a84c]" />
+              <div className="flex items-center gap-2 text-[#104360]">
+                <Layers size={18} className="text-[#EF2034]" />
                 <h3 className="font-medium text-sm sm:text-base">
                   {editingProduct ? 'Edit Product' : 'Add New Product'}
                 </h3>
@@ -409,7 +409,7 @@ function ProductManager() {
             <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1">
+                  <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1">
                     Brand Name *
                   </label>
                   <input
@@ -421,7 +421,7 @@ function ProductManager() {
                     }
                     placeholder="LEXONE, FABIE PLUS, KARE..."
                     list="brand-suggestions"
-                    className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#172b3f]"
+                    className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#104360]"
                   />
                   <datalist id="brand-suggestions">
                     {DEFAULT_BRANDS.map((b) => (
@@ -431,7 +431,7 @@ function ProductManager() {
                 </div>
 
                 <div>
-                  <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1">
+                  <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1">
                     Category *
                   </label>
                   <select
@@ -439,7 +439,7 @@ function ProductManager() {
                     onChange={(e) =>
                       setFormData({ ...formData, category: e.target.value })
                     }
-                    className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#172b3f]"
+                    className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#104360]"
                   >
                     {CATEGORIES.filter((c) => c !== 'ALL').map((c) => (
                       <option key={c} value={c}>
@@ -451,7 +451,7 @@ function ProductManager() {
               </div>
 
               <div>
-                <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1">
+                <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1">
                   Product Name *
                 </label>
                 <input
@@ -462,12 +462,12 @@ function ProductManager() {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   placeholder="e.g. Liquid Detergent, Glass Cleaner..."
-                  className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#172b3f]"
+                  className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#104360]"
                 />
               </div>
 
               <div>
-                <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1">
+                <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1">
                   Tagline / Highlights
                 </label>
                 <input
@@ -477,12 +477,12 @@ function ProductManager() {
                     setFormData({ ...formData, tagline: e.target.value })
                   }
                   placeholder="e.g. Concentrated low-suds formulation"
-                  className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#172b3f]"
+                  className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#104360]"
                 />
               </div>
 
               <div>
-                <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1">
+                <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1">
                   Description
                 </label>
                 <textarea
@@ -492,12 +492,12 @@ function ProductManager() {
                     setFormData({ ...formData, description: e.target.value })
                   }
                   placeholder="Detailed product information for distributors and buyers..."
-                  className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#172b3f]"
+                  className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#104360]"
                 />
               </div>
 
               <div>
-                <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70 mb-1">
+                <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1">
                   Sizes / Variants (comma separated)
                 </label>
                 <input
@@ -507,13 +507,13 @@ function ProductManager() {
                     setFormData({ ...formData, variants: e.target.value })
                   }
                   placeholder="250 ml, 500 ml, 1 L, 5 L"
-                  className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#172b3f]"
+                  className="w-full border border-gray-200 p-2.5 text-xs outline-none focus:border-[#104360]"
                 />
               </div>
 
               {/* Image Configuration */}
               <div className="border-t border-gray-100 pt-4 space-y-3">
-                <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/70">
+                <label className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70">
                   Product Image
                 </label>
 
@@ -536,7 +536,7 @@ function ProductManager() {
                         setFormData({ ...formData, image: e.target.value })
                       }
                       placeholder="Paste image URL or upload below..."
-                      className="w-full border border-gray-200 p-2 text-xs outline-none focus:border-[#172b3f]"
+                      className="w-full border border-gray-200 p-2 text-xs outline-none focus:border-[#104360]"
                     />
 
                     <div className="flex items-center gap-2">
@@ -575,7 +575,7 @@ function ProductManager() {
                         is_featured: e.target.checked,
                       })
                     }
-                    className="h-4 w-4 rounded border-gray-300 text-[#172b3f] focus:ring-[#172b3f]"
+                    className="h-4 w-4 rounded border-gray-300 text-[#104360] focus:ring-[#104360]"
                   />
                   <span>Feature on Hero Carousel</span>
                 </label>
@@ -590,7 +590,7 @@ function ProductManager() {
                         in_stock: e.target.checked,
                       })
                     }
-                    className="h-4 w-4 rounded border-gray-300 text-[#172b3f] focus:ring-[#172b3f]"
+                    className="h-4 w-4 rounded border-gray-300 text-[#104360] focus:ring-[#104360]"
                   />
                   <span>In Stock</span>
                 </label>
@@ -606,7 +606,7 @@ function ProductManager() {
                 </button>
                 <button
                   type="submit"
-                  className="bg-[#172b3f] px-6 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:bg-[#c9a84c] hover:text-[#172b3f]"
+                  className="bg-[#104360] px-6 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:bg-[#EF2034] hover:text-[#104360]"
                 >
                   {editingProduct ? 'Save Changes' : 'Create Product'}
                 </button>

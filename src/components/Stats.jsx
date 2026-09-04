@@ -59,7 +59,7 @@ function Stats() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#172b3f] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-24"
+      className="relative overflow-hidden bg-[#104360] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-24"
     >
       <div className="mx-auto max-w-[1600px]">
         {/* =====================================================
@@ -67,7 +67,7 @@ function Stats() {
         ===================================================== */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-white/10">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#c9a84c] mb-2">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#EF2034] mb-2">
               At a glance
             </p>
             <h2 className="text-2xl sm:text-4xl font-medium tracking-tight text-white">
@@ -93,8 +93,9 @@ function Stats() {
                 className="py-6 sm:py-8 px-4 sm:px-6 first:pl-0"
               >
                 {/* Number with Counter */}
-                <div className="text-3xl sm:text-5xl font-light tracking-tight text-[#c9a84c]">
+                <div className="text-3xl sm:text-5xl font-light tracking-tight text-white flex items-baseline gap-1">
                   <AnimatedCounter target={stat.num} isVisible={isVisible} />
+                  <span className="text-lg font-bold text-[#EF2034]">+</span>
                 </div>
 
                 {/* Label */}
@@ -114,13 +115,13 @@ function Stats() {
         <div className="hidden sm:flex mt-10 flex-col gap-4 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-md text-[9px] uppercase leading-5 tracking-[0.25em] text-white/30">
             Cleaning solutions
-            <span className="mx-2 text-[#c9a84c]">·</span>
+            <span className="mx-2 text-[#EF2034]">·</span>
             Manufactured in India
           </p>
 
           <p className="text-[9px] uppercase tracking-[0.25em] text-white/30">
             India
-            <span className="mx-2 text-[#c9a84c]">·</span>
+            <span className="mx-2 text-[#EF2034]">·</span>
             Middle East
           </p>
         </div>

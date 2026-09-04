@@ -42,7 +42,7 @@ export default function TrustMarquee() {
   ]
 
   return (
-    <div className="border-y border-gray-200/70 bg-[#fafaf9] py-8 text-[#172b3f]">
+    <div className="border-y border-gray-200/70 bg-[#fafaf9] py-8 text-[#104360]">
       <div className="mx-auto max-w-[1600px] px-6 sm:px-10 lg:px-16">
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6 lg:gap-8">
           {trustPoints.map((item, index) => {
@@ -54,10 +54,10 @@ export default function TrustMarquee() {
                   index >= 4 ? 'hidden sm:flex' : 'flex'
                 }`}
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white border border-gray-200/80 text-[#b08d2e] shadow-2xs transition-transform duration-300 group-hover:scale-105 group-hover:border-[#b08d2e]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white border border-gray-200/80 text-[#EF2034] shadow-2xs transition-transform duration-300 group-hover:scale-105 group-hover:border-[#EF2034]">
                   <Icon size={18} strokeWidth={1.75} />
                 </div>
-                <h4 className="mt-3 text-xs font-semibold text-[#172b3f]">
+                <h4 className="mt-3 text-xs font-semibold text-[#104360]">
                   {item.title}
                 </h4>
                 <p className="mt-1 text-[11px] leading-relaxed text-gray-500">

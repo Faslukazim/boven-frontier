@@ -34,12 +34,12 @@ function About() {
   ]
 
   return (
-    <main className="bg-white text-[#172b3f]">
+    <main className="bg-white text-[#104360]">
       {/* Hero Banner */}
-      <section className="bg-[#172b3f] px-6 py-20 sm:py-28 text-white">
+      <section className="bg-[#104360] px-6 py-20 sm:py-28 text-white">
         <div className="mx-auto max-w-[1600px] px-2 sm:px-10">
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-xs font-semibold tracking-wider uppercase text-[#c9a84c]">
+            <span className="text-xs font-semibold tracking-wider uppercase text-[#EF2034]">
               About Boven Frontier International LLP
             </span>
           </div>
@@ -47,7 +47,7 @@ function About() {
           <h1 className="max-w-3xl text-3xl sm:text-5xl font-semibold tracking-tight leading-tight">
             Manufactured in India.
             <br />
-            <span className="text-[#c9a84c]">Built for global standards.</span>
+            <span className="text-[#EF2034]">Built for global standards.</span>
           </h1>
 
           <p className="mt-6 max-w-2xl text-xs sm:text-sm leading-relaxed text-white/70">
@@ -60,11 +60,11 @@ function About() {
       <section className="mx-auto max-w-[1600px] px-6 py-20 sm:px-10 lg:px-16 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-6 space-y-6">
-            <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#c9a84c]">
+            <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#EF2034]">
               Our Heritage & Infrastructure
             </span>
 
-            <h2 className="text-3xl sm:text-4xl font-medium tracking-tight text-[#172b3f]">
+            <h2 className="text-3xl sm:text-4xl font-medium tracking-tight text-[#104360]">
               Reliable chemistry for everyday homes and commercial spaces.
             </h2>
 
@@ -78,13 +78,13 @@ function About() {
 
             <div className="pt-4 grid grid-cols-2 gap-4 border-t border-gray-100">
               <div>
-                <p className="text-2xl font-bold text-[#172b3f]">14+</p>
+                <p className="text-2xl font-bold text-[#104360]">14+</p>
                 <p className="text-[10px] uppercase tracking-wider text-gray-500">
                   Formulated SKUs
                 </p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-[#c9a84c]">100%</p>
+                <p className="text-2xl font-bold text-[#EF2034]">100%</p>
                 <p className="text-[10px] uppercase tracking-wider text-gray-500">
                   Batch Quality Tested
                 </p>
@@ -94,7 +94,7 @@ function About() {
 
           <div className="lg:col-span-6">
             <div className="relative rounded-2xl bg-[#f8f8f6] p-8 border border-gray-200/80 shadow-xs">
-              <h3 className="text-lg font-semibold text-[#172b3f] mb-4">
+              <h3 className="text-lg font-semibold text-[#104360] mb-4">
                 Manufacturing Highlights
               </h3>
 
@@ -107,20 +107,20 @@ function About() {
                   'Export shipping container docking and palleted carton freight handling',
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-3">
-                    <CheckCircle2 size={17} className="text-[#c9a84c] shrink-0 mt-0.5" />
+                    <CheckCircle2 size={17} className="text-[#EF2034] shrink-0 mt-0.5" />
                     <span className="text-xs sm:text-sm text-gray-700">{item}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-8 rounded-lg bg-[#172b3f] p-4 text-white flex items-center justify-between">
+              <div className="mt-8 rounded-lg bg-[#104360] p-4 text-white flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold">Have OEM or Contract Needs?</p>
                   <p className="text-[10px] text-white/60">We formulate custom white-label batches</p>
                 </div>
                 <Link
                   to="/contact"
-                  className="rounded bg-[#c9a84c] px-3 py-1.5 text-[10px] font-semibold text-[#172b3f] uppercase tracking-wider hover:bg-white"
+                  className="rounded bg-[#EF2034] px-3 py-1.5 text-[10px] font-semibold text-white uppercase tracking-wider hover:bg-white"
                 >
                   Inquire
                 </Link>
@@ -134,10 +134,10 @@ function About() {
       <section className="bg-[#f8f9fa] py-20 px-6 sm:px-10 lg:px-16 border-y border-gray-200/70">
         <div className="mx-auto max-w-[1600px]">
           <div className="text-center max-w-xl mx-auto mb-16">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e]">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#EF2034]">
               Why Work With Us
             </span>
-            <h2 className="mt-3 text-3xl font-medium tracking-tight text-[#172b3f]">
+            <h2 className="mt-3 text-3xl font-medium tracking-tight text-[#104360]">
               The Boven Frontier Commitment
             </h2>
           </div>
@@ -151,10 +151,10 @@ function About() {
                   className="rounded-xl bg-white p-7 border border-gray-200/80 shadow-xs flex flex-col justify-between"
                 >
                   <div>
-                    <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#172b3f] text-[#c9a84c] mb-6">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#104360] text-[#EF2034] mb-6">
                       <Icon size={20} />
                     </div>
-                    <h3 className="text-base font-semibold text-[#172b3f] mb-2">
+                    <h3 className="text-base font-semibold text-[#104360] mb-2">
                       {pillar.title}
                     </h3>
                     <p className="text-xs leading-relaxed text-gray-600">

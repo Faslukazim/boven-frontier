@@ -70,8 +70,8 @@ function Navbar() {
             to="/about"
             className={`text-[10px] uppercase tracking-[0.25em] transition-colors duration-200 ${
               isActive('/about')
-                ? 'font-bold text-[#172b3f] border-b-2 border-[#c9a84c] pb-0.5'
-                : 'text-[#172b3f]/65 hover:text-[#172b3f]'
+                ? 'font-bold text-[#104360] border-b-2 border-[#EF2034] pb-0.5'
+                : 'text-[#104360]/70 hover:text-[#EF2034]'
             }`}
           >
             About
@@ -81,8 +81,8 @@ function Navbar() {
             to="/products"
             className={`text-[10px] uppercase tracking-[0.25em] transition-colors duration-200 ${
               isActive('/products')
-                ? 'font-bold text-[#172b3f] border-b-2 border-[#c9a84c] pb-0.5'
-                : 'text-[#172b3f]/65 hover:text-[#172b3f]'
+                ? 'font-bold text-[#104360] border-b-2 border-[#EF2034] pb-0.5'
+                : 'text-[#104360]/70 hover:text-[#EF2034]'
             }`}
           >
             Products
@@ -92,8 +92,8 @@ function Navbar() {
             to="/contact"
             className={`group flex items-center gap-1.5 text-[10px] uppercase tracking-[0.25em] transition-colors duration-200 ${
               isActive('/contact')
-                ? 'font-bold text-[#172b3f] border-b-2 border-[#c9a84c] pb-0.5'
-                : 'font-semibold text-[#172b3f] hover:text-[#c9a84c]'
+                ? 'font-bold text-[#104360] border-b-2 border-[#EF2034] pb-0.5'
+                : 'font-semibold text-[#104360] hover:text-[#EF2034]'
             }`}
           >
             Contact
@@ -106,14 +106,14 @@ function Navbar() {
 
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 rounded bg-[#172b3f] px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-white hover:bg-[#c9a84c] hover:text-[#172b3f] transition shadow-xs"
+            className="inline-flex items-center gap-2 rounded bg-[#104360] px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-white hover:bg-[#EF2034] transition shadow-xs"
           >
             Enquire
           </Link>
 
           <Link
             to="/admin"
-            className="ml-1 rounded border border-[#172b3f]/15 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-[#172b3f]/60 transition hover:border-[#172b3f] hover:text-[#172b3f]"
+            className="ml-1 rounded border border-[#104360]/15 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-[#104360]/60 transition hover:border-[#104360] hover:text-[#104360]"
             title="Management Console"
           >
             Admin
@@ -124,7 +124,7 @@ function Navbar() {
         <div className="flex items-center gap-2 md:hidden">
           <Link
             to="/contact"
-            className="rounded bg-[#172b3f] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-white"
+            className="rounded bg-[#104360] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-white active:bg-[#EF2034]"
           >
             Enquire
           </Link>
@@ -133,7 +133,7 @@ function Navbar() {
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-            className="flex h-9 w-9 items-center justify-center border border-[#172b3f]/15 bg-white text-[#172b3f] rounded transition active:scale-95"
+            className="flex h-9 w-9 items-center justify-center border border-[#104360]/15 bg-white text-[#104360] rounded transition active:scale-95"
           >
             {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -146,7 +146,7 @@ function Navbar() {
       {mobileMenuOpen && (
         <div className="fixed inset-0 top-[68px] z-40 flex flex-col bg-white px-6 py-8 md:hidden animate-in fade-in slide-in-from-top duration-200">
           <div className="flex flex-col gap-6 text-left">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e]">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#EF2034]">
               Navigation
             </span>
 
@@ -154,7 +154,7 @@ function Navbar() {
               to="/"
               onClick={() => setMobileMenuOpen(false)}
               className={`text-2xl font-medium tracking-tight ${
-                isActive('/') ? 'text-[#c9a84c]' : 'text-[#172b3f]'
+                isActive('/') ? 'text-[#EF2034]' : 'text-[#104360]'
               }`}
             >
               Home
@@ -164,7 +164,7 @@ function Navbar() {
               to="/about"
               onClick={() => setMobileMenuOpen(false)}
               className={`text-2xl font-medium tracking-tight ${
-                isActive('/about') ? 'text-[#c9a84c]' : 'text-[#172b3f]'
+                isActive('/about') ? 'text-[#EF2034]' : 'text-[#104360]'
               }`}
             >
               About Boven Frontier
@@ -174,7 +174,7 @@ function Navbar() {
               to="/products"
               onClick={() => setMobileMenuOpen(false)}
               className={`text-2xl font-medium tracking-tight ${
-                isActive('/products') ? 'text-[#c9a84c]' : 'text-[#172b3f]'
+                isActive('/products') ? 'text-[#EF2034]' : 'text-[#104360]'
               }`}
             >
               Products & Brands
@@ -184,7 +184,7 @@ function Navbar() {
               to="/contact"
               onClick={() => setMobileMenuOpen(false)}
               className={`text-2xl font-medium tracking-tight ${
-                isActive('/contact') ? 'text-[#c9a84c]' : 'text-[#172b3f]'
+                isActive('/contact') ? 'text-[#EF2034]' : 'text-[#104360]'
               }`}
             >
               B2B & Export Enquiries
@@ -198,7 +198,7 @@ function Navbar() {
                 href="https://wa.me/919207577242?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry%20regarding%20cleaning%20products."
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-2 rounded border border-[#172b3f]/15 py-3 text-xs font-semibold text-[#172b3f] hover:bg-gray-50"
+                className="flex items-center justify-center gap-2 rounded border border-[#104360]/15 py-3 text-xs font-semibold text-[#104360] hover:bg-gray-50"
               >
                 <MessageCircle size={15} className="text-emerald-600" />
                 WhatsApp
@@ -206,7 +206,7 @@ function Navbar() {
 
               <a
                 href="tel:+917012777495"
-                className="flex items-center justify-center gap-2 rounded bg-[#172b3f] py-3 text-xs font-semibold text-white"
+                className="flex items-center justify-center gap-2 rounded bg-[#104360] py-3 text-xs font-semibold text-white"
               >
                 <Phone size={15} />
                 Call Direct
@@ -220,7 +220,7 @@ function Navbar() {
               <Link
                 to="/admin"
                 onClick={() => setMobileMenuOpen(false)}
-                className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-[#c9a84c] hover:underline"
+                className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-[#104360] hover:text-[#EF2034] hover:underline"
               >
                 <ShieldCheck size={13} />
                 Admin Portal

@@ -29,7 +29,7 @@ function BackToTopButton() {
       type="button"
       onClick={scrollToTop}
       aria-label="Back to top of page"
-      className={`fixed right-6 bottom-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-[#172b3f]/15 bg-white/90 text-[#172b3f] shadow-md backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-[#172b3f] hover:text-[#c9a84c] hover:border-[#c9a84c] ${
+      className={`fixed right-6 bottom-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-[#104360]/15 bg-white/90 text-[#104360] shadow-md backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-[#104360] hover:text-[#EF2034] hover:border-[#EF2034] ${
         visible
           ? 'opacity-100 translate-y-0 pointer-events-auto'
           : 'opacity-0 translate-y-4 pointer-events-none'

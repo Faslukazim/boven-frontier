@@ -43,20 +43,20 @@ function ProductCard({ product, index }) {
         {/* Product Meta */}
         <div className="mt-4 space-y-1.5">
           <div className="flex items-center justify-between">
-            <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#c9a84c]">
+            <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#EF2034]">
               {product.category}
             </span>
-            <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#172b3f]/50">
+            <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#4D4B4C]">
               {product.brand}
             </span>
           </div>
 
-          <h3 className="text-base font-bold tracking-tight text-[#172b3f] group-hover:text-[#c9a84c] transition-colors duration-300">
+          <h3 className="text-base font-bold tracking-tight text-[#104360] group-hover:text-[#EF2034] transition-colors duration-300">
             {product.name}
           </h3>
 
           {product.tagline && (
-            <p className="text-xs text-[#172b3f]/60 line-clamp-2 leading-relaxed">
+            <p className="text-xs text-[#4D4B4C] line-clamp-2 leading-relaxed">
               {product.tagline}
             </p>
           )}
@@ -81,7 +81,7 @@ function ProductCard({ product, index }) {
           to={`/contact?product=${encodeURIComponent(
             `${product.brand} ${product.name}`
           )}`}
-          className="group/btn inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#172b3f] hover:text-[#c9a84c] transition-colors"
+          className="group/btn inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#104360] hover:text-[#EF2034] transition-colors"
         >
           Enquire
           <ArrowUpRight
@@ -126,10 +126,10 @@ function Products({ limit, showFilters = true }) {
         ===================================================== */}
         <div className="products-header reveal-on-scroll flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-gray-100">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-2">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#EF2034] mb-2">
               Product Portfolio
             </p>
-            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#172b3f]">
+            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#104360]">
               Manufactured for everyday performance.
             </h2>
           </div>
@@ -143,7 +143,7 @@ function Products({ limit, showFilters = true }) {
             MINIMAL CATEGORY & BRAND FILTERS
         ===================================================== */}
         {showFilters && (
-          <div className="reveal-on-scroll stagger-1 border-b border-[#172b3f]/10 py-5 space-y-4">
+          <div className="reveal-on-scroll stagger-1 border-b border-[#104360]/10 py-5 space-y-4">
             {/* Category Pills */}
             <div className="flex items-center gap-2 overflow-x-auto pb-1">
               {categories.map((cat) => (
@@ -153,7 +153,7 @@ function Products({ limit, showFilters = true }) {
                   onClick={() => setSelectedCategory(cat)}
                   className={`shrink-0 rounded-full px-3.5 py-1 text-xs font-semibold transition ${
                     selectedCategory === cat
-                      ? 'bg-[#172b3f] text-white'
+                      ? 'bg-[#104360] text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -165,7 +165,7 @@ function Products({ limit, showFilters = true }) {
             {/* Brand Filter Row */}
             <div className="flex items-center justify-between pt-1">
               <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto">
-                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#172b3f]/40 mr-1">
+                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#104360]/40 mr-1">
                   BRANDS:
                 </span>
                 {brands.map((brand) => (
@@ -175,8 +175,8 @@ function Products({ limit, showFilters = true }) {
                     onClick={() => setSelectedBrand(brand)}
                     className={`text-[11px] font-semibold uppercase tracking-wider transition ${
                       selectedBrand === brand
-                        ? 'text-[#c9a84c] border-b-2 border-[#c9a84c] pb-0.5'
-                        : 'text-gray-500 hover:text-[#172b3f]'
+                        ? 'text-[#EF2034] border-b-2 border-[#EF2034] pb-0.5'
+                        : 'text-gray-500 hover:text-[#104360]'
                     }`}
                   >
                     {brand}
@@ -203,17 +203,17 @@ function Products({ limit, showFilters = true }) {
         {/* =====================================================
             BOTTOM B2B INQUIRY STRIP
         ===================================================== */}
-        <div className="reveal-on-scroll stagger-2 mt-16 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#172b3f]/10 pt-6">
-          <p className="text-xs text-[#172b3f]/65">
+        <div className="reveal-on-scroll stagger-2 mt-16 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#104360]/10 pt-6">
+          <p className="text-xs text-[#4D4B4C]">
             Manufactured in India · Available for domestic distribution & GCC container export.
           </p>
 
           <Link
             to="/contact"
-            className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#172b3f] hover:text-[#c9a84c] transition-colors"
+            className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#104360] hover:text-[#EF2034] transition-colors"
           >
             <span>Enquire about wholesale & export supply</span>
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#172b3f] text-white transition-all duration-300 group-hover:bg-[#c9a84c] group-hover:text-[#172b3f]">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#104360] text-white transition-all duration-300 group-hover:bg-[#EF2034] group-hover:text-white">
               <ArrowUpRight size={13} />
             </span>
           </Link>
