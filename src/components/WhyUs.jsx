@@ -13,28 +13,28 @@ const wholesalePillars = [
     icon: Factory,
     title: 'Direct Factory Margins',
     subtitle: 'Zero middleman markups',
-    text: 'Source directly from our automated blending and bottling facility in India. Enjoy pure factory-level pricing that protects your wholesale and retail margins.',
+    text: 'Direct supply from our plant in India with protected distributor pricing.',
   },
   {
     number: '02',
     icon: Sparkles,
     title: 'Contract OEM & Private Label',
     subtitle: 'Custom formulation & bottling',
-    text: 'We manufacture tailored formulations matching your required surfactant concentration, viscosity, and proprietary fragrance profiles with custom branded labels.',
+    text: 'Tailored active matter, viscosity, fragrance profiles, and custom branded labels.',
   },
   {
     number: '03',
     icon: Ship,
-    title: 'Container-Load Logistics',
-    subtitle: 'Palletized 20ft / 40ft FCL',
-    text: 'Strategically connected for direct seaport dispatch from India to GCC trade hubs including Jebel Ali (Dubai), Dammam, and Muscat with complete customs and bill of lading documentation.',
+    title: 'Container Shipping (FCL)',
+    subtitle: 'Palletized ocean freight',
+    text: 'Direct seaport dispatch from India to GCC hubs with complete bill of lading documentation.',
   },
   {
     number: '04',
     icon: ShieldCheck,
-    title: 'Certified Formulation Quality',
-    subtitle: 'Induction sealed & lab tested',
-    text: 'Every batch is quality verified for pH balance and active matter. All bottles feature induction heat-sealed foil liners to ensure zero transit leakage during ocean shipping.',
+    title: 'Transit-Proof Packaging',
+    subtitle: 'Induction sealed & tested',
+    text: 'Induction heat-sealed foil liners on all bottles to guarantee zero leakage during shipping.',
   },
 ]
 
@@ -45,24 +45,24 @@ function WhyUs() {
     <section
       id="why-us"
       ref={sectionRef}
-      className="relative overflow-hidden bg-white px-6 py-20 sm:px-10 lg:px-16 lg:py-28 border-t border-[#172b3f]/10"
+      className="relative overflow-hidden bg-white px-5 py-16 sm:py-24 sm:px-10 lg:px-14 border-t border-gray-100"
     >
-      <div className="mx-auto max-w-[1600px]">
+      <div className="mx-auto max-w-[1500px]">
         {/* =====================================================
             HEADER
         ===================================================== */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-gray-100 reveal-on-scroll">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 border-b border-gray-100 reveal-on-scroll">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-2">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-1.5">
               Wholesale Advantage
             </p>
-            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#172b3f]">
-              Direct manufacturing. Dependable wholesale scale.
+            <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-[#172b3f]">
+              Direct Manufacturing. Wholesale Scale.
             </h2>
           </div>
 
-          <p className="max-w-md text-xs sm:text-sm text-gray-500 leading-relaxed">
-            Whether you are stocking regional supermarket shelves or importing full shipping containers into the Gulf, Boven Frontier delivers consistency, compliance, and direct factory pricing.
+          <p className="max-w-xs text-xs text-gray-500 leading-relaxed">
+            Reliable supply chain, verified chemical purity, and export compliance.
           </p>
         </div>
 

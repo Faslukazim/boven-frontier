@@ -62,16 +62,16 @@ function ContactStrip() {
         ===================================================== */}
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-2">
-              Start a conversation
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-1.5">
+              Wholesale & Export Desk
             </p>
 
-            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#172b3f]">
-              Let's build something together.
+            <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-[#172b3f]">
+              Request Wholesale Pricing.
             </h2>
 
-            <p className="mt-4 max-w-lg text-xs sm:text-sm leading-relaxed text-gray-500">
-              Whether you are an institutional buyer, domestic distributor, or looking for container-load export supply to the Middle East, speak directly with the Boven Frontier team.
+            <p className="mt-2.5 max-w-md text-xs sm:text-sm text-gray-500 leading-relaxed">
+              Direct factory quotes for container loads, domestic distribution, and private label contracts.
             </p>
           </div>
 

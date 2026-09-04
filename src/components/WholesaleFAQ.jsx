@@ -7,28 +7,20 @@ export default function WholesaleFAQ() {
 
   const faqs = [
     {
-      q: 'What is the Minimum Order Quantity (MOQ) for wholesale and export orders?',
-      a: 'For standard stock SKUs under our LEXONE and FABIE PLUS brands, our MOQ is 50 cartons per SKU for domestic supply and 100 cartons for export shipments. We also accommodate mixed-container stuffing (FCL) where multiple products are consolidated in a single 20ft or 40ft container.',
+      q: 'What is the Minimum Order Quantity (MOQ)?',
+      a: '50 cartons per SKU for domestic supply; 100 cartons for export shipments. We also support mixed-container stuffing (FCL) across multiple product lines.',
     },
     {
-      q: 'Can we receive lab test reports and product samples prior to placing a bulk order?',
-      a: 'Yes. We dispatch sample kits to verified distributors, supermarket buyers, and commercial facilities worldwide. Each sample dispatch includes full formulation specifications, Certificate of Analysis (COA), and Material Safety Data Sheets (MSDS).',
+      q: 'Can we receive product samples and test reports?',
+      a: 'Yes. Sample kits are dispatched with full Certificate of Analysis (COA) and Material Safety Data Sheets (MSDS) for quality verification.',
     },
     {
-      q: 'Do you offer Private Label and Contract Manufacturing (OEM)?',
-      a: 'Absolutely. We provide end-to-end OEM and contract bottling solutions. We can manufacture using your desired formulation viscosity, active matter percentage, and proprietary fragrance profiles, packaged in your custom bottle molds and private labels with induction-sealed leak-proof caps.',
+      q: 'Do you offer Private Label & OEM contract bottling?',
+      a: 'Yes. We provide turnkey OEM manufacturing with custom surfactant concentration, viscosity, fragrance profiles, and private label packaging.',
     },
     {
-      q: 'What are your export shipping terms and primary ports of dispatch?',
-      a: 'We operate primarily on FOB Indian Ports and CIF Jebel Ali (Dubai / UAE), Dammam (KSA), and Muscat (Oman). We handle complete export documentation, customs clearance, and palletized ocean freight logistics.',
-    },
-    {
-      q: 'How are liquids packed to prevent leakage during long ocean container transits?',
-      a: 'All our bottles utilize induction heat-sealed foil liners beneath heavy-duty threaded caps. Cartons are manufactured from heavy 5-ply export-grade corrugated board, shrink-wrapped on treated wooden/plastic pallets to ensure zero transit leakage or carton collapse.',
-    },
-    {
-      q: 'What are the accepted payment terms for commercial orders?',
-      a: 'We accept Wire Transfer (T/T), with standard terms of 30% advance on order confirmation and 70% against Bill of Lading (B/L) copy. For large-scale container export orders, we also accept Irrevocable Letters of Credit (L/C at sight) from prime international banks.',
+      q: 'What are your export shipping and payment terms?',
+      a: 'FOB Indian Ports and CIF GCC trade hubs (Dubai, Dammam, Muscat). Standard payment is T/T (30% advance, 70% against B/L) or confirmed L/C at sight.',
     },
   ]
 

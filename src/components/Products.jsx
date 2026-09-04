@@ -124,18 +124,18 @@ function Products({ limit, showFilters = true }) {
         {/* =====================================================
             HEADER
         ===================================================== */}
-        <div className="products-header reveal-on-scroll flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-gray-100">
+        <div className="products-header reveal-on-scroll flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 border-b border-gray-100">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-2">
-              Product Portfolio
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-1.5">
+              Product Catalog
             </p>
-            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#172b3f]">
-              Manufactured for everyday performance.
+            <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-[#172b3f]">
+              Manufactured for Everyday Performance.
             </h2>
           </div>
 
-          <p className="max-w-md text-xs sm:text-sm text-gray-500 leading-relaxed">
-            Direct-from-plant cleaning chemicals manufactured in India for wholesale distributors, institutional facilities, and GCC export containers.
+          <p className="max-w-xs text-xs text-gray-500 leading-relaxed">
+            Direct factory pricing for wholesale distribution and export containers.
           </p>
         </div>
 
