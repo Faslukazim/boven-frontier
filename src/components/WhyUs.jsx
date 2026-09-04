@@ -27,7 +27,7 @@ const wholesalePillars = [
     icon: Ship,
     title: 'Container-Load Logistics',
     subtitle: 'Palletized 20ft / 40ft FCL',
-    text: 'Strategically located for Cochin Port dispatch to GCC trade hubs including Jebel Ali (Dubai), Dammam, and Muscat with complete customs and bill of lading documentation.',
+    text: 'Strategically connected for direct seaport dispatch from India to GCC trade hubs including Jebel Ali (Dubai), Dammam, and Muscat with complete customs and bill of lading documentation.',
   },
   {
     number: '04',
@@ -51,29 +51,19 @@ function WhyUs() {
         {/* =====================================================
             HEADER
         ===================================================== */}
-        <div className="grid gap-10 lg:grid-cols-12 reveal-on-scroll">
-          <div className="lg:col-span-4">
-            <div className="flex items-center gap-3">
-              <span className="h-[5px] w-[5px] rounded-full bg-[#c9a84c] animate-ping" />
-              <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#c9a84c]">
-                The Boven Wholesale Advantage
-              </p>
-            </div>
-          </div>
-
-          <div className="lg:col-span-7 lg:col-start-5">
-            <h2 className="max-w-[850px] text-[clamp(2.4rem,4.8vw,5rem)] font-bold leading-[0.94] tracking-[-0.05em] text-[#172b3f]">
-              Direct manufacturing.
-              <br />
-              <span className="text-[#c9a84c]">
-                Dependable wholesale scale.
-              </span>
-            </h2>
-
-            <p className="mt-6 max-w-xl text-sm leading-relaxed text-[#172b3f]/70 sm:text-[15px]">
-              Whether you are stocking regional supermarket shelves or importing full shipping containers into the Gulf, Boven Frontier delivers consistency, compliance, and competitive factory pricing.
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-gray-100 reveal-on-scroll">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-2">
+              Wholesale Advantage
             </p>
+            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#172b3f]">
+              Direct manufacturing. Dependable wholesale scale.
+            </h2>
           </div>
+
+          <p className="max-w-md text-xs sm:text-sm text-gray-500 leading-relaxed">
+            Whether you are stocking regional supermarket shelves or importing full shipping containers into the Gulf, Boven Frontier delivers consistency, compliance, and direct factory pricing.
+          </p>
         </div>
 
         {/* =====================================================

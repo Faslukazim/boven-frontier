@@ -124,25 +124,19 @@ function Products({ limit, showFilters = true }) {
         {/* =====================================================
             HEADER
         ===================================================== */}
-        <div className="products-header reveal-on-scroll flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-[#172b3f]/10">
-          <div className="products-heading-wrap">
-            <div className="products-eyebrow flex items-center gap-3 mb-3 text-[9px] font-bold uppercase tracking-[0.3em] text-[#c9a84c]">
-              <span className="h-px w-8 bg-[#c9a84c]" />
-              PRODUCT PORTFOLIO
-            </div>
-
-            <h2 className="products-title text-[clamp(2.4rem,4.8vw,4.8rem)] font-bold leading-[0.94] tracking-[-0.05em] text-[#172b3f]">
-              Products made
-              <br />
-              <span className="text-[#c9a84c]">for everyday life.</span>
+        <div className="products-header reveal-on-scroll flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-gray-100">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-2">
+              Product Portfolio
+            </p>
+            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#172b3f]">
+              Manufactured for everyday performance.
             </h2>
           </div>
 
-          <div className="products-intro max-w-sm border-l-2 border-[#c9a84c] pl-4 text-xs sm:text-sm text-[#172b3f]/70 leading-relaxed">
-            <p>
-              Direct-from-plant cleaning chemicals manufactured in India. Supplying regional distributors, institutional facilities, and GCC container shipments.
-            </p>
-          </div>
+          <p className="max-w-md text-xs sm:text-sm text-gray-500 leading-relaxed">
+            Direct-from-plant cleaning chemicals manufactured in India for wholesale distributors, institutional facilities, and GCC export containers.
+          </p>
         </div>
 
         {/* =====================================================

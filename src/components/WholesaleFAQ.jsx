@@ -20,7 +20,7 @@ export default function WholesaleFAQ() {
     },
     {
       q: 'What are your export shipping terms and primary ports of dispatch?',
-      a: 'We operate primarily on FOB Cochin Port (India) and CIF Jebel Ali (Dubai / UAE), Dammam (KSA), and Muscat (Oman). We handle complete export documentation, customs clearance, and palletized ocean freight logistics.',
+      a: 'We operate primarily on FOB Indian Ports and CIF Jebel Ali (Dubai / UAE), Dammam (KSA), and Muscat (Oman). We handle complete export documentation, customs clearance, and palletized ocean freight logistics.',
     },
     {
       q: 'How are liquids packed to prevent leakage during long ocean container transits?',
@@ -42,18 +42,18 @@ export default function WholesaleFAQ() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16 items-start">
           {/* Left Column: Heading & Support Desk */}
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-3 mb-4">
-              <HelpCircle size={18} className="text-[#c9a84c]" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#c9a84c]">
+            <div className="flex items-center gap-2 mb-2">
+              <HelpCircle size={16} className="text-[#b08d2e]" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e]">
                 Wholesale Knowledge Base
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#172b3f] leading-tight">
+            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#172b3f] leading-tight">
               Frequently Asked Questions for B2B Buyers.
             </h2>
 
-            <p className="mt-4 text-sm text-[#172b3f]/70 leading-relaxed">
+            <p className="mt-4 text-xs sm:text-sm text-gray-500 leading-relaxed">
               Find quick answers regarding our minimum order volumes, private label capabilities, international shipping corridors, and compliance standards.
             </p>
 

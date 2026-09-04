@@ -1,21 +1,17 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import {
-  ArrowUpRight,
   Menu,
   X,
   Phone,
   MessageCircle,
   ShieldCheck,
-  Megaphone,
+  ArrowUpRight,
 } from 'lucide-react'
-import { useStore } from '../context/useStore'
 
 function Navbar() {
   const location = useLocation()
-  const { topBadge } = useStore()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [bannerDismissed, setBannerDismissed] = useState(false)
 
   const [prevPath, setPrevPath] = useState(location.pathname)
   if (prevPath !== location.pathname) {
@@ -39,7 +35,7 @@ function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 25)
+      setIsScrolled(window.scrollY > 20)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
@@ -49,60 +45,16 @@ function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-all duration-300 ${
+      className={`sticky top-0 z-40 transition-all duration-200 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-[#172b3f]/10'
-          : 'bg-white border-b border-[#172b3f]/5'
+          ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-gray-200/80'
+          : 'bg-white border-b border-gray-100'
       }`}
     >
       {/* =======================================================
-          TOP EDITABLE ANNOUNCEMENT BADGE (CONTROLLED FROM ADMIN)
-      ======================================================= */}
-      {topBadge?.is_active && !bannerDismissed && (
-        <div
-          className={`relative z-40 px-4 py-2 text-xs transition-all ${
-            topBadge.theme === 'gold'
-              ? 'bg-[#c9a84c] text-[#172b3f]'
-              : topBadge.theme === 'dark'
-              ? 'bg-gray-900 text-white'
-              : 'bg-[#172b3f] text-white'
-          }`}
-        >
-          <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-2 sm:px-6">
-            <div className="flex flex-1 items-center justify-center gap-2 text-center text-[10px] sm:text-xs">
-              <Megaphone size={13} className="shrink-0 hidden sm:inline text-[#c9a84c]" />
-              <span className="font-semibold">{topBadge.title}</span>
-              {topBadge.subtitle && (
-                <span className="hidden md:inline opacity-80">— {topBadge.subtitle}</span>
-              )}
-              {topBadge.ctaText && (
-                <a
-                  href={topBadge.ctaLink || '/contact'}
-                  target={topBadge.ctaLink?.startsWith('http') ? '_blank' : undefined}
-                  rel={topBadge.ctaLink?.startsWith('http') ? 'noreferrer' : undefined}
-                  className="ml-2 inline-flex items-center gap-1 rounded bg-white/20 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider transition hover:bg-white/30"
-                >
-                  {topBadge.ctaText}
-                  <ArrowUpRight size={10} />
-                </a>
-              )}
-            </div>
-
-            <button
-              onClick={() => setBannerDismissed(true)}
-              className="p-1 opacity-70 hover:opacity-100"
-              aria-label="Dismiss banner"
-            >
-              <X size={13} />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* =======================================================
           MAIN NAVIGATION BAR (MINIMAL & REFINED)
       ======================================================= */}
-      <nav className="mx-auto flex h-[68px] max-w-[1600px] items-center justify-between border-b border-[#172b3f]/10 px-5 sm:px-8 lg:px-12 xl:px-16">
+      <nav className="mx-auto flex h-16 sm:h-[70px] max-w-[1600px] items-center justify-between px-5 sm:px-8 lg:px-12 xl:px-16">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-3">
           <img
@@ -194,7 +146,7 @@ function Navbar() {
       {mobileMenuOpen && (
         <div className="fixed inset-0 top-[68px] z-40 flex flex-col bg-white px-6 py-8 md:hidden animate-in fade-in slide-in-from-top duration-200">
           <div className="flex flex-col gap-6 text-left">
-            <span className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#c9a84c]">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e]">
               Navigation
             </span>
 
@@ -262,8 +214,8 @@ function Navbar() {
             </div>
 
             <div className="flex items-center justify-between pt-2">
-              <span className="text-[9px] uppercase tracking-wider text-gray-400">
-                Kozhikode, India
+              <span className="text-[10px] uppercase tracking-wider text-gray-400">
+                Manufactured in India
               </span>
               <Link
                 to="/admin"

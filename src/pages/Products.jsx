@@ -9,14 +9,13 @@ function Products() {
       <section className="bg-[#172b3f] px-6 py-16 text-white sm:py-20">
         <div className="mx-auto max-w-[1600px] px-2 sm:px-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <div className="flex items-center gap-3 mb-3">
-              <span className="h-2 w-2 rounded-full bg-[#c9a84c] animate-ping" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#c9a84c]">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#c9a84c]">
                 Direct Factory Catalog · 14 Active SKUs
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
+            <h1 className="text-2xl sm:text-4xl font-semibold tracking-tight">
               Wholesale & Export Products
             </h1>
 

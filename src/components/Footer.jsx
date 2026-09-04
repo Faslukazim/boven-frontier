@@ -25,7 +25,7 @@ function Footer() {
         <div className="border-b border-white/10 py-12">
           <div className="grid gap-6 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-6">
-              <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#c9a84c]">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#c9a84c]">
                 B2B Price List & SKU Bulletins
               </span>
               <h3 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight">
@@ -94,13 +94,13 @@ function Footer() {
             </p>
 
             <div className="mt-6 rounded-lg border border-white/10 bg-white/5 p-4 text-xs">
-              <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#c9a84c]">
-                Operations & Headquarters
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-[#c9a84c]">
+                Operations & Facility
               </p>
               <p className="mt-1 text-white/80">
-                Kozhikode, India · LLP Reg: ACE-5349
+                India · LLP Reg: ACE-5349
               </p>
-              <p className="mt-0.5 text-[10px] text-white/50">
+              <p className="mt-0.5 text-[11px] text-white/50">
                 Manufactured in India · ISO 9001:2015 Quality Standards
               </p>
             </div>
@@ -207,7 +207,7 @@ function Footer() {
           </p>
 
           <div className="flex items-center justify-center gap-4">
-            <span>Incoterms: FOB Cochin · CIF Jebel Ali / Dammam</span>
+            <span>Incoterms: FOB Indian Ports · CIF Jebel Ali / Dammam</span>
             <span className="h-1 w-1 rounded-full bg-[#c9a84c]" />
             <span>T/T & L/C Accepted</span>
           </div>

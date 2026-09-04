@@ -5,7 +5,7 @@ function NotFound() {
   return (
     <main className="flex min-h-[70vh] items-center justify-center bg-[#f8f9fa] px-6 py-24 text-[#172b3f]">
       <div className="mx-auto max-w-lg text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#c9a84c]">
+        <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e]">
           404 Error
         </p>
 

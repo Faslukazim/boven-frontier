@@ -62,22 +62,15 @@ function ContactStrip() {
         ===================================================== */}
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
-            <div className="flex items-center gap-3">
-              <span className="h-[5px] w-[5px] rounded-full bg-[#c9a84c]" />
-              <span className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#172b3f]/50">
-                Start a conversation
-              </span>
-            </div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e] mb-2">
+              Start a conversation
+            </p>
 
-            <h2 className="mt-6 max-w-[760px] text-[clamp(2.5rem,5.5vw,5.5rem)] font-medium leading-[0.92] tracking-[-0.065em]">
-              Let's build
-              <br />
-              something
-              <br />
-              <span className="text-[#c9a84c]">together.</span>
+            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#172b3f]">
+              Let's build something together.
             </h2>
 
-            <p className="mt-6 max-w-lg text-sm sm:text-base leading-relaxed text-[#172b3f]/60">
+            <p className="mt-4 max-w-lg text-xs sm:text-sm leading-relaxed text-gray-500">
               Whether you are an institutional buyer, domestic distributor, or looking for container-load export supply to the Middle East, speak directly with the Boven Frontier team.
             </p>
           </div>
@@ -169,25 +162,25 @@ function ContactStrip() {
           {/* Information Panel */}
           <div className="relative bg-[#172b3f] p-8 text-white sm:p-12 lg:col-span-5 flex flex-col justify-between">
             <div>
-              <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#c9a84c]">
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#c9a84c] mb-2">
                 B2B & Export Desk
               </p>
 
-              <h3 className="mt-5 text-2xl sm:text-3xl font-medium tracking-tight">
+              <h3 className="text-2xl sm:text-3xl font-medium tracking-tight">
                 Tell us your requirement.
               </h3>
 
-              <p className="mt-4 text-xs sm:text-sm text-white/60 leading-relaxed">
+              <p className="mt-3 text-xs sm:text-sm text-white/60 leading-relaxed">
                 Wholesale supply, private label (OEM) formulation, custom bottle packaging, or bulk freight export.
               </p>
             </div>
 
             <div className="mt-10 space-y-4 border-t border-white/10 pt-6 text-xs text-white/80">
               <div className="flex justify-between">
-                <span className="text-white/40 text-[9px] uppercase tracking-wider">
+                <span className="text-white/40 text-[10px] uppercase tracking-wider">
                   Origin
                 </span>
-                <span>Kozhikode, India</span>
+                <span>India</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white/40 text-[9px] uppercase tracking-wider">

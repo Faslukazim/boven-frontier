@@ -38,21 +38,20 @@ function About() {
       {/* Hero Banner */}
       <section className="bg-[#172b3f] px-6 py-20 sm:py-28 text-white">
         <div className="mx-auto max-w-[1600px] px-2 sm:px-10">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#c9a84c]" />
-            <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-[#c9a84c]">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-xs font-semibold tracking-wider uppercase text-[#c9a84c]">
               About Boven Frontier International LLP
-            </p>
+            </span>
           </div>
 
-          <h1 className="max-w-4xl text-[clamp(2.5rem,6vw,5.5rem)] font-medium leading-[0.94] tracking-[-0.06em]">
+          <h1 className="max-w-3xl text-3xl sm:text-5xl font-semibold tracking-tight leading-tight">
             Manufactured in India.
             <br />
             <span className="text-[#c9a84c]">Built for global standards.</span>
           </h1>
 
-          <p className="mt-8 max-w-2xl text-sm sm:text-base leading-relaxed text-white/70">
-            Boven Frontier International LLP is an Indian chemical and household cleaning manufacturer headquartered in Kozhikode, India (LLP Reg: ACE-5349). We manufacture, package, and distribute trusted consumer hygiene brands including LEXONE, FABIE PLUS, and KARE, produced at our facilities in India.
+          <p className="mt-6 max-w-2xl text-xs sm:text-sm leading-relaxed text-white/70">
+            Boven Frontier International LLP is an Indian chemical and household cleaning manufacturer (LLP Reg: ACE-5349). We manufacture, package, and distribute trusted consumer hygiene brands including LEXONE, FABIE PLUS, and KARE, produced at our facilities in India.
           </p>
         </div>
       </section>
@@ -135,7 +134,7 @@ function About() {
       <section className="bg-[#f8f9fa] py-20 px-6 sm:px-10 lg:px-16 border-y border-gray-200/70">
         <div className="mx-auto max-w-[1600px]">
           <div className="text-center max-w-xl mx-auto mb-16">
-            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#c9a84c]">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#b08d2e]">
               Why Work With Us
             </span>
             <h2 className="mt-3 text-3xl font-medium tracking-tight text-[#172b3f]">

@@ -8,14 +8,13 @@ function Contact() {
       {/* Contact Header */}
       <section className="bg-[#172b3f] px-6 py-20 text-white sm:py-24">
         <div className="mx-auto max-w-[1600px] px-2 sm:px-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#c9a84c]" />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#c9a84c]">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#c9a84c]">
               Direct Communication
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-medium tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight">
             Connect With Our Team
           </h1>
 

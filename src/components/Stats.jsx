@@ -65,55 +65,41 @@ function Stats() {
         {/* =====================================================
             INTRO
         ===================================================== */}
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-4">
-            <div className="flex items-center gap-3">
-              <span className="h-[5px] w-[5px] rounded-full bg-[#c9a84c] animate-ping" />
-              <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-white/40">
-                At a glance
-              </p>
-            </div>
-          </div>
-
-          <div className="lg:col-span-7 lg:col-start-5">
-            <h2 className="max-w-3xl text-[clamp(2.4rem,4.5vw,5rem)] font-medium leading-[0.92] tracking-[-0.06em]">
-              One manufacturer.
-              <br />
-              <span className="ml-[4vw] text-white/45">
-                Multiple possibilities.
-              </span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-white/10">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#c9a84c] mb-2">
+              At a glance
+            </p>
+            <h2 className="text-2xl sm:text-4xl font-medium tracking-tight text-white">
+              One manufacturing partner. Multiple possibilities.
             </h2>
           </div>
+          <p className="text-xs sm:text-sm text-white/60 max-w-sm leading-relaxed">
+            Formulated and bottled in India with certified active chemical purity for institutional buyers and global container exports.
+          </p>
         </div>
 
         {/* =====================================================
             STATS CARDS WITH ANIMATED COUNTERS
         ===================================================== */}
-        <div className="mt-20 border-t border-white/10">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map((stat, index) => (
+        <div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+            {stats.map((stat) => (
               <div
                 key={stat.label}
-                className={`group relative border-b border-white/10 px-4 py-10 sm:px-6 lg:border-b-0 lg:py-12 transition-all duration-500 hover:bg-white/[0.03] ${
-                  index !== 0 ? 'lg:border-l lg:border-white/10' : ''
-                }`}
+                className="py-8 px-4 sm:px-6 first:pl-0"
               >
                 {/* Number with Counter */}
-                <div className="text-[clamp(3.2rem,5.5vw,5.5rem)] font-medium leading-none tracking-[-0.06em] text-[#c9a84c] transition-transform duration-300 group-hover:scale-105">
+                <div className="text-4xl sm:text-5xl font-light tracking-tight text-[#c9a84c]">
                   <AnimatedCounter target={stat.num} isVisible={isVisible} />
                 </div>
 
                 {/* Label */}
-                <div className="mt-5">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/75 group-hover:text-white transition-colors">
+                <div className="mt-3">
+                  <p className="text-xs font-medium uppercase tracking-wider text-white/70">
                     {stat.label}
                   </p>
                 </div>
-
-                {/* Index marker */}
-                <span className="absolute right-5 top-5 text-[8px] tabular-nums tracking-[0.2em] text-white/20 group-hover:text-[#c9a84c]/50 transition-colors">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
               </div>
             ))}
           </div>
