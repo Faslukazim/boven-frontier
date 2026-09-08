@@ -147,14 +147,14 @@ function Hero() {
         aria-hidden="true"
       />
 
-      <div className="mx-auto max-w-[1560px] px-5 sm:px-10 lg:px-16 xl:px-20 py-8 sm:py-14 lg:py-16 xl:py-20 min-h-[calc(100vh-74px)] flex items-center">
+      <div className="mx-auto max-w-[1560px] px-5 sm:px-10 lg:px-16 xl:px-20 py-6 sm:py-8 lg:py-10 xl:py-12 min-h-[calc(100vh-74px)] flex items-center">
         <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-8 lg:gap-12 w-full">
           
           {/* LEFT: MAJESTIC EDITORIAL HEADLINE, ACTIONS, & TAGLINE */}
           <div className="lg:col-span-7 flex flex-col justify-center z-10">
             {/* Acronym stylized BFI Headline with Staggered Entrance Animations */}
             <h1
-              className="font-cinzel text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] xl:text-[4.75rem] font-bold tracking-[0.02em] leading-[1.06] text-white select-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]"
+              className="font-cinzel text-3xl sm:text-5xl md:text-6xl lg:text-[3.8rem] xl:text-[4.4rem] font-bold tracking-[0.02em] leading-[1.03] text-white select-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]"
             >
               <span className="block hero-text-reveal-1">
                 <span className="text-[#EF2034]">B</span>RIDGING
@@ -171,7 +171,7 @@ function Hero() {
             </h1>
 
             {/* Action Links with Entrance Animation */}
-            <div className="hero-fade-in mt-8 sm:mt-10 lg:mt-12 flex flex-row items-center gap-6 sm:gap-10 lg:gap-14">
+            <div className="hero-fade-in mt-6 sm:mt-7 lg:mt-8 flex flex-row items-center gap-6 sm:gap-10 lg:gap-14">
               <a
                 href="#products"
                 onClick={(e) => {
@@ -199,9 +199,9 @@ function Hero() {
             </div>
 
             {/* Gold Cursive Script Tagline with Entrance Animation */}
-            <div className="hero-script-in mt-8 sm:mt-12 lg:mt-18">
+            <div className="hero-script-in mt-6 sm:mt-8 lg:mt-10">
               <p
-                className="font-script text-xl sm:text-2xl lg:text-[1.85rem] xl:text-[2.15rem] text-[#e5b741] font-normal leading-relaxed tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)] whitespace-normal lg:whitespace-nowrap"
+                className="font-script text-xl sm:text-2xl lg:text-[1.75rem] xl:text-[2rem] text-[#e5b741] font-normal leading-relaxed tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)] whitespace-normal lg:whitespace-nowrap"
               >
                 Connecting Quality. <br className="block sm:hidden" />
                 Creating Markets. <br className="block sm:hidden" />
@@ -222,7 +222,7 @@ function Hero() {
                 <img
                   src={activeProduct.image}
                   alt={`${activeProduct.brand} ${activeProduct.name}`}
-                  className={`h-[280px] sm:h-[400px] md:h-[460px] lg:h-[500px] xl:h-[560px] w-auto max-w-full object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.55)] select-none transition-all duration-300 ease-out ${
+                  className={`h-[280px] sm:h-[380px] md:h-[420px] lg:h-[460px] xl:h-[500px] w-auto max-w-full object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.55)] select-none transition-all duration-300 ease-out ${
                     productVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
                   }`}
                   draggable="false"
