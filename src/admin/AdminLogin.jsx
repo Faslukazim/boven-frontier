@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react'
+import { useStore } from '../context/useStore'
 
 function AdminLogin() {
   const navigate = useNavigate()
+  const { adminPassword } = useStore()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -16,12 +18,11 @@ function AdminLogin() {
 
     setTimeout(() => {
       const validAdminEmail = (import.meta.env.VITE_ADMIN_EMAIL || 'admin@bovenfrontier.co.in').trim().toLowerCase()
-      const validAdminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'BovenAdmin2026!'
+      const enteredEmail = email.trim().toLowerCase()
 
-      const isDevLogin = import.meta.env.DEV && email.trim().toLowerCase() === 'admin@bovenfrontier.co.in' && password === 'admin123'
-      const isConfiguredLogin = email.trim().toLowerCase() === validAdminEmail && password === validAdminPassword
+      const isAuthorized = enteredEmail === validAdminEmail && password === adminPassword
 
-      if (isConfiguredLogin || isDevLogin) {
+      if (isAuthorized) {
         localStorage.setItem(
           'bf_admin_auth',
           JSON.stringify({
@@ -32,16 +33,10 @@ function AdminLogin() {
         )
         navigate('/admin')
       } else {
-        setError('Invalid credentials. Please check your admin email and password.')
+        setError('Invalid credentials. Please verify your administrative email and password.')
       }
       setLoading(false)
     }, 400)
-  }
-
-  const fillDemoCredentials = () => {
-    setEmail('admin@bovenfrontier.co.in')
-    setPassword('admin123')
-    setError('')
   }
 
   return (
@@ -124,19 +119,6 @@ function AdminLogin() {
               </div>
             </div>
           </div>
-
-          {import.meta.env.DEV && (
-            <div className="flex items-center justify-between border-t border-gray-100 pt-3">
-              <button
-                type="button"
-                onClick={fillDemoCredentials}
-                className="text-[10px] uppercase tracking-wider text-[#EF2034] underline hover:text-[#104360]"
-              >
-                Fill Dev Credentials
-              </button>
-              <span className="text-[10px] text-gray-400 font-mono">admin123 (dev only)</span>
-            </div>
-          )}
 
           <button
             type="submit"

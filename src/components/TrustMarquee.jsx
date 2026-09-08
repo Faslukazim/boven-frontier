@@ -42,7 +42,7 @@ export default function TrustMarquee() {
   ]
 
   return (
-    <div className="border-y border-gray-200/70 bg-[#fafaf9] py-8 text-[#104360]">
+    <div className="border-y border-gray-200/70 bg-[#F8FAFC] py-8 text-[#104360]">
       <div className="mx-auto max-w-[1600px] px-6 sm:px-10 lg:px-16">
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6 lg:gap-8">
           {trustPoints.map((item, index) => {

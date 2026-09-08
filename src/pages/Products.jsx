@@ -1,8 +1,15 @@
 import ProductsGrid from '../components/Products'
+import ContactStrip from '../components/ContactStrip'
 import Footer from '../components/Footer'
 import { MessageCircle } from 'lucide-react'
+import { useStore } from '../context/useStore'
+import { COMPANY } from '../constants'
 
 function Products() {
+  const { company: storeCompany } = useStore()
+  const company = storeCompany || COMPANY
+  const rawWhatsapp = (company.whatsappUAE || company.phone1 || '+971 50 735 5418').replace(/[^0-9]/g, '')
+
   return (
     <main className="bg-white text-[#104360]">
       {/* Header Banner */}
@@ -19,19 +26,19 @@ function Products() {
               Wholesale & Export Products
             </h1>
 
-            <p className="mt-3 max-w-xl text-xs sm:text-sm text-white/70 leading-relaxed">
+            <p className="mt-3 max-w-xl text-xs sm:text-sm text-white/70 leading-relaxed font-normal">
               Full specification laundry detergents, disinfectant solutions, surface cleaners, and bulk commercial drums available for distributor and container supply.
             </p>
           </div>
 
           <a
-            href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier%2C%20I%20am%20interested%20in%20wholesale%2Fdistributor%20pricing%20for%20your%20products."
+            href={`https://wa.me/${rawWhatsapp}?text=Hello%20Boven%20Frontier%2C%20I%20am%20interested%20in%20wholesale%2Fdistributor%20pricing%20for%20your%20products.`}
             target="_blank"
             rel="noopener noreferrer"
             className="self-start md:self-auto inline-flex items-center gap-2 rounded-lg bg-[#EF2034] px-5 py-3 text-xs font-bold uppercase tracking-wider text-white hover:bg-white hover:text-[#104360] transition shadow-sm"
           >
             <MessageCircle size={15} />
-            Enquire for Wholesale & Export
+            <span>Enquire for Wholesale & Export</span>
           </a>
         </div>
       </section>
@@ -39,7 +46,8 @@ function Products() {
       {/* Main Catalog Component */}
       <ProductsGrid showFilters={true} />
 
-      {/* Footer */}
+      {/* Contact Strip & Footer */}
+      <ContactStrip />
       <Footer />
     </main>
   )

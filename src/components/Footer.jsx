@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MessageCircle, Phone, Mail, CheckCircle2 } from 'lucide-react'
+import { useStore } from '../context/useStore'
 
 function Footer() {
+  const { company } = useStore()
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
 
@@ -90,7 +92,7 @@ function Footer() {
             </div>
 
             <p className="mt-6 max-w-sm text-xs leading-6 text-white/65">
-              Certified manufacturer of professional cleaning chemicals, detergents, and disinfection products in India. Supplying regional retail chains and GCC container import partners.
+              Certified manufacturer of professional cleaning chemicals in India. Supplying domestic retail chains and GCC container import partners.
             </p>
 
             <div className="mt-6 rounded-lg border border-white/10 bg-white/5 p-4 text-xs">
@@ -98,13 +100,13 @@ function Footer() {
                 Operations & Facility
               </p>
               <p className="mt-1 font-medium text-white/90">
-                India · LLP Reg: ACE-5349
+                India · LLP Reg: {company?.llpId || 'ACE-5349'}
               </p>
               <p className="mt-0.5 text-[11px] font-mono text-white/70">
-                GSTIN: 32ABCFB2913N1ZN
+                GSTIN: {company?.gstin || '32ABCFB2913N1ZN'}
               </p>
               <p className="mt-1 text-[11px] text-white/60 leading-relaxed">
-                Room No. OP 7/452, Manakkadavu, Kozhikode 673019, India
+                {company?.address || 'Room No. OP 7/452, Manakkadavu, Kozhikode 673019, India'}
               </p>
             </div>
           </div>
@@ -167,42 +169,45 @@ function Footer() {
 
             <div className="mt-5 space-y-3 text-xs">
               <a
-                href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier,%20I%20have%20a%20wholesale%20enquiry"
+                href={`https://wa.me/${company?.whatsappUAE?.replace(/[^0-9]/g, '') || '971507355418'}?text=Hello%20Boven%20Frontier,%20I%20have%20a%20wholesale%20enquiry`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 text-emerald-400 hover:text-emerald-300 transition"
               >
                 <MessageCircle size={15} />
-                <span>WhatsApp: +971 50 735 5418</span>
+                <span>WhatsApp: {company?.whatsappUAE || '+971 50 735 5418'}</span>
               </a>
 
-              <a
-                href="tel:+919633890447"
-                className="flex items-center gap-2.5 text-white/80 hover:text-white transition"
-              >
-                <Phone size={14} />
-                <span>Direct: +91 96338 90447</span>
-              </a>
+              {company?.phone1 && (
+                <a
+                  href={`tel:${company.phone1.replace(/\s+/g, '')}`}
+                  className="flex items-center gap-2.5 text-white/80 hover:text-white transition"
+                >
+                  <Phone size={14} />
+                  <span>Direct: {company.phone1}</span>
+                </a>
+              )}
+
+              {company?.phone2 && (
+                <a
+                  href={`tel:${company.phone2.replace(/\s+/g, '')}`}
+                  className="flex items-center gap-2.5 text-white/80 hover:text-white transition"
+                >
+                  <Phone size={14} />
+                  <span>Direct: {company.phone2}</span>
+                </a>
+              )}
 
               <a
-                href="tel:+917012777495"
-                className="flex items-center gap-2.5 text-white/80 hover:text-white transition"
-              >
-                <Phone size={14} />
-                <span>Direct: +91 70127 77495</span>
-              </a>
-
-              <a
-                href="mailto:aswin@bovenfrontier.co.in"
+                href={`mailto:${company?.email2 || company?.email1 || 'aswin@bovenfrontier.co.in'}`}
                 className="flex items-center gap-2.5 text-white/80 hover:text-white transition"
               >
                 <Mail size={14} />
-                <span>aswin@bovenfrontier.co.in</span>
+                <span>{company?.email2 || company?.email1 || 'aswin@bovenfrontier.co.in'}</span>
               </a>
 
               <div className="pt-2 text-[10px] text-white/50 leading-relaxed">
-                Operating Hours: Mon – Sat<br />
-                9:00 AM – 6:30 PM (IST)
+                Operating Hours: {company?.operatingHours || 'Mon – Sat: 9:00 AM – 6:30 PM (IST)'}
               </div>
             </div>
           </div>

@@ -11,10 +11,14 @@ import {
   RotateCcw,
   ShieldCheck,
   CheckCircle,
+  Building2,
+  KeyRound,
 } from 'lucide-react'
 import { useStore } from '../context/useStore'
 import ProductManager from './ProductManager'
 import BannerManager from './BannerManager'
+import CompanySettings from './CompanySettings'
+import SecuritySettings from './SecuritySettings'
 
 function AdminDashboard() {
   const navigate = useNavigate()
@@ -50,7 +54,7 @@ function AdminDashboard() {
   const activeBannersCount = banners.filter((b) => b.is_active).length
 
   return (
-    <div className="flex min-h-screen bg-[#f8f9fa] text-[#104360]">
+    <div className="flex min-h-screen bg-[#F8FAFC] text-[#104360]">
       {/* =======================================================
           MOBILE SIDEBAR OVERLAY
       ======================================================= */}
@@ -136,6 +140,36 @@ function AdminDashboard() {
             <span className="rounded-full bg-emerald-500/30 px-2 py-0.5 text-[10px] text-emerald-300">
               Live
             </span>
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab('company')
+              setMobileMenuOpen(false)
+            }}
+            className={`flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 transition ${
+              activeTab === 'company'
+                ? 'bg-[#EF2034] text-[#104360] font-semibold'
+                : 'text-white/70 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            <Building2 size={16} />
+            Company & Contact
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab('security')
+              setMobileMenuOpen(false)
+            }}
+            className={`flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 transition ${
+              activeTab === 'security'
+                ? 'bg-[#EF2034] text-[#104360] font-semibold'
+                : 'text-white/70 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            <KeyRound size={16} />
+            Security & Password
           </button>
 
           <button
@@ -322,15 +356,49 @@ function AdminDashboard() {
                     onClick={() => setActiveTab('banners')}
                     className="flex items-start gap-4 rounded-lg border border-gray-200 p-4 text-left transition hover:border-[#104360] hover:bg-gray-50/50"
                   >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EF2034] text-[#104360]">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EF2034] text-white">
                       <Megaphone size={20} />
                     </div>
                     <div>
                       <h4 className="text-sm font-semibold text-[#104360]">
-                        Edit Top Badge & Announcement
+                        Top Badge & Announcements
                       </h4>
                       <p className="mt-1 text-xs text-gray-500">
-                        Customize the top website announcement bar, color theme, and homepage hero badge.
+                        Customize the header announcement bar and hero badges.
+                      </p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab('company')}
+                    className="flex items-start gap-4 rounded-lg border border-gray-200 p-4 text-left transition hover:border-[#104360] hover:bg-gray-50/50"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#104360] text-white">
+                      <Building2 size={20} />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold text-[#104360]">
+                        Company & Contact Info
+                      </h4>
+                      <p className="mt-1 text-xs text-gray-500">
+                        Update phone numbers, WhatsApp, emails, address, and operating hours.
+                      </p>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab('security')}
+                    className="flex items-start gap-4 rounded-lg border border-gray-200 p-4 text-left transition hover:border-[#104360] hover:bg-gray-50/50"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#104360] text-[#EF2034]">
+                      <KeyRound size={20} />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold text-[#104360]">
+                        Security & Inquiries
+                      </h4>
+                      <p className="mt-1 text-xs text-gray-500">
+                        Change admin password and review incoming customer inquiries.
                       </p>
                     </div>
                   </button>
@@ -341,6 +409,8 @@ function AdminDashboard() {
 
           {activeTab === 'products' && <ProductManager />}
           {activeTab === 'banners' && <BannerManager />}
+          {activeTab === 'company' && <CompanySettings />}
+          {activeTab === 'security' && <SecuritySettings />}
         </main>
       </div>
 

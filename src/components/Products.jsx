@@ -5,6 +5,8 @@ import { useStore } from '../context/useStore'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 
 function ProductCard({ product, index }) {
+  const { company } = useStore()
+  const whatsappDigits = company?.whatsappUAE?.replace(/[^0-9]/g, '') || '971507355418'
   const whatsappMessage = encodeURIComponent(
     `Hello Boven Frontier, I would like to enquire about wholesale/export supply for ${product.brand} ${product.name}.`
   )
@@ -20,7 +22,7 @@ function ProductCard({ product, index }) {
         <div className="relative aspect-square overflow-hidden rounded-lg bg-[#f8f8f6]">
           {/* Quick WhatsApp Action */}
           <a
-            href={`https://wa.me/971507355418?text=${whatsappMessage}`}
+            href={`https://wa.me/${whatsappDigits}?text=${whatsappMessage}`}
             target="_blank"
             rel="noopener noreferrer"
             className="absolute right-2.5 bottom-2.5 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-emerald-600 shadow-xs backdrop-blur-xs transition hover:scale-110 hover:bg-emerald-600 hover:text-white"
@@ -177,19 +179,21 @@ function Products({ limit, showFilters = true }) {
         {/* =====================================================
             HEADER
         ===================================================== */}
-        <div className="reveal-on-scroll flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-gray-100">
+        <div className="reveal-on-scroll flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-gray-100">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#EF2034] mb-2">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#EF2034] mb-1.5">
               Product Portfolio
             </p>
-            <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#104360]">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-[#104360]">
               Manufactured for everyday performance.
             </h2>
           </div>
 
-          <p className="max-w-md text-xs sm:text-sm text-gray-500 leading-relaxed">
-            Direct-from-plant cleaning chemicals manufactured in India for wholesale distributors, institutional facilities, and GCC export containers.
-          </p>
+          <div className="flex items-center gap-3 text-xs font-medium text-gray-400 shrink-0">
+            <span>Direct Plant Supply</span>
+            <span>·</span>
+            <span>GCC Container Ready</span>
+          </div>
         </div>
 
         {/* =====================================================

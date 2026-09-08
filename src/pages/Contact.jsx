@@ -1,32 +1,27 @@
 import { MapPin, Phone, Mail, ShieldCheck, Clock, MessageCircle } from 'lucide-react'
 import ContactStrip from '../components/ContactStrip'
 import Footer from '../components/Footer'
-import { COMPANY } from '../constants'
+import { useStore } from '../context/useStore'
 
 function Contact() {
+  const { company } = useStore()
+
   return (
     <main className="bg-white text-[#104360]">
       {/* =====================================================
-          CONTACT HEADER (FROM CLIENT DATA)
+          CONTACT HEADER
       ===================================================== */}
-      <section className="bg-[#104360] px-6 py-20 text-white sm:py-24 relative overflow-hidden">
-        <div
-          className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full opacity-20 blur-3xl bg-[#EF2034]"
-          aria-hidden="true"
-        />
-
+      <section className="bg-[#104360] px-6 py-16 text-white sm:py-20 relative overflow-hidden">
         <div className="mx-auto max-w-[1600px] px-2 sm:px-10 relative z-10">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#EF2034]">
-              Direct Communication
-            </span>
-          </div>
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#EF2034] block mb-2">
+            Direct Communication
+          </span>
 
-          <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-semibold tracking-tight">
             Connect With Our Team
           </h1>
 
-          <p className="mt-4 max-w-2xl text-sm sm:text-base text-white/80 leading-relaxed font-normal">
+          <p className="mt-2 max-w-xl text-xs sm:text-sm text-white/70 leading-relaxed font-normal">
             For retail distributorship, bulk institutional purchase, or Middle East export inquiries, contact our management desk directly.
           </p>
         </div>
@@ -35,7 +30,7 @@ function Contact() {
       {/* =====================================================
           OFFICIAL CORPORATE DETAILS CARDS
       ===================================================== */}
-      <section className="border-b border-gray-200 bg-[#f8f9fa] py-14 px-6 sm:px-10 lg:px-16">
+      <section className="border-b border-gray-200 bg-[#F8FAFC] py-12 px-6 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-[1600px] grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           
           {/* Corporate & Registered Office */}
@@ -47,7 +42,7 @@ function Contact() {
               Corporate & Registered Office
             </p>
             <p className="mt-2 text-xs font-medium text-gray-800 leading-relaxed">
-              {COMPANY.address}
+              {company?.address || 'Room No. OP 7/452, Manakkadavu, Kozhikode 673019, India'}
             </p>
           </div>
 
@@ -60,25 +55,29 @@ function Contact() {
               Direct Calls & WhatsApp
             </p>
             <div className="mt-2 space-y-1 text-xs">
-              <p>
-                <a href="tel:+919633890447" className="font-semibold text-gray-900 hover:text-[#EF2034] transition">
-                  +91 96338 90447
-                </a>
-              </p>
-              <p>
-                <a href="tel:+917012777495" className="font-semibold text-gray-900 hover:text-[#EF2034] transition">
-                  +91 70127 77495
-                </a>
-              </p>
+              {company?.phone1 && (
+                <p>
+                  <a href={`tel:${company.phone1.replace(/\s+/g, '')}`} className="font-semibold text-gray-900 hover:text-[#EF2034] transition">
+                    {company.phone1}
+                  </a>
+                </p>
+              )}
+              {company?.phone2 && (
+                <p>
+                  <a href={`tel:${company.phone2.replace(/\s+/g, '')}`} className="font-semibold text-gray-900 hover:text-[#EF2034] transition">
+                    {company.phone2}
+                  </a>
+                </p>
+              )}
               <p className="pt-1">
                 <a
-                  href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry."
+                  href={`https://wa.me/${company?.whatsappUAE?.replace(/[^0-9]/g, '') || '971507355418'}?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-medium text-emerald-600 hover:text-emerald-700 inline-flex items-center gap-1 transition"
                 >
                   <MessageCircle size={13} />
-                  <span>+971 50 735 5418 (UAE)</span>
+                  <span>{company?.whatsappUAE || '+971 50 735 5418'} (UAE)</span>
                 </a>
               </p>
             </div>
@@ -93,21 +92,27 @@ function Contact() {
               Email Communications
             </p>
             <div className="mt-2 space-y-1 text-xs">
-              <p>
-                <a href="mailto:info@bovenfrontier.co.in" className="font-medium text-gray-900 hover:text-[#EF2034] transition">
-                  info@bovenfrontier.co.in
-                </a>
-              </p>
-              <p>
-                <a href="mailto:aswin@bovenfrontier.co.in" className="font-medium text-gray-900 hover:text-[#EF2034] transition">
-                  aswin@bovenfrontier.co.in
-                </a>
-              </p>
-              <p>
-                <a href="mailto:shidil@bovenfrontier.co.in" className="font-medium text-gray-900 hover:text-[#EF2034] transition">
-                  shidil@bovenfrontier.co.in
-                </a>
-              </p>
+              {company?.email1 && (
+                <p>
+                  <a href={`mailto:${company.email1}`} className="font-medium text-gray-900 hover:text-[#EF2034] transition">
+                    {company.email1}
+                  </a>
+                </p>
+              )}
+              {company?.email2 && (
+                <p>
+                  <a href={`mailto:${company.email2}`} className="font-medium text-gray-900 hover:text-[#EF2034] transition">
+                    {company.email2}
+                  </a>
+                </p>
+              )}
+              {company?.email3 && (
+                <p>
+                  <a href={`mailto:${company.email3}`} className="font-medium text-gray-900 hover:text-[#EF2034] transition">
+                    {company.email3}
+                  </a>
+                </p>
+              )}
             </div>
           </div>
 
@@ -120,11 +125,11 @@ function Contact() {
               Entity Registration
             </p>
             <div className="mt-2 text-xs space-y-1 text-gray-800">
-              <p className="font-semibold text-gray-900">LLP ID: {COMPANY.llpId}</p>
-              <p className="font-mono text-[11px] text-gray-600">GSTIN: {COMPANY.gstin}</p>
+              <p className="font-semibold text-gray-900">LLP ID: {company?.llpId || 'ACE-5349'}</p>
+              <p className="font-mono text-[11px] text-gray-600">GSTIN: {company?.gstin || '32ABCFB2913N1ZN'}</p>
               <div className="pt-2 text-[10px] text-gray-500 flex items-center gap-1">
                 <Clock size={12} className="text-[#104360]" />
-                <span>{COMPANY.operatingHours}</span>
+                <span>{company?.operatingHours || 'Mon – Sat: 9:00 AM – 6:30 PM (IST)'}</span>
               </div>
             </div>
           </div>

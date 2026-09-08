@@ -10,19 +10,23 @@ import {
 } from 'lucide-react'
 import ContactStrip from '../components/ContactStrip'
 import Footer from '../components/Footer'
+import { useStore } from '../context/useStore'
 import { COMPANY } from '../constants'
 
 function About() {
+  const { company: storeCompany } = useStore()
+  const company = storeCompany || COMPANY
+
   const pillars = [
     {
       icon: Factory,
       title: 'Advanced Sourcing & Manufacturing',
-      desc: 'Formulated and packaged at certified production facilities in India, ensuring batch consistency, high active matter, and strict compliance.',
+      desc: 'Formulated and packaged at certified production facilities in India with rigorous batch consistency and high active matter.',
     },
     {
       icon: Award,
       title: 'Quality & Innovation Focus',
-      desc: 'Continuous formulation enhancement for everyday consumer hygiene, balanced for maximum stain/grime removal while safe on surfaces.',
+      desc: 'High-efficacy formulations optimized for maximum stain removal while safe across premium domestic and commercial surfaces.',
     },
     {
       icon: Globe,
@@ -32,7 +36,7 @@ function About() {
     {
       icon: Sparkles,
       title: 'Trusted Consumer Brands',
-      desc: 'Manufacturing and distributing trusted consumer hygiene brands including LEXONE, FABIE PLUS, and KARE produced at facilities in India.',
+      desc: 'Direct manufacturing and distribution of consumer hygiene brands including LEXONE, FABIE PLUS, and KARE.',
     },
   ]
 
@@ -51,18 +55,18 @@ function About() {
         <div className="mx-auto max-w-[1600px] px-2 sm:px-10 relative z-10">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-xs font-semibold tracking-wider uppercase text-[#EF2034]">
-              About Boven Frontier International LLP
+              About {company.name}
             </span>
           </div>
 
           <h1 className="max-w-4xl text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight">
             Manufactured in India.
             <br />
-            <span className="text-[#EF2034]">Built for global standards.</span>
+            <span className="text-[#EF2034]">Engineered for global standards.</span>
           </h1>
 
           <p className="mt-6 max-w-3xl text-sm sm:text-base leading-relaxed text-white/80 font-normal">
-            BOVEN FRONTIER INTERNATIONAL LLP is a dynamic and forward-looking consumer goods company engaged in the manufacturing, domestic distribution, and international export of quality Food and Non-Food products. With a strong focus on quality, innovation, and customer satisfaction, we aim to bring reliable products to consumers while creating strong and sustainable market networks.
+            A dynamic consumer goods company specializing in direct manufacturing, domestic distribution, and international export of certified Food and Non-Food products across India and the GCC.
           </p>
         </div>
       </section>
@@ -70,7 +74,7 @@ function About() {
       {/* =====================================================
           OVERVIEW & CORE CAPABILITIES
       ===================================================== */}
-      <section className="mx-auto max-w-[1600px] px-6 py-20 sm:px-10 lg:px-16 sm:py-28">
+      <section className="mx-auto max-w-[1600px] px-6 py-20 sm:px-10 lg:px-16 sm:py-24">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-7 space-y-6">
             <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#EF2034]">
@@ -78,15 +82,15 @@ function About() {
             </span>
 
             <h2 className="text-2xl sm:text-4xl font-semibold tracking-tight text-[#104360] leading-snug">
-              From manufacturing to distribution and global trade.
+              Connecting quality manufacturing with international trade.
             </h2>
 
             <p className="text-sm sm:text-base leading-relaxed text-gray-600">
-              From manufacturing to distribution and global trade, BOVEN FRONTIER INTERNATIONAL LLP connects quality products with diverse markets. Our growing portfolio spans everyday consumer essentials, supported by efficient sourcing, manufacturing capabilities, and a robust distribution network.
+              We connect high-spec manufacturing facilities with expanding retail and wholesale markets. Our portfolio spans everyday consumer hygiene essentials, supported by direct plant sourcing, stringent batch controls, and container-ready logistics.
             </p>
 
             {/* Vision Callout Box */}
-            <div className="rounded-xl border-l-4 border-[#EF2034] bg-[#f8f9fa] p-5 sm:p-6 shadow-2xs">
+            <div className="rounded-xl border-l-4 border-[#EF2034] bg-[#F8FAFC] p-5 sm:p-6 shadow-2xs">
               <p className="text-xs font-semibold uppercase tracking-wider text-[#104360] mb-1">
                 Our Driving Vision
               </p>
@@ -94,23 +98,19 @@ function About() {
                 “Quality, Reach and Growth”
               </p>
               <p className="mt-2 text-xs sm:text-sm text-gray-600 leading-relaxed">
-                Driven by this vision, we continuously explore new markets, develop meaningful business partnerships, and deliver products that create value for customers and partners alike.
+                Expanding market reach through disciplined trade networks, transparent commercial terms, and uncompromising product consistency.
               </p>
             </div>
 
-            <p className="text-sm leading-relaxed text-gray-600">
-              We manufacture, package, and distribute trusted consumer hygiene brands including <strong className="text-[#104360]">LEXONE</strong>, <strong className="text-[#104360]">FABIE PLUS</strong>, and <strong className="text-[#104360]">KARE</strong>, produced at our facilities in India.
-            </p>
-
             <div className="pt-2">
-              <p className="font-script text-xl sm:text-2xl text-[#104360] font-normal">
-                {COMPANY.tagline}
+              <p className="font-script text-2xl sm:text-3xl text-[#104360] font-normal">
+                {company.tagline || COMPANY.tagline}
               </p>
             </div>
           </div>
 
           <div className="lg:col-span-5">
-            <div className="rounded-2xl bg-[#f8f9fa] p-7 sm:p-9 border border-gray-200/80 shadow-xs space-y-6">
+            <div className="rounded-2xl bg-[#F8FAFC] p-7 sm:p-9 border border-gray-200/80 shadow-xs space-y-6">
               <h3 className="text-base font-bold uppercase tracking-wider text-[#104360] border-b border-gray-200 pb-3">
                 Company Credentials
               </h3>
@@ -118,23 +118,23 @@ function About() {
               <div className="space-y-4 text-xs">
                 <div>
                   <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400">Legal Entity</p>
-                  <p className="text-sm font-semibold text-gray-900 mt-0.5">{COMPANY.name}</p>
+                  <p className="text-sm font-semibold text-gray-900 mt-0.5">{company.name}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400">LLP Registration</p>
-                    <p className="text-sm font-semibold text-[#EF2034] mt-0.5">{COMPANY.llpId}</p>
+                    <p className="text-sm font-semibold text-[#EF2034] mt-0.5">{company.llpId}</p>
                   </div>
                   <div>
                     <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400">GSTIN</p>
-                    <p className="text-xs font-semibold text-gray-900 mt-0.5">{COMPANY.gstin}</p>
+                    <p className="text-xs font-semibold text-gray-900 mt-0.5">{company.gstin}</p>
                   </div>
                 </div>
 
                 <div>
                   <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400">Corporate Office</p>
-                  <p className="text-xs text-gray-700 mt-0.5 leading-relaxed">{COMPANY.address}</p>
+                  <p className="text-xs text-gray-700 mt-0.5 leading-relaxed">{company.address}</p>
                 </div>
 
                 <div>
@@ -165,7 +165,7 @@ function About() {
       {/* =====================================================
           PILLARS GRID
       ===================================================== */}
-      <section className="bg-[#f8f9fa] py-20 px-6 sm:px-10 lg:px-16 border-y border-gray-200/70">
+      <section className="bg-[#F8FAFC] py-20 px-6 sm:px-10 lg:px-16 border-y border-gray-200/70">
         <div className="mx-auto max-w-[1600px]">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-xs font-semibold uppercase tracking-wider text-[#EF2034]">
@@ -203,43 +203,40 @@ function About() {
       </section>
 
       {/* =====================================================
-          STRATEGIC PARTNERSHIPS & LEAD GENERATION (FROM CLIENT DATA)
+          STRATEGIC PARTNERSHIPS & TRADE NETWORKS
       ===================================================== */}
       <section className="py-20 px-6 sm:px-10 lg:px-16 mx-auto max-w-[1600px]">
-        <div className="grid gap-12 lg:grid-cols-2">
+        <div className="grid gap-8 lg:grid-cols-2">
           
-          {/* Relationship-Driven Lead Generation */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 sm:p-12 shadow-xs flex flex-col justify-between">
+          {/* Relationship-Driven Trade */}
+          <div className="rounded-2xl border border-gray-200 bg-white p-8 sm:p-10 shadow-xs flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#EF2034]/10 text-[#EF2034]">
                   <Users size={20} />
                 </div>
                 <span className="text-xs font-bold uppercase tracking-wider text-[#EF2034]">
-                  Relationship-Driven Lead Generation
+                  Relationship-Driven Trade
                 </span>
               </div>
 
               <h3 className="text-xl sm:text-2xl font-semibold text-[#104360]">
-                We believe lasting business begins with meaningful relationships.
+                Lasting business begins with trusted relationships.
               </h3>
 
-              <div className="mt-5 space-y-4 text-xs sm:text-sm text-gray-600 leading-relaxed">
+              <div className="mt-4 space-y-3 text-xs sm:text-sm text-gray-600 leading-relaxed">
                 <p>
-                  At BOVEN FRONTIER INTERNATIONAL LLP, we go beyond traditional lead generation by building strong connections with distributors, retailers, wholesalers, importers, exporters, and business partners.
+                  We partner directly with distributors, wholesalers, and institutional buyers across India and the GCC.
                 </p>
                 <p>
-                  Through a relationship-first approach, we identify the right opportunities, understand market needs, and create partnerships that deliver long-term value.
-                </p>
-                <p>
-                  Our approach focuses on <strong className="text-[#104360]">trust, communication, market understanding, and consistent engagement</strong>—turning initial connections into productive business relationships and sustainable growth.
+                  Our commercial framework prioritizes transparency, reliable shipment schedules, and continuous support to ensure mutual long-term growth.
                 </p>
               </div>
             </div>
 
             <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#104360]">
-                Connect with us. Explore opportunities. Grow together.
+              <span className="text-xs font-semibold text-[#104360]">
+                Direct distributor inquiries welcome
               </span>
               <Link
                 to="/contact"
@@ -251,38 +248,35 @@ function About() {
             </div>
           </div>
 
-          {/* B2B Strategic Events & Partnership Networks */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 sm:p-12 shadow-xs flex flex-col justify-between">
+          {/* B2B Trade Networks */}
+          <div className="rounded-2xl border border-gray-200 bg-white p-8 sm:p-10 shadow-xs flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#104360]/10 text-[#104360]">
                   <Handshake size={20} />
                 </div>
                 <span className="text-xs font-bold uppercase tracking-wider text-[#104360]">
-                  B2B Strategic Events & Partnership Networks
+                  B2B Trade Networks
                 </span>
               </div>
 
               <h3 className="text-xl sm:text-2xl font-semibold text-[#104360]">
-                Creating connections that create opportunities.
+                Active participation in international trade ecosystems.
               </h3>
 
-              <div className="mt-5 space-y-4 text-xs sm:text-sm text-gray-600 leading-relaxed">
+              <div className="mt-4 space-y-3 text-xs sm:text-sm text-gray-600 leading-relaxed">
                 <p>
-                  At BOVEN FRONTIER INTERNATIONAL LLP, we actively build and strengthen our B2B ecosystem through strategic business events, industry engagements, trade exhibitions, buyer–seller meets, and partnership networks.
+                  Through trade exhibitions, buyer-seller summits, and dedicated Middle East channel partnerships, we bridge manufacturing capabilities with regional market demand.
                 </p>
-                <p>
-                  These platforms help us connect with distributors, retailers, wholesalers, importers, exporters, manufacturers, and strategic business partners across domestic and international markets.
-                </p>
-                <p>
-                  Our relationship-focused approach enables us to discover new markets, exchange industry insights, develop collaborations, and create long-term commercial opportunities. By bringing the right businesses together, we aim to transform connections into sustainable partnerships and measurable growth.
+                <p className="font-medium text-[#104360]">
+                  Connect • Collaborate • Expand • Grow
                 </p>
               </div>
             </div>
 
             <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#104360]">
-                Connect • Collaborate • Expand • Grow
+              <span className="text-xs font-semibold text-[#104360]">
+                GCC container & export contracts
               </span>
               <Link
                 to="/contact"

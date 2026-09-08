@@ -217,7 +217,7 @@ function ProductManager() {
         {/* Desktop View */}
         <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left text-xs text-[#104360]">
-            <thead className="border-b border-gray-200 bg-[#f8f9fa] text-[9px] uppercase tracking-wider text-gray-500">
+            <thead className="border-b border-gray-200 bg-[#F8FAFC] text-[9px] uppercase tracking-wider text-gray-500">
               <tr>
                 <th className="py-3.5 pl-4 pr-2">Product</th>
                 <th className="px-3 py-3.5">Brand</th>
@@ -391,7 +391,7 @@ function ProductManager() {
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/60 p-4 backdrop-blur-xs">
           <div className="relative w-full max-w-2xl rounded-xl bg-white shadow-2xl overflow-hidden my-8">
-            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 bg-[#f8f9fa]">
+            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 bg-[#F8FAFC]">
               <div className="flex items-center gap-2 text-[#104360]">
                 <Layers size={18} className="text-[#EF2034]" />
                 <h3 className="font-medium text-sm sm:text-base">

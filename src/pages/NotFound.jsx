@@ -3,7 +3,7 @@ import { ArrowLeft, Home } from 'lucide-react'
 
 function NotFound() {
   return (
-    <main className="flex min-h-[70vh] items-center justify-center bg-[#f8f9fa] px-6 py-24 text-[#104360]">
+    <main className="flex min-h-[70vh] items-center justify-center bg-[#F8FAFC] px-6 py-24 text-[#104360]">
       <div className="mx-auto max-w-lg text-center">
         <p className="text-xs font-semibold uppercase tracking-wider text-[#EF2034]">
           404 Error

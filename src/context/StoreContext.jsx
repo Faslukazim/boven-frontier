@@ -3,9 +3,13 @@ import imageCompression from 'browser-image-compression'
 import { StoreContext } from './storeContextInstance'
 import { INITIAL_PRODUCTS } from '../data/productsData'
 import { INITIAL_BANNERS } from '../data/bannersData'
+import { COMPANY } from '../constants'
 
 const PRODUCTS_STORAGE_KEY = 'bf_products_v1'
 const BANNERS_STORAGE_KEY = 'bf_banners_v1'
+const COMPANY_STORAGE_KEY = 'bf_company_v1'
+const ADMIN_PWD_STORAGE_KEY = 'bf_admin_pwd_v1'
+const INQUIRIES_STORAGE_KEY = 'bf_inquiries'
 
 export function StoreProvider({ children }) {
   const [products, setProducts] = useState(() => {
@@ -190,6 +194,93 @@ export function StoreProvider({ children }) {
     setTopBadge((prev) => ({ ...prev, ...newSettings }))
   }
 
+  // ==========================================================
+  // EDITABLE COMPANY CONTACT & LEGAL SETTINGS
+  // ==========================================================
+  const [company, setCompany] = useState(() => {
+    try {
+      const cached = localStorage.getItem(COMPANY_STORAGE_KEY)
+      if (cached) {
+        const parsed = JSON.parse(cached)
+        if (parsed && typeof parsed === 'object') return { ...COMPANY, ...parsed }
+      }
+    } catch (e) {
+      console.warn('Failed reading company from localStorage:', e)
+    }
+    return COMPANY
+  })
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(COMPANY_STORAGE_KEY, JSON.stringify(company))
+    } catch (e) {
+      console.warn('Failed saving company to localStorage:', e)
+    }
+  }, [company])
+
+  const updateCompany = (newFields) => {
+    setCompany((prev) => ({ ...prev, ...newFields }))
+  }
+
+  const resetCompany = () => {
+    setCompany(COMPANY)
+    localStorage.removeItem(COMPANY_STORAGE_KEY)
+  }
+
+  // ==========================================================
+  // ADMIN PASSWORD MANAGEMENT
+  // ==========================================================
+  const [adminPassword, setAdminPassword] = useState(() => {
+    try {
+      const cached = localStorage.getItem(ADMIN_PWD_STORAGE_KEY)
+      if (cached && typeof cached === 'string' && cached.trim().length > 0) return cached
+    } catch (e) {
+      console.warn('Failed reading admin password from localStorage:', e)
+    }
+    return import.meta.env.VITE_ADMIN_PASSWORD || 'Boven@2026'
+  })
+
+  const updateAdminPassword = (newPassword) => {
+    const trimmed = (newPassword || '').trim()
+    if (!trimmed) return false
+    setAdminPassword(trimmed)
+    try {
+      localStorage.setItem(ADMIN_PWD_STORAGE_KEY, trimmed)
+    } catch (e) {
+      console.warn('Failed saving admin password:', e)
+    }
+    return true
+  }
+
+  // ==========================================================
+  // INQUIRIES MANAGEMENT
+  // ==========================================================
+  const [inquiries, setInquiries] = useState(() => {
+    try {
+      const cached = localStorage.getItem(INQUIRIES_STORAGE_KEY)
+      if (cached) {
+        const parsed = JSON.parse(cached)
+        if (Array.isArray(parsed)) return parsed
+      }
+    } catch (e) {
+      console.warn('Failed reading inquiries from localStorage:', e)
+    }
+    return []
+  })
+
+  const deleteInquiry = (id) => {
+    setInquiries((prev) => {
+      const filtered = prev.filter((inq) => inq.id !== id)
+      localStorage.setItem(INQUIRIES_STORAGE_KEY, JSON.stringify(filtered))
+      return filtered
+    })
+  }
+
+  const clearInquiries = () => {
+    setInquiries([])
+    localStorage.removeItem(INQUIRIES_STORAGE_KEY)
+  }
+
   const value = {
     products,
     banners,
@@ -206,6 +297,17 @@ export function StoreProvider({ children }) {
     // Editable Top Badge
     topBadge,
     updateTopBadge,
+    // Editable Company Settings
+    company,
+    updateCompany,
+    resetCompany,
+    // Admin Password
+    adminPassword,
+    updateAdminPassword,
+    // Inquiries
+    inquiries,
+    deleteInquiry,
+    clearInquiries,
   }
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>

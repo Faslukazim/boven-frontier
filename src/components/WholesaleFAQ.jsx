@@ -1,9 +1,14 @@
 import { useState } from 'react'
 import { ChevronDown, HelpCircle, MessageCircle, ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useStore } from '../context/useStore'
+import { COMPANY } from '../constants'
 
 export default function WholesaleFAQ() {
   const [openIndex, setOpenIndex] = useState(0)
+  const { company: storeCompany } = useStore()
+  const company = storeCompany || COMPANY
+  const rawWhatsapp = (company.whatsappUAE || company.phone1 || '+971 50 735 5418').replace(/[^0-9]/g, '')
 
   const faqs = [
     {
@@ -53,24 +58,24 @@ export default function WholesaleFAQ() {
               Frequently Asked Questions for B2B Buyers.
             </h2>
 
-            <p className="mt-4 text-xs sm:text-sm text-gray-500 leading-relaxed">
+            <p className="mt-4 text-xs sm:text-sm text-gray-500 leading-relaxed font-normal">
               Find quick answers regarding our minimum order volumes, private label capabilities, international shipping corridors, and compliance standards.
             </p>
 
-            <div className="mt-8 rounded-xl border border-[#104360]/10 bg-[#f4f7f9] p-6">
+            <div className="mt-8 rounded-xl border border-gray-200/80 bg-[#F8FAFC] p-6 shadow-2xs">
               <h3 className="text-xs font-bold uppercase tracking-wider text-[#104360]">
                 Need a Custom Formulation or Pricing?
               </h3>
-              <p className="mt-2 text-xs text-[#4D4B4C] leading-relaxed">
+              <p className="mt-2 text-xs text-gray-600 leading-relaxed">
                 Speak directly with our B2B Export Desk for custom container pricing, bulk drums (20L/200L), and OEM packaging schedules.
               </p>
 
               <div className="mt-5 flex flex-col gap-2.5">
                 <a
-                  href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier,%20I%20have%20a%20B2B%20wholesale%20enquiry"
+                  href={`https://wa.me/${rawWhatsapp}?text=Hello%20Boven%20Frontier,%20I%20have%20a%20B2B%20wholesale%20enquiry`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-emerald-700 transition"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#EF2034] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#104360] transition shadow-xs"
                 >
                   <MessageCircle size={15} />
                   WhatsApp B2B Desk
@@ -78,7 +83,7 @@ export default function WholesaleFAQ() {
 
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-[#104360]/20 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#104360] hover:border-[#EF2034] hover:text-[#EF2034] transition"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#104360] hover:border-[#EF2034] hover:text-[#EF2034] transition"
                 >
                   Contact Form
                   <ArrowUpRight size={13} />

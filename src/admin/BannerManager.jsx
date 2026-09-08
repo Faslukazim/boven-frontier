@@ -629,7 +629,7 @@ function BannerManager() {
       {isPromoModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
           <div className="relative w-full max-w-md rounded-2xl bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 bg-[#f8f9fa]">
+            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 bg-[#F8FAFC]">
               <h3 className="font-bold text-sm text-[#104360]">
                 {editingPromo ? 'Edit Promotional Banner' : 'Create New Promotional Banner'}
               </h3>

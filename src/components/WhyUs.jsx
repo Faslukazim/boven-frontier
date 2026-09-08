@@ -13,28 +13,28 @@ const wholesalePillars = [
     icon: Factory,
     title: 'Direct Factory Margins',
     subtitle: 'Zero middleman markups',
-    text: 'Source directly from our automated blending and bottling facility in India. Enjoy pure factory-level pricing that protects your wholesale and retail margins.',
+    text: 'Direct factory pricing from automated blending & bottling lines in India.',
   },
   {
     number: '02',
     icon: Sparkles,
     title: 'Contract OEM & Private Label',
     subtitle: 'Custom formulation & bottling',
-    text: 'We manufacture tailored formulations matching your required surfactant concentration, viscosity, and proprietary fragrance profiles with custom branded labels.',
+    text: 'Tailored surfactant active matter, custom viscosities, and private label packaging.',
   },
   {
     number: '03',
     icon: Ship,
     title: 'Container-Load Logistics',
     subtitle: 'Palletized 20ft / 40ft FCL',
-    text: 'Strategically connected for direct seaport dispatch from India to GCC trade hubs including Jebel Ali (Dubai), Dammam, and Muscat with complete customs and bill of lading documentation.',
+    text: 'Palletized container dispatch to Jebel Ali, Dammam, and international ports.',
   },
   {
     number: '04',
     icon: ShieldCheck,
     title: 'Certified Formulation Quality',
     subtitle: 'Induction sealed & lab tested',
-    text: 'Every batch is quality verified for pH balance and active matter. All bottles feature induction heat-sealed foil liners to ensure zero transit leakage during ocean shipping.',
+    text: 'pH-tested active matter formulations with leak-proof induction heat foil seals.',
   },
 ]
 
@@ -61,10 +61,7 @@ function WhyUs() {
             </h2>
           </div>
 
-          <p className="hidden sm:block max-w-md text-xs sm:text-sm text-gray-500 leading-relaxed">
-            Whether you are stocking regional supermarket shelves or importing full shipping containers into the Gulf, Boven Frontier delivers consistency, compliance, and direct factory pricing.
-          </p>
-          <p className="block sm:hidden text-xs text-gray-500 leading-relaxed">
+          <p className="max-w-md text-xs sm:text-sm text-gray-500 leading-relaxed">
             Consistent formulations, export compliance, and direct factory pricing.
           </p>
         </div>
@@ -80,7 +77,7 @@ function WhyUs() {
             return (
               <div
                 key={item.number}
-                className={`reveal-on-scroll ${staggerClass} group flex flex-col justify-between rounded-xl border border-gray-200/80 bg-[#fbfbf9] p-5 sm:p-6 transition-all duration-300 hover:bg-white hover:border-[#EF2034]/40 hover:shadow-lg`}
+                className={`reveal-on-scroll ${staggerClass} group flex flex-col justify-between rounded-xl border border-gray-200/80 bg-[#F8FAFC] p-5 sm:p-6 transition-all duration-300 hover:bg-white hover:border-[#EF2034]/40 hover:shadow-lg`}
               >
                 <div>
                   <div className="flex items-center justify-between">

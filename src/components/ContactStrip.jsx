@@ -11,7 +11,7 @@ import { useStore } from '../context/useStore'
 
 function ContactStrip() {
   const [searchParams] = useSearchParams()
-  const { products } = useStore()
+  const { products, company } = useStore()
 
   const [formData, setFormData] = useState(() => ({
     name: '',
@@ -51,10 +51,11 @@ function ContactStrip() {
   }
 
   const handleWhatsAppDirect = () => {
+    const uaeDigits = company?.whatsappUAE?.replace(/[^0-9]/g, '') || '971507355418'
     const text = `*New B2B Enquiry - Boven Frontier Web*\n\n*Name:* ${formData.name || 'Not specified'}\n*Company:* ${formData.company || 'Not specified'}\n*Email:* ${formData.email || 'Not specified'}\n*Phone:* ${formData.phone || 'Not specified'}\n*Region:* ${formData.region || 'Not specified'}\n*Buyer Type:* ${formData.buyerType || 'Not specified'}\n*Product Interest:* ${formData.product || 'General Products'}\n*Message:* ${formData.message || 'I would like more information on bulk/export pricing.'}`
 
     window.open(
-      `https://wa.me/971507355418?text=${encodeURIComponent(text)}`,
+      `https://wa.me/${uaeDigits}?text=${encodeURIComponent(text)}`,
       '_blank',
       'noopener,noreferrer'
     )
@@ -63,12 +64,8 @@ function ContactStrip() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-[#f3f1ec] text-[#104360]"
+      className="relative overflow-hidden bg-[#F8FAFC] text-[#104360] border-t border-[#104360]/10"
     >
-      {/* Subtle Background Circles */}
-      <div className="pointer-events-none absolute -right-28 -top-28 h-96 w-96 rounded-full border border-[#104360]/5" />
-      <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full border border-[#EF2034]/10" />
-
       <div className="mx-auto max-w-[1600px] px-5 sm:px-10 lg:px-16 py-16 sm:py-24">
         {/* =====================================================
             HEADER & QUICK CONTACTS
@@ -84,7 +81,7 @@ function ContactStrip() {
             </h2>
 
             <p className="mt-4 max-w-lg text-xs sm:text-sm leading-relaxed text-gray-500">
-              Whether you are an institutional buyer, domestic distributor, or looking for container-load export supply to the Middle East, speak directly with the Boven Frontier team.
+              Direct factory supply for wholesale distributors, institutional facilities, and GCC container export.
             </p>
           </div>
 
@@ -93,7 +90,7 @@ function ContactStrip() {
             <div className="border-t border-[#104360]/10">
               {/* Phone */}
               <a
-                href="tel:+919633890447"
+                href={`tel:${company?.phone1?.replace(/\s+/g, '') || '+919633890447'}`}
                 className="group flex items-center justify-between border-b border-[#104360]/10 py-4 sm:py-5 transition-colors hover:bg-white/40 px-2"
               >
                 <div className="flex items-center gap-4">
@@ -105,7 +102,7 @@ function ContactStrip() {
                       Direct Phone
                     </p>
                     <p className="mt-0.5 text-sm font-semibold text-gray-900">
-                      +91 96338 90447 / +91 70127 77495
+                      {company?.phone1 || '+91 96338 90447'}{company?.phone2 ? ` · ${company.phone2}` : ''}
                     </p>
                   </div>
                 </div>
@@ -117,7 +114,7 @@ function ContactStrip() {
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry%20regarding%20products."
+                href={`https://wa.me/${company?.whatsappUAE?.replace(/[^0-9]/g, '') || '971507355418'}?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry%20regarding%20products.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center justify-between border-b border-[#104360]/10 py-4 sm:py-5 transition-colors hover:bg-white/40 px-2"
@@ -131,7 +128,7 @@ function ContactStrip() {
                       WhatsApp Quick Chat
                     </p>
                     <p className="mt-0.5 text-sm font-semibold text-gray-900">
-                      +971 50 735 5418
+                      {company?.whatsappUAE || '+971 50 735 5418'}
                     </p>
                   </div>
                 </div>
@@ -143,7 +140,7 @@ function ContactStrip() {
 
               {/* Email */}
               <a
-                href="mailto:info@bovenfrontier.co.in"
+                href={`mailto:${company?.email1 || 'info@bovenfrontier.co.in'}`}
                 className="group flex items-center justify-between border-b border-[#104360]/10 py-4 sm:py-5 transition-colors hover:bg-white/40 px-2"
               >
                 <div className="flex items-center gap-4">
@@ -155,7 +152,7 @@ function ContactStrip() {
                       Official Email
                     </p>
                     <p className="mt-0.5 text-sm font-semibold text-gray-900">
-                      info@bovenfrontier.co.in / aswin@bovenfrontier.co.in
+                      {company?.email1 || 'info@bovenfrontier.co.in'}{company?.email2 ? ` · ${company.email2}` : ''}
                     </p>
                   </div>
                 </div>
@@ -193,17 +190,17 @@ function ContactStrip() {
                 <span className="text-white/40 text-[10px] uppercase tracking-wider">
                   Origin
                 </span>
-                <span>India</span>
+                <span>{company?.origin || 'India'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white/40 text-[9px] uppercase tracking-wider">
-                  Target Regions
+                  Target Corridors
                 </span>
-                <span>India · UAE · Saudi Arabia · GCC</span>
+                <span>{company?.markets ? company.markets.join(' · ') : 'India · UAE · GCC'}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white/40 text-[9px] uppercase tracking-wider">
-                  Response Time
+                  Response Window
                 </span>
                 <span className="text-[#EF2034]">Within 24 Hours</span>
               </div>
