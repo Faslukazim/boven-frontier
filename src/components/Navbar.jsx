@@ -57,7 +57,7 @@ function Navbar() {
         {/* Brand Logo - Seamlessly blended on white */}
         <Link to="/" className="flex items-center gap-3 shrink-0">
           <img
-            src="/assets/branding/bovenlogo-white.jpeg"
+            src="/assets/branding/bovenlogo2.jpeg"
             alt="Boven Frontier International LLP"
             className="h-[32px] sm:h-[42px] max-w-[170px] sm:max-w-none w-auto object-contain"
           />

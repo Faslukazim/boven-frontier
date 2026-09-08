@@ -96,16 +96,22 @@ body {
 }
 
 .hero-text-reveal-1 {
-  animation: heroSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: heroSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 .hero-text-reveal-2 {
-  animation: heroSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 60ms forwards;
+  animation: heroSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 80ms forwards;
 }
 .hero-text-reveal-3 {
-  animation: heroSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 120ms forwards;
+  animation: heroSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 160ms forwards;
+}
+.hero-text-reveal-4 {
+  animation: heroSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 240ms forwards;
 }
 .hero-fade-in {
-  animation: heroSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 180ms forwards;
+  animation: heroSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 320ms forwards;
+}
+.hero-script-in {
+  animation: heroSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 400ms forwards;
 }
 
 @keyframes floatGentle {
