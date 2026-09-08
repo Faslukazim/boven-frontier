@@ -4,12 +4,25 @@ import { StoreContext } from './storeContextInstance'
 import { INITIAL_PRODUCTS } from '../data/productsData'
 import { INITIAL_BANNERS } from '../data/bannersData'
 import { COMPANY } from '../constants'
+import { isSupabaseConfigured, supabase } from '../lib/supabase'
 
 const PRODUCTS_STORAGE_KEY = 'bf_products_v1'
 const BANNERS_STORAGE_KEY = 'bf_banners_v1'
 const COMPANY_STORAGE_KEY = 'bf_company_v1'
 const ADMIN_PWD_STORAGE_KEY = 'bf_admin_pwd_v1'
+const ADMIN_USERS_STORAGE_KEY = 'bf_admin_users_v1'
 const INQUIRIES_STORAGE_KEY = 'bf_inquiries'
+
+const DEFAULT_ADMIN_USERS = [
+  {
+    id: 'usr_aswin_primary',
+    name: 'Aswin',
+    email: 'aswin@bovenfrontier.co.in',
+    role: 'Super Admin',
+    createdAt: '2026-03-01T00:00:00.000Z',
+    isPrimary: true,
+  },
+]
 
 export function StoreProvider({ children }) {
   const [products, setProducts] = useState(() => {
@@ -65,6 +78,9 @@ export function StoreProvider({ children }) {
       in_stock: productData.in_stock !== undefined ? productData.in_stock : true,
     }
     setProducts((prev) => [newProduct, ...prev])
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('products').insert([newProduct]).catch(console.warn)
+    }
     return newProduct
   }
 
@@ -72,10 +88,45 @@ export function StoreProvider({ children }) {
     setProducts((prev) =>
       prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item))
     )
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('products').update(updatedFields).eq('id', id).catch(console.warn)
+    }
   }
 
   const deleteProduct = (id) => {
     setProducts((prev) => prev.filter((item) => item.id !== id))
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('products').delete().eq('id', id).catch(console.warn)
+    }
+  }
+
+  const cloneProduct = (id) => {
+    const original = products.find((p) => p.id === id)
+    if (!original) return null
+    const cloned = {
+      ...original,
+      id: `prod-${Date.now()}`,
+      name: `${original.name} (Copy)`,
+      sort_order: products.length + 1,
+    }
+    setProducts((prev) => [cloned, ...prev])
+    return cloned
+  }
+
+  const toggleProductFeatured = (id) => {
+    setProducts((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, is_featured: !item.is_featured } : item
+      )
+    )
+  }
+
+  const toggleProductStock = (id) => {
+    setProducts((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, in_stock: item.in_stock === false } : item
+      )
+    )
   }
 
   // Banner CRUD
@@ -112,11 +163,10 @@ export function StoreProvider({ children }) {
   const resetToDefaults = () => {
     setProducts(INITIAL_PRODUCTS)
     setBanners(INITIAL_BANNERS)
-    setTopBadge(DEFAULT_TOP_BADGE)
     try {
       localStorage.removeItem(PRODUCTS_STORAGE_KEY)
       localStorage.removeItem(BANNERS_STORAGE_KEY)
-      localStorage.removeItem(TOP_BADGE_STORAGE_KEY)
+      localStorage.removeItem('bf_top_badge_v1')
       localStorage.removeItem('bf_quote_v1')
     } catch (e) {
       console.error(e)
@@ -149,49 +199,83 @@ export function StoreProvider({ children }) {
     }
   }
 
-  // Active top announcement banner
-  const activeTopBanner = banners.find(
-    (b) => b.is_active && b.position === 'top-bar'
-  )
-
   // ==========================================================
-  // EDITABLE TOP BADGE & ANNOUNCEMENT SETTINGS
+  // MULTI-USER TEAM MANAGEMENT (Aswin & Added Admins)
   // ==========================================================
-  const TOP_BADGE_STORAGE_KEY = 'bf_top_badge_v1'
-  const DEFAULT_TOP_BADGE = {
-    title: 'Direct Factory Wholesale · Manufactured in India · Export Ready to UAE, KSA, GCC',
-    subtitle: 'Min. Order: 50 Cartons · Direct Factory Pricing',
-    ctaText: 'Export Desk',
-    ctaLink: 'https://wa.me/971507355418?text=Hello%20Boven%20Frontier%2C%20I%20would%20like%20to%20enquire%20about%20wholesale%20orders.',
-    theme: 'navy', // 'navy' | 'gold' | 'dark'
-    is_active: true,
-    heroBadge: 'Manufactured in India · Direct Factory Supply',
-  }
-
-  const [topBadge, setTopBadge] = useState(() => {
+  const [adminUsers, setAdminUsers] = useState(() => {
     try {
-      const cached = localStorage.getItem(TOP_BADGE_STORAGE_KEY)
+      const cached = localStorage.getItem(ADMIN_USERS_STORAGE_KEY)
       if (cached) {
         const parsed = JSON.parse(cached)
-        if (parsed && typeof parsed === 'object') return { ...DEFAULT_TOP_BADGE, ...parsed }
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const hasAswin = parsed.some(
+            (u) => u.email?.toLowerCase() === 'aswin@bovenfrontier.co.in'
+          )
+          if (hasAswin) return parsed
+          return [...DEFAULT_ADMIN_USERS, ...parsed]
+        }
       }
     } catch (e) {
-      console.warn('Failed reading top badge from localStorage:', e)
+      console.warn('Failed reading admin users from localStorage:', e)
     }
-    return DEFAULT_TOP_BADGE
+    return DEFAULT_ADMIN_USERS
   })
 
-  // Persist top badge
   useEffect(() => {
     try {
-      localStorage.setItem(TOP_BADGE_STORAGE_KEY, JSON.stringify(topBadge))
+      localStorage.setItem(ADMIN_USERS_STORAGE_KEY, JSON.stringify(adminUsers))
     } catch (e) {
-      console.warn('Failed saving top badge to localStorage:', e)
+      console.warn('Failed saving admin users to localStorage:', e)
     }
-  }, [topBadge])
+  }, [adminUsers])
 
-  const updateTopBadge = (newSettings) => {
-    setTopBadge((prev) => ({ ...prev, ...newSettings }))
+  const addAdminUser = ({ name, email, role = 'Administrator', password = '' }) => {
+    const trimmedEmail = (email || '').trim().toLowerCase()
+    if (!trimmedEmail) return { success: false, error: 'Email is required' }
+
+    const exists = adminUsers.some((u) => u.email.toLowerCase() === trimmedEmail)
+    if (exists) return { success: false, error: 'User with this email already exists' }
+
+    const newUser = {
+      id: `usr_${Date.now()}`,
+      name: (name || '').trim() || trimmedEmail.split('@')[0],
+      email: trimmedEmail,
+      role: role || 'Administrator',
+      password: (password || '').trim(),
+      createdAt: new Date().toISOString(),
+      isPrimary: false,
+    }
+
+    setAdminUsers((prev) => [...prev, newUser])
+    return { success: true, user: newUser }
+  }
+
+  const updateAdminUser = (id, updates) => {
+    setAdminUsers((prev) =>
+      prev.map((user) => {
+        if (user.id !== id) return user
+        if (user.isPrimary) {
+          return {
+            ...user,
+            name: updates.name || user.name,
+            role: 'Super Admin',
+            password: updates.password !== undefined ? updates.password : user.password,
+          }
+        }
+        return { ...user, ...updates }
+      })
+    )
+    return { success: true }
+  }
+
+  const deleteAdminUser = (id) => {
+    const target = adminUsers.find((u) => u.id === id)
+    if (!target) return { success: false, error: 'User not found' }
+    if (target.isPrimary || target.email.toLowerCase() === 'aswin@bovenfrontier.co.in') {
+      return { success: false, error: 'Cannot delete the primary Super Administrator' }
+    }
+    setAdminUsers((prev) => prev.filter((u) => u.id !== id))
+    return { success: true }
   }
 
   // ==========================================================
@@ -219,7 +303,16 @@ export function StoreProvider({ children }) {
   }, [company])
 
   const updateCompany = (newFields) => {
-    setCompany((prev) => ({ ...prev, ...newFields }))
+    setCompany((prev) => {
+      const updated = { ...prev, ...newFields }
+      if (isSupabaseConfigured && supabase) {
+        supabase
+          .from('company_settings')
+          .upsert({ id: 'default', data: updated, updated_at: new Date().toISOString() })
+          .catch(console.warn)
+      }
+      return updated
+    })
   }
 
   const resetCompany = () => {
@@ -281,26 +374,64 @@ export function StoreProvider({ children }) {
     localStorage.removeItem(INQUIRIES_STORAGE_KEY)
   }
 
+  // ==========================================================
+  // SUPABASE INITIAL SYNC (WHEN CONFIGURED)
+  // ==========================================================
+  useEffect(() => {
+    if (!isSupabaseConfigured || !supabase) return
+
+    async function fetchSupabaseData() {
+      try {
+        const { data: remoteProducts, error: prodErr } = await supabase
+          .from('products')
+          .select('*')
+          .order('sort_order', { ascending: true })
+
+        if (!prodErr && remoteProducts && remoteProducts.length > 0) {
+          setProducts(remoteProducts)
+        }
+
+        const { data: remoteCompany, error: compErr } = await supabase
+          .from('company_settings')
+          .select('data')
+          .eq('id', 'default')
+          .single()
+
+        if (!compErr && remoteCompany && remoteCompany.data) {
+          setCompany(remoteCompany.data)
+        }
+      } catch (e) {
+        console.warn('Supabase sync notice:', e)
+      }
+    }
+
+    fetchSupabaseData()
+  }, [])
+
   const value = {
     products,
     banners,
-    activeTopBanner,
     addProduct,
     updateProduct,
     deleteProduct,
+    cloneProduct,
+    toggleProductFeatured,
+    toggleProductStock,
     addBanner,
     updateBanner,
     deleteBanner,
     toggleBanner,
     resetToDefaults,
     processImageUpload,
-    // Editable Top Badge
-    topBadge,
-    updateTopBadge,
     // Editable Company Settings
     company,
     updateCompany,
     resetCompany,
+    // Multi-User Team Access
+    adminUsers,
+    addAdminUser,
+    updateAdminUser,
+    deleteAdminUser,
     // Admin Password
     adminPassword,
     updateAdminPassword,

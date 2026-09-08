@@ -5,7 +5,7 @@ import { useStore } from '../context/useStore'
 
 function AdminLogin() {
   const navigate = useNavigate()
-  const { adminPassword } = useStore()
+  const { adminPassword, adminUsers } = useStore()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -17,17 +17,43 @@ function AdminLogin() {
     setLoading(true)
 
     setTimeout(() => {
-      const validAdminEmail = (import.meta.env.VITE_ADMIN_EMAIL || 'admin@bovenfrontier.co.in').trim().toLowerCase()
       const enteredEmail = email.trim().toLowerCase()
+      const enteredPassword = password.trim()
 
-      const isAuthorized = enteredEmail === validAdminEmail && password === adminPassword
+      // Primary Super Admin is Aswin
+      const isPrimaryAdmin =
+        (enteredEmail === 'aswin@bovenfrontier.co.in' ||
+          enteredEmail === (import.meta.env.VITE_ADMIN_EMAIL || '').trim().toLowerCase()) &&
+        enteredPassword === adminPassword
 
-      if (isAuthorized) {
+      // Check if user exists in dynamic adminUsers list
+      const matchedUser = adminUsers?.find(
+        (u) => u.email.toLowerCase() === enteredEmail
+      )
+
+      let authorizedUser = null
+
+      if (isPrimaryAdmin) {
+        authorizedUser = {
+          id: matchedUser?.id || 'usr_aswin_primary',
+          name: matchedUser?.name || 'Aswin',
+          email: 'aswin@bovenfrontier.co.in',
+          role: 'Super Admin',
+        }
+      } else if (matchedUser && matchedUser.password && matchedUser.password === enteredPassword) {
+        authorizedUser = {
+          id: matchedUser.id,
+          name: matchedUser.name,
+          email: matchedUser.email,
+          role: matchedUser.role || 'Administrator',
+        }
+      }
+
+      if (authorizedUser) {
         localStorage.setItem(
           'bf_admin_auth',
           JSON.stringify({
-            email,
-            role: 'Administrator',
+            ...authorizedUser,
             loggedInAt: new Date().toISOString(),
           })
         )
@@ -61,7 +87,7 @@ function AdminLogin() {
             Sign in to Dashboard
           </h2>
           <p className="mt-2 text-xs text-[#104360]/60">
-            Manage product catalog, inventory status, and announcement banners.
+            Manage product catalog, inventory status, and corporate settings.
           </p>
         </div>
 
@@ -90,7 +116,7 @@ function AdminLogin() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@bovenfrontier.co.in"
+                  placeholder="aswin@bovenfrontier.co.in"
                   className="w-full border border-gray-200 py-3 pl-10 pr-3 text-sm text-[#104360] placeholder-gray-400 outline-none transition focus:border-[#104360] focus:ring-1 focus:ring-[#104360]"
                 />
               </div>

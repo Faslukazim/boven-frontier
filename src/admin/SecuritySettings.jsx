@@ -83,8 +83,8 @@ function SecuritySettings() {
             <input
               type="text"
               disabled
-              value="admin@bovenfrontier.co.in"
-              className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed"
+              value="aswin@bovenfrontier.co.in"
+              className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed font-medium"
             />
           </div>
 
