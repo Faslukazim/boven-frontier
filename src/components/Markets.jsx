@@ -3,7 +3,7 @@ import { ArrowUpRight, MapPin, Plane, Navigation } from 'lucide-react'
 
 function Markets() {
   return (
-    <section className="relative overflow-hidden bg-[#0c354d] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28">
+    <section id="markets" className="relative overflow-hidden bg-[#0c354d] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28">
       <div className="mx-auto max-w-[1600px]">
         {/* =====================================================
             HEADER

@@ -85,12 +85,12 @@ function Stats() {
         {/* =====================================================
             STATS CARDS WITH ANIMATED COUNTERS
         ===================================================== */}
-        <div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+        <div className="pt-2">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="py-6 sm:py-8 px-4 sm:px-6 first:pl-0"
+                className="rounded-xl border border-white/10 bg-white/[0.04] p-5 sm:p-6 transition-all duration-300 hover:border-[#EF2034]/40 hover:bg-white/[0.06]"
               >
                 {/* Number with Counter */}
                 <div className="text-3xl sm:text-5xl font-light tracking-tight text-white flex items-baseline gap-1">
@@ -100,7 +100,7 @@ function Stats() {
 
                 {/* Label */}
                 <div className="mt-2 sm:mt-3">
-                  <p className="text-xs font-medium uppercase tracking-wider text-white/70">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-white/80">
                     {stat.label}
                   </p>
                 </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { ArrowUpRight, MessageCircle } from 'lucide-react'
 import { useStore } from '../context/useStore'
 import { useScrollReveal } from '../hooks/useScrollReveal'
@@ -96,13 +96,47 @@ function ProductCard({ product, index }) {
 
 function Products({ limit, showFilters = true }) {
   const { products } = useStore()
-  const [selectedBrand, setSelectedBrand] = useState('ALL')
-  const [selectedCategory, setSelectedCategory] = useState('ALL')
-  const gridSectionRef = useScrollReveal()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   // Extract unique brands and categories
   const brands = ['ALL', ...new Set(products.map((p) => p.brand))]
   const categories = ['ALL', ...new Set(products.map((p) => p.category))]
+
+  const catParam = searchParams.get('category') || ''
+  const brandParam = searchParams.get('brand') || ''
+
+  // Fuzzy match category
+  const getMatchedCategory = (query) => {
+    if (!query || query.toUpperCase() === 'ALL') return 'ALL'
+    const q = query.toLowerCase().trim()
+    return (
+      categories.find(
+        (c) =>
+          c.toLowerCase() === q ||
+          c.toLowerCase().includes(q) ||
+          q.includes(c.toLowerCase())
+      ) || 'ALL'
+    )
+  }
+
+  const [userCategory, setUserCategory] = useState(null)
+  const [userBrand, setUserBrand] = useState(null)
+
+  const selectedCategory =
+    userCategory !== null
+      ? userCategory
+      : catParam
+      ? getMatchedCategory(catParam)
+      : 'ALL'
+
+  const selectedBrand =
+    userBrand !== null
+      ? userBrand
+      : brandParam
+      ? brands.find((b) => b.toLowerCase() === brandParam.toLowerCase()) || 'ALL'
+      : 'ALL'
+
+  const gridSectionRef = useScrollReveal()
 
   const filteredProducts = products.filter((p) => {
     const brandMatch = selectedBrand === 'ALL' || p.brand === selectedBrand
@@ -113,6 +147,26 @@ function Products({ limit, showFilters = true }) {
   const displayedProducts = limit
     ? filteredProducts.slice(0, limit)
     : filteredProducts
+
+  const handleCategorySelect = (cat) => {
+    setUserCategory(cat)
+    if (cat === 'ALL') {
+      searchParams.delete('category')
+    } else {
+      searchParams.set('category', cat)
+    }
+    setSearchParams(searchParams, { replace: true })
+  }
+
+  const handleBrandSelect = (brand) => {
+    setUserBrand(brand)
+    if (brand === 'ALL') {
+      searchParams.delete('brand')
+    } else {
+      searchParams.set('brand', brand)
+    }
+    setSearchParams(searchParams, { replace: true })
+  }
 
   return (
     <section
@@ -145,15 +199,15 @@ function Products({ limit, showFilters = true }) {
         {showFilters && (
           <div className="reveal-on-scroll stagger-1 border-b border-[#104360]/10 py-5 space-y-4">
             {/* Category Pills */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   type="button"
-                  onClick={() => setSelectedCategory(cat)}
+                  onClick={() => handleCategorySelect(cat)}
                   className={`shrink-0 rounded-full px-3.5 py-1 text-xs font-semibold transition ${
                     selectedCategory === cat
-                      ? 'bg-[#104360] text-white'
+                      ? 'bg-[#104360] text-white shadow-xs'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -164,7 +218,7 @@ function Products({ limit, showFilters = true }) {
 
             {/* Brand Filter Row */}
             <div className="flex items-center justify-between pt-1">
-              <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto">
+              <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto no-scrollbar">
                 <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#104360]/40 mr-1">
                   BRANDS:
                 </span>
@@ -172,7 +226,7 @@ function Products({ limit, showFilters = true }) {
                   <button
                     key={brand}
                     type="button"
-                    onClick={() => setSelectedBrand(brand)}
+                    onClick={() => handleBrandSelect(brand)}
                     className={`text-[11px] font-semibold uppercase tracking-wider transition ${
                       selectedBrand === brand
                         ? 'text-[#EF2034] border-b-2 border-[#EF2034] pb-0.5'

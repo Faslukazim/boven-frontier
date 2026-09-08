@@ -120,7 +120,7 @@ function About() {
                 </div>
                 <Link
                   to="/contact"
-                  className="rounded bg-[#EF2034] px-3 py-1.5 text-[10px] font-semibold text-white uppercase tracking-wider hover:bg-white"
+                  className="rounded bg-[#EF2034] px-3 py-1.5 text-[10px] font-semibold text-white uppercase tracking-wider hover:bg-white hover:text-[#104360] transition shadow-xs"
                 >
                   Inquire
                 </Link>

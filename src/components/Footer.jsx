@@ -113,19 +113,19 @@ function Footer() {
             </p>
 
             <nav className="mt-5 flex flex-col gap-2.5 text-xs text-white/70">
-              <Link to="/products" className="hover:text-white transition">
+              <Link to="/products?category=LAUNDRY+CARE" className="hover:text-white transition">
                 Laundry Care
               </Link>
-              <Link to="/products" className="hover:text-white transition">
+              <Link to="/products?category=FLOOR+CARE" className="hover:text-white transition">
                 Floor Cleaners
               </Link>
-              <Link to="/products" className="hover:text-white transition">
+              <Link to="/products?category=SURFACE+CARE" className="hover:text-white transition">
                 Surface & Glass
               </Link>
-              <Link to="/products" className="hover:text-white transition">
+              <Link to="/products?category=DISINFECTION" className="hover:text-white transition">
                 Disinfection & Hygiene
               </Link>
-              <Link to="/products" className="hover:text-white transition">
+              <Link to="/products?category=PERSONAL+CARE" className="hover:text-white transition">
                 Personal Care & Handwash
               </Link>
             </nav>
@@ -141,13 +141,13 @@ function Footer() {
               <Link to="/about" className="hover:text-white transition">
                 Contract Bottling & OEM
               </Link>
-              <Link to="/contact" className="hover:text-white transition">
+              <Link to="/contact?service=Private+Label" className="hover:text-white transition">
                 Private Label Formulation
               </Link>
-              <Link to="/contact" className="hover:text-white transition">
+              <Link to="/#markets" className="hover:text-white transition">
                 Palletized Container Shipping (FCL)
               </Link>
-              <Link to="/contact" className="hover:text-white transition">
+              <Link to="/contact?service=Samples" className="hover:text-white transition">
                 Request Samples & Specifications
               </Link>
               <Link to="/admin" className="text-white/40 hover:text-white transition">

@@ -6,7 +6,6 @@ import {
   Phone,
   MessageCircle,
   ShieldCheck,
-  ArrowUpRight,
 } from 'lucide-react'
 
 function Navbar() {
@@ -45,33 +44,33 @@ function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-all duration-200 ${
+      className={`sticky top-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-xs text-[#104360]'
-          : 'bg-white text-[#104360]'
-      } border-b-2 border-[#104360]`}
+          ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_20px_-4px_rgba(16,67,96,0.08)]'
+          : 'bg-white'
+      }`}
     >
       {/* =======================================================
-          MAIN NAVIGATION BAR (MINIMAL & REFINED)
+          MAIN NAVIGATION BAR
       ======================================================= */}
-      <nav className="mx-auto flex h-16 sm:h-[72px] max-w-[1600px] items-center justify-between px-5 sm:px-8 lg:px-12 xl:px-16">
-        {/* Brand Logo - Official Logo with white background seamlessly blended */}
-        <Link to="/" className="flex items-center gap-3">
+      <nav className="mx-auto flex h-16 sm:h-[72px] max-w-[1600px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16">
+        {/* Brand Logo - Seamlessly blended on white */}
+        <Link to="/" className="flex items-center gap-3 shrink-0">
           <img
             src="/assets/branding/bovenlogo-white.jpeg"
             alt="Boven Frontier International LLP"
-            className="h-[38px] sm:h-[44px] w-auto object-contain"
+            className="h-[32px] sm:h-[42px] max-w-[170px] sm:max-w-none w-auto object-contain"
           />
         </Link>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden items-center gap-8 lg:gap-10 md:flex">
+        <div className="hidden items-center gap-7 lg:gap-9 md:flex">
           <Link
             to="/about"
-            className={`text-[10px] uppercase tracking-[0.25em] transition-colors duration-200 ${
+            className={`py-1 text-xs uppercase tracking-[0.2em] transition-colors duration-200 ${
               isActive('/about')
-                ? 'font-bold text-[#104360] border-b-2 border-[#EF2034] pb-0.5'
-                : 'text-[#104360]/75 hover:text-[#EF2034]'
+                ? 'font-bold text-[#EF2034]'
+                : 'font-semibold text-[#104360] hover:text-[#EF2034]'
             }`}
           >
             About
@@ -79,10 +78,10 @@ function Navbar() {
 
           <Link
             to="/products"
-            className={`text-[10px] uppercase tracking-[0.25em] transition-colors duration-200 ${
+            className={`py-1 text-xs uppercase tracking-[0.2em] transition-colors duration-200 ${
               isActive('/products')
-                ? 'font-bold text-[#104360] border-b-2 border-[#EF2034] pb-0.5'
-                : 'text-[#104360]/75 hover:text-[#EF2034]'
+                ? 'font-bold text-[#EF2034]'
+                : 'font-semibold text-[#104360] hover:text-[#EF2034]'
             }`}
           >
             Products
@@ -90,30 +89,29 @@ function Navbar() {
 
           <Link
             to="/contact"
-            className={`group flex items-center gap-1.5 text-[10px] uppercase tracking-[0.25em] transition-colors duration-200 ${
+            className={`py-1 text-xs uppercase tracking-[0.2em] transition-colors duration-200 ${
               isActive('/contact')
-                ? 'font-bold text-[#104360] border-b-2 border-[#EF2034] pb-0.5'
+                ? 'font-bold text-[#EF2034]'
                 : 'font-semibold text-[#104360] hover:text-[#EF2034]'
             }`}
           >
             Contact
-            <ArrowUpRight
-              size={13}
-              strokeWidth={1.5}
-              className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 text-[#104360]/60 group-hover:text-[#EF2034]"
-            />
           </Link>
 
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 rounded bg-[#EF2034] px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-white hover:bg-[#104360] transition shadow-xs"
+            className="py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#104360] hover:text-[#EF2034] transition-colors duration-200"
           >
             Enquire
           </Link>
 
           <Link
             to="/admin"
-            className="ml-1 rounded border border-[#104360]/20 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-[#104360]/70 transition hover:border-[#104360] hover:text-[#104360]"
+            className={`py-1 text-xs uppercase tracking-[0.2em] transition-colors duration-200 ${
+              isActive('/admin')
+                ? 'font-bold text-[#EF2034]'
+                : 'font-semibold text-[#104360] hover:text-[#EF2034]'
+            }`}
             title="Management Console"
           >
             Admin
@@ -124,7 +122,7 @@ function Navbar() {
         <div className="flex items-center gap-2 md:hidden">
           <Link
             to="/contact"
-            className="rounded bg-[#EF2034] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-white active:bg-[#104360]"
+            className="rounded-md bg-[#EF2034] px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-xs active:bg-[#104360]"
           >
             Enquire
           </Link>
@@ -133,61 +131,88 @@ function Navbar() {
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-            className="flex h-9 w-9 items-center justify-center border border-[#104360]/20 bg-white text-[#104360] rounded transition active:scale-95"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#104360]/15 bg-white text-[#104360] transition active:scale-95 shadow-2xs"
           >
             {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </nav>
 
+      {/* Signature Brand Accent Line (Boven Navy flowing to Frontier Red) */}
+      <div className="h-[2.5px] w-full bg-gradient-to-r from-[#104360] via-[#104360] to-[#EF2034]" />
+
       {/* =======================================================
           MOBILE NAVIGATION DRAWER
       ======================================================= */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-[64px] sm:top-[72px] z-40 flex flex-col bg-white px-6 py-8 text-[#104360] md:hidden animate-in fade-in slide-in-from-top duration-200 border-t border-gray-100">
-          <div className="flex flex-col gap-6 text-left">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#EF2034]">
-              Navigation
+        <div className="fixed inset-0 top-[66px] sm:top-[74px] z-50 flex flex-col bg-white/98 backdrop-blur-xl px-6 py-6 md:hidden animate-in fade-in slide-in-from-top-2 duration-200 overflow-y-auto">
+          <div className="flex flex-col gap-2 text-left">
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#EF2034] mb-2">
+              Navigation Menu
             </span>
 
             <Link
               to="/"
               onClick={() => setMobileMenuOpen(false)}
-              className={`text-2xl font-medium tracking-tight ${
-                isActive('/') ? 'text-[#EF2034]' : 'text-[#104360]'
+              className={`flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight transition ${
+                isActive('/')
+                  ? 'bg-[#104360]/5 text-[#EF2034] font-semibold'
+                  : 'text-[#104360] hover:bg-gray-50'
               }`}
             >
-              Home
+              <span>Home</span>
             </Link>
 
             <Link
               to="/about"
               onClick={() => setMobileMenuOpen(false)}
-              className={`text-2xl font-medium tracking-tight ${
-                isActive('/about') ? 'text-[#EF2034]' : 'text-[#104360]'
+              className={`flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight transition ${
+                isActive('/about')
+                  ? 'bg-[#104360]/5 text-[#EF2034] font-semibold'
+                  : 'text-[#104360] hover:bg-gray-50'
               }`}
             >
-              About Boven Frontier
+              <span>About Boven Frontier</span>
             </Link>
 
             <Link
               to="/products"
               onClick={() => setMobileMenuOpen(false)}
-              className={`text-2xl font-medium tracking-tight ${
-                isActive('/products') ? 'text-[#EF2034]' : 'text-[#104360]'
+              className={`flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight transition ${
+                isActive('/products')
+                  ? 'bg-[#104360]/5 text-[#EF2034] font-semibold'
+                  : 'text-[#104360] hover:bg-gray-50'
               }`}
             >
-              Products & Brands
+              <span>Products & Brands</span>
+            </Link>
+
+            <Link
+              to="/#markets"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight text-[#104360] hover:bg-gray-50 transition"
+            >
+              <span>Logistics & Export Markets</span>
+            </Link>
+
+            <Link
+              to="/#faq"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight text-[#104360] hover:bg-gray-50 transition"
+            >
+              <span>Wholesale FAQ</span>
             </Link>
 
             <Link
               to="/contact"
               onClick={() => setMobileMenuOpen(false)}
-              className={`text-2xl font-medium tracking-tight ${
-                isActive('/contact') ? 'text-[#EF2034]' : 'text-[#104360]'
+              className={`flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight transition ${
+                isActive('/contact')
+                  ? 'bg-[#104360]/5 text-[#EF2034] font-semibold'
+                  : 'text-[#104360] hover:bg-gray-50'
               }`}
             >
-              B2B & Export Enquiries
+              <span>B2B & Export Enquiries</span>
             </Link>
           </div>
 
@@ -198,23 +223,23 @@ function Navbar() {
                 href="https://wa.me/919207577242?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry%20regarding%20cleaning%20products."
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-2 rounded border border-[#104360]/15 py-3 text-xs font-semibold text-[#104360] hover:bg-gray-50"
+                className="flex items-center justify-center gap-2 rounded-lg border border-[#104360]/15 py-3 text-xs font-semibold text-[#104360] hover:bg-gray-50 active:bg-gray-100"
               >
-                <MessageCircle size={15} className="text-emerald-600" />
-                WhatsApp
+                <MessageCircle size={16} className="text-emerald-600" />
+                <span>WhatsApp</span>
               </a>
 
               <a
                 href="tel:+917012777495"
-                className="flex items-center justify-center gap-2 rounded bg-[#EF2034] py-3 text-xs font-semibold text-white hover:bg-[#d8192c]"
+                className="flex items-center justify-center gap-2 rounded-lg bg-[#EF2034] py-3 text-xs font-semibold text-white hover:bg-[#d8192c] active:scale-98 shadow-xs"
               >
                 <Phone size={15} />
-                Call Direct
+                <span>Call Direct</span>
               </a>
             </div>
 
             <div className="flex items-center justify-between pt-2">
-              <span className="text-[10px] uppercase tracking-wider text-gray-400">
+              <span className="text-[10px] font-medium uppercase tracking-wider text-gray-400">
                 Manufactured in India
               </span>
               <Link
@@ -223,7 +248,7 @@ function Navbar() {
                 className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-[#104360] hover:text-[#EF2034] hover:underline"
               >
                 <ShieldCheck size={13} />
-                Admin Portal
+                <span>Admin Portal</span>
               </Link>
             </div>
           </div>

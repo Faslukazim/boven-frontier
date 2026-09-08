@@ -14,7 +14,7 @@ import AdminDashboard from './admin/AdminDashboard'
 
 function PublicLayout() {
   return (
-    <div className="flex min-h-screen flex-col bg-white text-[#104360]">
+    <div className="flex min-h-screen w-full max-w-full overflow-x-hidden flex-col bg-white text-[#104360]">
       <ScrollProgress />
       <Navbar />
       <div className="flex-1">

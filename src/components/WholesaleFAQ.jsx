@@ -37,7 +37,7 @@ export default function WholesaleFAQ() {
   }
 
   return (
-    <section className="bg-white py-16 sm:py-24 border-t border-[#104360]/10">
+    <section id="faq" className="bg-white py-16 sm:py-24 border-t border-[#104360]/10">
       <div className="mx-auto max-w-[1400px] px-6 sm:px-10 lg:px-16">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16 items-start">
           {/* Left Column: Heading & Support Desk */}

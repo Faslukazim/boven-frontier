@@ -1,5 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Great+Vibes&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-cinzel: 'Cinzel Decorative', Georgia, serif;
+  --font-script: 'Great Vibes', cursive;
+}
+
+.font-cinzel {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+}
+
+.font-script {
+  font-family: 'Great Vibes', cursive;
+}
 
 :root {
   --navy: #104360;
@@ -40,6 +53,14 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #EF2034;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Scroll Reveal Utilities */
