@@ -13,14 +13,14 @@ function ProductCard({ product, index }) {
 
   return (
     <article
-      className={`product-card reveal-on-scroll ${staggerClass} group flex flex-col justify-between rounded-xl border border-gray-100 bg-white p-4 transition-all duration-300 hover:border-gray-200 hover:shadow-md`}
+      className={`reveal-on-scroll ${staggerClass} group flex flex-col justify-between rounded-xl border border-gray-200/80 bg-white p-4 transition-all duration-300 hover:border-[#EF2034]/40 hover:shadow-lg`}
     >
       <div>
         {/* Product Image Stage */}
-        <div className="product-card-image relative aspect-square overflow-hidden rounded-lg bg-[#f8f8f6]">
+        <div className="relative aspect-square overflow-hidden rounded-lg bg-[#f8f8f6]">
           {/* Quick WhatsApp Action */}
           <a
-            href={`https://wa.me/919207577242?text=${whatsappMessage}`}
+            href={`https://wa.me/971507355418?text=${whatsappMessage}`}
             target="_blank"
             rel="noreferrer"
             className="absolute right-2.5 bottom-2.5 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-emerald-600 shadow-xs backdrop-blur-xs transition hover:scale-110 hover:bg-emerald-600 hover:text-white"
@@ -30,12 +30,11 @@ function ProductCard({ product, index }) {
           </a>
 
           {/* Centered Image */}
-          <div className="product-image-stage absolute inset-0 flex items-center justify-center p-6">
+          <div className="absolute inset-0 flex items-center justify-center p-6">
             <img
               src={product.image}
               alt={`${product.brand} ${product.name}`}
-              loading="lazy"
-              className="product-image max-h-full max-w-full object-contain mix-blend-multiply drop-shadow-sm transition-transform duration-400 ease-out group-hover:scale-[1.025]"
+              className="max-h-full max-w-full object-contain mix-blend-multiply drop-shadow-sm transition-transform duration-400 ease-out group-hover:scale-[1.04]"
             />
           </div>
         </div>
@@ -172,13 +171,13 @@ function Products({ limit, showFilters = true }) {
     <section
       id="products"
       ref={gridSectionRef}
-      className="products-section bg-white py-16 sm:py-24"
+      className="bg-white py-16 sm:py-24 border-t border-[#104360]/10"
     >
-      <div className="products-container mx-auto max-w-[1600px] px-5 sm:px-10 lg:px-16">
+      <div className="mx-auto max-w-[1600px] px-5 sm:px-10 lg:px-16">
         {/* =====================================================
             HEADER
         ===================================================== */}
-        <div className="products-header reveal-on-scroll flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-gray-100">
+        <div className="reveal-on-scroll flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-gray-100">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-[#EF2034] mb-2">
               Product Portfolio

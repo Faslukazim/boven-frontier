@@ -31,10 +31,10 @@ function Markets() {
         ===================================================== */}
         <div className="relative mt-12">
           {/* Middle Route Badge */}
-          <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 items-center justify-center pointer-events-none">
-            <div className="flex items-center gap-2 rounded-full border border-white/15 bg-[#104360]/90 px-4 py-1.5 shadow-xl backdrop-blur-md">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#EF2034]" />
-              <span className="text-[11px] font-medium tracking-wide text-white/90">
+          <div className="hidden lg:flex absolute left-1/2 top-10 -translate-x-1/2 z-20 items-center justify-center pointer-events-none">
+            <div className="flex items-center gap-2 rounded-full border border-white/20 bg-[#104360] px-4 py-1.5 shadow-xl backdrop-blur-md">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#EF2034] animate-pulse" />
+              <span className="text-[11px] font-semibold tracking-wide text-white">
                 Direct Export Corridor
               </span>
               <Navigation size={12} className="text-[#EF2034] rotate-90" />
@@ -42,7 +42,7 @@ function Markets() {
           </div>
 
           {/* Route Connecting Line */}
-          <div className="hidden lg:block absolute left-[20%] right-[20%] top-1/2 h-px bg-gradient-to-r from-transparent via-[#EF2034]/30 to-transparent" />
+          <div className="hidden lg:block absolute left-[25%] right-[25%] top-10 mt-[14px] h-px bg-gradient-to-r from-transparent via-[#EF2034]/40 to-transparent" />
 
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-0">
             {/* =================================================

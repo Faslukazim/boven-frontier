@@ -154,24 +154,24 @@ function Hero() {
           <div className="lg:col-span-7 flex flex-col justify-center z-10">
             {/* Acronym stylized BFI Headline with Staggered Entrance Animations */}
             <h1
-              className="font-cinzel text-3xl sm:text-5xl md:text-6xl lg:text-[3.8rem] xl:text-[4.4rem] font-bold tracking-[0.02em] leading-[1.03] text-white select-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]"
+              className="font-inter text-[2.4rem] sm:text-[3.4rem] md:text-[3.8rem] lg:text-[3.9rem] xl:text-[4.5rem] font-extrabold tracking-tight leading-[1.0] text-white select-none drop-shadow-[0_4px_14px_rgba(0,0,0,0.35)]"
             >
               <span className="block hero-text-reveal-1">
-                <span className="text-[#EF2034]">B</span>RIDGING
+                <span className="text-[#EF2034] inline-block min-w-[0.62em] text-left">B</span>RIDGING
               </span>
               <span className="block hero-text-reveal-2">
-                <span className="text-[#EF2034]">F</span>RONTIERS
+                <span className="text-[#EF2034] inline-block min-w-[0.62em] text-left">F</span>RONTIERS
               </span>
               <span className="block hero-text-reveal-3">
-                <span className="text-[#EF2034]">I</span>NSPIRING
+                <span className="text-[#EF2034] inline-block min-w-[0.62em] text-left">I</span>NSPIRING
               </span>
               <span className="block text-white hero-text-reveal-4">
-                GROWTH
+                <span className="inline-block min-w-[0.62em] text-left">G</span>ROWTH
               </span>
             </h1>
 
             {/* Action Links with Entrance Animation */}
-            <div className="hero-fade-in mt-6 sm:mt-7 lg:mt-8 flex flex-row items-center gap-6 sm:gap-10 lg:gap-14">
+            <div className="hero-fade-in mt-6 sm:mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 sm:gap-10 lg:gap-14">
               <a
                 href="#products"
                 onClick={(e) => {

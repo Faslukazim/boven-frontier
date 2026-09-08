@@ -31,22 +31,21 @@ function Stats() {
   const sectionRef = useRef(null)
 
   useEffect(() => {
-    let triggered = false
+    const el = sectionRef.current
+    if (!el) return
 
-    const handleCheck = () => {
-      if (triggered || !sectionRef.current) return
-      const rect = sectionRef.current.getBoundingClientRect()
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+    )
 
-      // Only trigger when user actively scrolls down and section is in view
-      if (window.scrollY > 60 && rect.top <= window.innerHeight * 0.8) {
-        triggered = true
-        setIsVisible(true)
-        window.removeEventListener('scroll', handleCheck)
-      }
-    }
-
-    window.addEventListener('scroll', handleCheck, { passive: true })
-    return () => window.removeEventListener('scroll', handleCheck)
+    observer.observe(el)
+    return () => observer.disconnect()
   }, [])
 
   const stats = [
