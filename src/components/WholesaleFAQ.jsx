@@ -67,7 +67,7 @@ export default function WholesaleFAQ() {
 
               <div className="mt-5 flex flex-col gap-2.5">
                 <a
-                  href="https://wa.me/919207577242?text=Hello%20Boven%20Frontier,%20I%20have%20a%20B2B%20wholesale%20enquiry"
+                  href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier,%20I%20have%20a%20B2B%20wholesale%20enquiry"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-emerald-700 transition"

@@ -97,11 +97,14 @@ function Footer() {
               <p className="text-[10px] font-semibold uppercase tracking-wider text-[#EF2034]">
                 Operations & Facility
               </p>
-              <p className="mt-1 text-white/80">
+              <p className="mt-1 font-medium text-white/90">
                 India · LLP Reg: ACE-5349
               </p>
-              <p className="mt-0.5 text-[11px] text-white/50">
-                Manufactured in India · ISO 9001:2015 Quality Standards
+              <p className="mt-0.5 text-[11px] font-mono text-white/70">
+                GSTIN: 32ABCFB2913N1ZN
+              </p>
+              <p className="mt-1 text-[11px] text-white/60 leading-relaxed">
+                Room No. OP 7/452, Manakkadavu, Kozhikode 673019, India
               </p>
             </div>
           </div>
@@ -164,13 +167,21 @@ function Footer() {
 
             <div className="mt-5 space-y-3 text-xs">
               <a
-                href="https://wa.me/919207577242?text=Hello%20Boven%20Frontier,%20I%20have%20a%20wholesale%20enquiry"
+                href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier,%20I%20have%20a%20wholesale%20enquiry"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-2.5 text-emerald-400 hover:text-emerald-300 transition"
               >
                 <MessageCircle size={15} />
-                <span>WhatsApp: +91 92075 77242</span>
+                <span>WhatsApp: +971 50 735 5418</span>
+              </a>
+
+              <a
+                href="tel:+919633890447"
+                className="flex items-center gap-2.5 text-white/80 hover:text-white transition"
+              >
+                <Phone size={14} />
+                <span>Direct: +91 96338 90447</span>
               </a>
 
               <a
@@ -182,16 +193,16 @@ function Footer() {
               </a>
 
               <a
-                href="mailto:exports@bovenfrontier.com"
+                href="mailto:aswin@bovenfrontier.co.in"
                 className="flex items-center gap-2.5 text-white/80 hover:text-white transition"
               >
                 <Mail size={14} />
-                <span>exports@bovenfrontier.com</span>
+                <span>aswin@bovenfrontier.co.in</span>
               </a>
 
               <div className="pt-2 text-[10px] text-white/50 leading-relaxed">
                 Operating Hours: Mon – Sat<br />
-                9:00 AM – 6:30 PM (IST) · 7:30 AM – 5:00 PM (GST)
+                9:00 AM – 6:30 PM (IST)
               </div>
             </div>
           </div>

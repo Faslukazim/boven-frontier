@@ -42,7 +42,7 @@ function ContactStrip() {
     const text = `*New B2B Enquiry - Boven Frontier Web*\n\n*Name:* ${formData.name || 'Not specified'}\n*Company:* ${formData.company || 'Not specified'}\n*Email:* ${formData.email || 'Not specified'}\n*Phone:* ${formData.phone || 'Not specified'}\n*Region:* ${formData.region || 'Not specified'}\n*Buyer Type:* ${formData.buyerType || 'Not specified'}\n*Product Interest:* ${formData.product || 'General Products'}\n*Message:* ${formData.message || 'I would like more information on bulk/export pricing.'}`
 
     window.open(
-      `https://wa.me/919207577242?text=${encodeURIComponent(text)}`,
+      `https://wa.me/971507355418?text=${encodeURIComponent(text)}`,
       '_blank'
     )
   }
@@ -80,7 +80,7 @@ function ContactStrip() {
             <div className="border-t border-[#104360]/10">
               {/* Phone */}
               <a
-                href="tel:+917012777495"
+                href="tel:+919633890447"
                 className="group flex items-center justify-between border-b border-[#104360]/10 py-4 sm:py-5 transition-colors hover:bg-white/40 px-2"
               >
                 <div className="flex items-center gap-4">
@@ -91,8 +91,8 @@ function ContactStrip() {
                     <p className="text-[8px] uppercase tracking-[0.25em] text-[#104360]/40">
                       Direct Phone
                     </p>
-                    <p className="mt-0.5 text-sm font-semibold">
-                      +91 70127 77495
+                    <p className="mt-0.5 text-sm font-semibold text-gray-900">
+                      +91 96338 90447 / +91 70127 77495
                     </p>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ function ContactStrip() {
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/919207577242?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry%20regarding%20products."
+                href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry%20regarding%20products."
                 target="_blank"
                 rel="noreferrer"
                 className="group flex items-center justify-between border-b border-[#104360]/10 py-4 sm:py-5 transition-colors hover:bg-white/40 px-2"
@@ -117,8 +117,8 @@ function ContactStrip() {
                     <p className="text-[8px] uppercase tracking-[0.25em] text-[#104360]/40">
                       WhatsApp Quick Chat
                     </p>
-                    <p className="mt-0.5 text-sm font-semibold">
-                      +91 92075 77242
+                    <p className="mt-0.5 text-sm font-semibold text-gray-900">
+                      +971 50 735 5418
                     </p>
                   </div>
                 </div>
@@ -141,8 +141,8 @@ function ContactStrip() {
                     <p className="text-[8px] uppercase tracking-[0.25em] text-[#104360]/40">
                       Official Email
                     </p>
-                    <p className="mt-0.5 text-sm font-semibold">
-                      info@bovenfrontier.co.in
+                    <p className="mt-0.5 text-sm font-semibold text-gray-900">
+                      info@bovenfrontier.co.in / aswin@bovenfrontier.co.in
                     </p>
                   </div>
                 </div>
