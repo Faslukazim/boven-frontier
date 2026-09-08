@@ -31,11 +31,23 @@ function ContactStrip() {
     e.preventDefault()
     setLoading(true)
 
-    // Simulate enquiry registration / store
+    // Persist inquiry to local storage so leads are safely retained
+    try {
+      const existing = JSON.parse(localStorage.getItem('bf_inquiries') || '[]')
+      const newLead = {
+        ...formData,
+        id: `lead-${Date.now()}`,
+        submittedAt: new Date().toISOString(),
+      }
+      localStorage.setItem('bf_inquiries', JSON.stringify([newLead, ...existing]))
+    } catch (err) {
+      console.warn('Local storage inquiry error:', err)
+    }
+
     setTimeout(() => {
       setLoading(false)
       setSubmitted(true)
-    }, 600)
+    }, 500)
   }
 
   const handleWhatsAppDirect = () => {
@@ -43,7 +55,8 @@ function ContactStrip() {
 
     window.open(
       `https://wa.me/971507355418?text=${encodeURIComponent(text)}`,
-      '_blank'
+      '_blank',
+      'noopener,noreferrer'
     )
   }
 
@@ -106,7 +119,7 @@ function ContactStrip() {
               <a
                 href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry%20regarding%20products."
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="group flex items-center justify-between border-b border-[#104360]/10 py-4 sm:py-5 transition-colors hover:bg-white/40 px-2"
               >
                 <div className="flex items-center gap-4">

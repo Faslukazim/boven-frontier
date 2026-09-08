@@ -15,11 +15,13 @@ function AdminLogin() {
     setLoading(true)
 
     setTimeout(() => {
-      // Standard local credential check (or demo mode)
-      if (
-        (email === 'admin@bovenfrontier.co.in' && password === 'admin123') ||
-        (email.trim().length > 3 && password.trim().length >= 4)
-      ) {
+      const validAdminEmail = (import.meta.env.VITE_ADMIN_EMAIL || 'admin@bovenfrontier.co.in').trim().toLowerCase()
+      const validAdminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'BovenAdmin2026!'
+
+      const isDevLogin = import.meta.env.DEV && email.trim().toLowerCase() === 'admin@bovenfrontier.co.in' && password === 'admin123'
+      const isConfiguredLogin = email.trim().toLowerCase() === validAdminEmail && password === validAdminPassword
+
+      if (isConfiguredLogin || isDevLogin) {
         localStorage.setItem(
           'bf_admin_auth',
           JSON.stringify({
@@ -30,7 +32,7 @@ function AdminLogin() {
         )
         navigate('/admin')
       } else {
-        setError('Invalid credentials. Password must be at least 4 characters.')
+        setError('Invalid credentials. Please check your admin email and password.')
       }
       setLoading(false)
     }, 400)
@@ -123,16 +125,18 @@ function AdminLogin() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <button
-              type="button"
-              onClick={fillDemoCredentials}
-              className="text-[10px] uppercase tracking-wider text-[#EF2034] underline hover:text-[#EF2034]"
-            >
-              Fill Demo Credentials
-            </button>
-            <span className="text-[10px] text-gray-400">admin123</span>
-          </div>
+          {import.meta.env.DEV && (
+            <div className="flex items-center justify-between border-t border-gray-100 pt-3">
+              <button
+                type="button"
+                onClick={fillDemoCredentials}
+                className="text-[10px] uppercase tracking-wider text-[#EF2034] underline hover:text-[#104360]"
+              >
+                Fill Dev Credentials
+              </button>
+              <span className="text-[10px] text-gray-400 font-mono">admin123 (dev only)</span>
+            </div>
+          )}
 
           <button
             type="submit"

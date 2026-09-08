@@ -169,7 +169,7 @@ function Footer() {
               <a
                 href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier,%20I%20have%20a%20wholesale%20enquiry"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2.5 text-emerald-400 hover:text-emerald-300 transition"
               >
                 <MessageCircle size={15} />

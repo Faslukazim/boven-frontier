@@ -74,7 +74,7 @@ function Contact() {
                 <a
                   href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry."
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="font-medium text-emerald-600 hover:text-emerald-700 inline-flex items-center gap-1 transition"
                 >
                   <MessageCircle size={13} />

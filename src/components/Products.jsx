@@ -22,7 +22,7 @@ function ProductCard({ product, index }) {
           <a
             href={`https://wa.me/971507355418?text=${whatsappMessage}`}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="absolute right-2.5 bottom-2.5 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-emerald-600 shadow-xs backdrop-blur-xs transition hover:scale-110 hover:bg-emerald-600 hover:text-white"
             title={`Enquire on WhatsApp for ${product.name}`}
           >

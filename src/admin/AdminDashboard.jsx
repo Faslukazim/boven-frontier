@@ -157,7 +157,7 @@ function AdminDashboard() {
             <Link
               to="/"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-white/70 transition hover:bg-white/10 hover:text-white"
             >
               <ExternalLink size={16} />

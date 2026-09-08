@@ -25,9 +25,9 @@ function Products() {
           </div>
 
           <a
-            href="https://wa.me/919207577242?text=Hello%20Boven%20Frontier%2C%20I%20am%20interested%20in%20wholesale%2Fdistributor%20pricing%20for%20your%20products."
+            href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier%2C%20I%20am%20interested%20in%20wholesale%2Fdistributor%20pricing%20for%20your%20products."
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="self-start md:self-auto inline-flex items-center gap-2 rounded-lg bg-[#EF2034] px-5 py-3 text-xs font-bold uppercase tracking-wider text-white hover:bg-white hover:text-[#104360] transition shadow-sm"
           >
             <MessageCircle size={15} />

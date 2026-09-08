@@ -77,7 +77,7 @@ function BannerManager() {
       title: 'Direct Factory Wholesale · Manufactured in India · Export Ready to UAE, KSA, GCC',
       subtitle: 'Min. Order: 50 Cartons · Direct Factory Pricing',
       ctaText: 'Export Desk',
-      ctaLink: 'https://wa.me/919207577242?text=Hello%20Boven%20Frontier%2C%20I%20would%20like%20to%20enquire%20about%20wholesale%20orders.',
+      ctaLink: 'https://wa.me/971507355418?text=Hello%20Boven%20Frontier%2C%20I%20would%20like%20to%20enquire%20about%20wholesale%20orders.',
       theme: 'navy',
       is_active: true,
       heroBadge: 'Manufactured in India · Direct Factory Supply',
@@ -157,7 +157,7 @@ function BannerManager() {
           <a
             href="/"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1 rounded bg-white px-3 py-1.5 text-[11px] font-bold text-emerald-800 hover:bg-emerald-50 transition"
           >
             Check Live Site
@@ -196,7 +196,7 @@ function BannerManager() {
           <a
             href="/"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 rounded-lg bg-[#104360] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[#EF2034] hover:text-[#104360] transition shadow-2xs"
           >
             <Eye size={13} />
@@ -404,7 +404,7 @@ function BannerManager() {
                   onChange={(e) =>
                     setBadgeForm({ ...badgeForm, ctaLink: e.target.value })
                   }
-                  placeholder="e.g. https://wa.me/919207577242 or /contact"
+                  placeholder="e.g. https://wa.me/971507355418 or /contact"
                   className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-xs text-gray-900 outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360]"
                 />
               </div>

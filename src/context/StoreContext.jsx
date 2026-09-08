@@ -158,7 +158,7 @@ export function StoreProvider({ children }) {
     title: 'Direct Factory Wholesale · Manufactured in India · Export Ready to UAE, KSA, GCC',
     subtitle: 'Min. Order: 50 Cartons · Direct Factory Pricing',
     ctaText: 'Export Desk',
-    ctaLink: 'https://wa.me/919207577242?text=Hello%20Boven%20Frontier%2C%20I%20would%20like%20to%20enquire%20about%20wholesale%20orders.',
+    ctaLink: 'https://wa.me/971507355418?text=Hello%20Boven%20Frontier%2C%20I%20would%20like%20to%20enquire%20about%20wholesale%20orders.',
     theme: 'navy', // 'navy' | 'gold' | 'dark'
     is_active: true,
     heroBadge: 'Manufactured in India · Direct Factory Supply',

@@ -104,18 +104,6 @@ function Navbar() {
           >
             Enquire
           </Link>
-
-          <Link
-            to="/admin"
-            className={`py-1 text-xs uppercase tracking-[0.2em] transition-colors duration-200 ${
-              isActive('/admin')
-                ? 'font-bold text-[#EF2034]'
-                : 'font-semibold text-[#104360] hover:text-[#EF2034]'
-            }`}
-            title="Management Console"
-          >
-            Admin
-          </Link>
         </div>
 
         {/* Mobile Header Controls */}
@@ -222,7 +210,7 @@ function Navbar() {
               <a
                 href="https://wa.me/971507355418?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry%20regarding%20cleaning%20products."
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 rounded-lg border border-[#104360]/15 py-3 text-xs font-semibold text-[#104360] hover:bg-gray-50 active:bg-gray-100"
               >
                 <MessageCircle size={16} className="text-emerald-600" />
