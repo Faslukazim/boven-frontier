@@ -51,11 +51,27 @@ CREATE TABLE IF NOT EXISTS public.inquiries (
     submitted_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
+-- 5. BRANDS TABLE
+CREATE TABLE IF NOT EXISTS public.brands (
+    id BIGSERIAL PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- 6. CATEGORIES TABLE
+CREATE TABLE IF NOT EXISTS public.categories (
+    id BIGSERIAL PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
 -- ENABLE ROW LEVEL SECURITY (RLS)
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.company_settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.admin_users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.brands ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.categories ENABLE ROW LEVEL SECURITY;
 
 -- POLICIES: PUBLIC READ ACCESS FOR WEBSITE VISITORS
 CREATE POLICY "Public can view active products" 
@@ -66,6 +82,12 @@ CREATE POLICY "Public can view company settings"
 
 CREATE POLICY "Public can submit contact inquiries" 
     ON public.inquiries FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Public can view brands" 
+    ON public.brands FOR SELECT USING (true);
+
+CREATE POLICY "Public can view categories" 
+    ON public.categories FOR SELECT USING (true);
 
 -- POLICIES: AUTHENTICATED / SERVICE MANAGERS FULL ACCESS
 CREATE POLICY "Full access to products for authorized users" 
@@ -79,6 +101,23 @@ CREATE POLICY "Full access to admin users"
 
 CREATE POLICY "Full access to inquiries for authorized users" 
     ON public.inquiries FOR ALL USING (true) WITH CHECK (true);
+
+CREATE POLICY "Full access to brands for authorized users" 
+    ON public.brands FOR ALL USING (true) WITH CHECK (true);
+
+CREATE POLICY "Full access to categories for authorized users" 
+    ON public.categories FOR ALL USING (true) WITH CHECK (true);
+
+-- SEED INITIAL BRANDS
+INSERT INTO public.brands (name) VALUES 
+    ('LEXONE'), ('FABIE PLUS'), ('KARE')
+ON CONFLICT (name) DO NOTHING;
+
+-- SEED INITIAL CATEGORIES
+INSERT INTO public.categories (name) VALUES 
+    ('LAUNDRY CARE'), ('FLOOR CARE'), ('SURFACE CARE'), 
+    ('DISINFECTION'), ('PERSONAL CARE'), ('FABRIC CARE')
+ON CONFLICT (name) DO NOTHING;
 
 -- SEED PRIMARY ADMIN
 INSERT INTO public.admin_users (id, name, email, role)

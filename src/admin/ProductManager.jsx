@@ -13,14 +13,16 @@ import {
   Image as ImageIcon,
 } from 'lucide-react'
 import { useStore } from '../context/useStore'
-import { CATEGORIES } from '../data/productsData'
 
-const DEFAULT_BRANDS = ['LEXONE', 'FABIE PLUS', 'KARE']
 const PRESET_SIZES = ['250 ml', '500 ml', '750 ml', '1 L', '2 L', '5 L', '20 L', '200 L']
 
 function ProductManager() {
   const {
     products,
+    brands,
+    categories,
+    addBrand,
+    addCategory,
     addProduct,
     updateProduct,
     deleteProduct,
@@ -40,11 +42,17 @@ function ProductManager() {
   const [deleteConfirmationId, setDeleteConfirmationId] = useState(null)
   const [toastMessage, setToastMessage] = useState('')
 
+  // Quick Inline Add states inside modal
+  const [showQuickBrand, setShowQuickBrand] = useState(false)
+  const [quickBrandName, setQuickBrandName] = useState('')
+  const [showQuickCategory, setShowQuickCategory] = useState(false)
+  const [quickCategoryName, setQuickCategoryName] = useState('')
+
   // Form State
   const [formData, setFormData] = useState({
     name: '',
-    brand: 'LEXONE',
-    category: 'LAUNDRY CARE',
+    brand: brands[0] || 'LEXONE',
+    category: categories[0] || 'LAUNDRY CARE',
     tagline: '',
     description: '',
     variants: '500 ml, 1 L',
@@ -76,8 +84,8 @@ function ProductManager() {
     setEditingProduct(null)
     setFormData({
       name: '',
-      brand: 'LEXONE',
-      category: 'LAUNDRY CARE',
+      brand: brands[0] || 'LEXONE',
+      category: categories[0] || 'LAUNDRY CARE',
       tagline: '',
       description: '',
       variants: '500 ml, 1 L',
@@ -85,7 +93,35 @@ function ProductManager() {
       is_featured: false,
       in_stock: true,
     })
+    setShowQuickBrand(false)
+    setShowQuickCategory(false)
     setIsModalOpen(true)
+  }
+
+  const handleQuickAddBrand = (e) => {
+    e.preventDefault()
+    const res = addBrand(quickBrandName)
+    if (res.success) {
+      setFormData((prev) => ({ ...prev, brand: res.brand }))
+      setQuickBrandName('')
+      setShowQuickBrand(false)
+      showToast(`Brand "${res.brand}" created & selected!`)
+    } else {
+      showToast(res.error)
+    }
+  }
+
+  const handleQuickAddCategory = (e) => {
+    e.preventDefault()
+    const res = addCategory(quickCategoryName)
+    if (res.success) {
+      setFormData((prev) => ({ ...prev, category: res.category }))
+      setQuickCategoryName('')
+      setShowQuickCategory(false)
+      showToast(`Category "${res.category}" created & selected!`)
+    } else {
+      showToast(res.error)
+    }
   }
 
   // Open Edit Modal
@@ -182,7 +218,8 @@ function ProductManager() {
     setIsModalOpen(false)
   }
 
-  const uniqueBrands = ['ALL', ...new Set(products.map((p) => p.brand))]
+  const brandOptions = ['ALL', ...new Set([...brands, ...products.map((p) => p.brand)])]
+  const categoryOptions = ['ALL', ...new Set([...categories, ...products.map((p) => p.category)])]
 
   return (
     <div className="space-y-6">
@@ -204,7 +241,7 @@ function ProductManager() {
             </h2>
           </div>
           <p className="mt-1 text-xs text-gray-500">
-            {products.length} active wholesale SKUs across {DEFAULT_BRANDS.length} verified brands.
+            {products.length} active wholesale SKUs across {brands.length} verified brands.
           </p>
         </div>
 
@@ -247,7 +284,7 @@ function ProductManager() {
             onChange={(e) => setSelectedBrand(e.target.value)}
             className="rounded-lg border border-gray-200 px-3 py-2 text-xs text-[#104360] outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360] bg-white"
           >
-            {uniqueBrands.map((b) => (
+            {brandOptions.map((b) => (
               <option key={b} value={b}>
                 {b}
               </option>
@@ -263,8 +300,7 @@ function ProductManager() {
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="rounded-lg border border-gray-200 px-3 py-2 text-xs text-[#104360] outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360] bg-white"
           >
-            <option value="ALL">ALL CATEGORIES</option>
-            {CATEGORIES.map((c) => (
+            {categoryOptions.map((c) => (
               <option key={c} value={c}>
                 {c}
               </option>
@@ -595,31 +631,93 @@ function ProductManager() {
 
                   {/* Brand & Category Row */}
                   <div className="grid grid-cols-2 gap-3">
+                    {/* Brand */}
                     <div>
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1">
-                        Brand *
-                      </label>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500">
+                          Brand *
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => setShowQuickBrand((prev) => !prev)}
+                          className="text-[10px] font-semibold text-[#EF2034] hover:underline"
+                        >
+                          {showQuickBrand ? 'Cancel' : '+ New Brand'}
+                        </button>
+                      </div>
+
+                      {showQuickBrand && (
+                        <div className="flex items-center gap-1.5 mb-2">
+                          <input
+                            type="text"
+                            value={quickBrandName}
+                            onChange={(e) => setQuickBrandName(e.target.value)}
+                            placeholder="Brand name..."
+                            className="flex-1 rounded border border-gray-300 px-2 py-1 text-xs outline-none focus:border-[#104360]"
+                            autoFocus
+                          />
+                          <button
+                            type="button"
+                            onClick={handleQuickAddBrand}
+                            className="rounded bg-[#104360] px-2.5 py-1 text-xs font-semibold text-white hover:bg-[#0D2B3E]"
+                          >
+                            Add
+                          </button>
+                        </div>
+                      )}
+
                       <select
                         value={formData.brand}
                         onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
                         className="w-full rounded-lg border border-gray-200 px-3 py-2 text-xs text-[#104360] outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360] bg-white"
                       >
-                        {DEFAULT_BRANDS.map((b) => (
+                        {Array.from(new Set([...brands, ...products.map((p) => p.brand)])).map((b) => (
                           <option key={b} value={b}>{b}</option>
                         ))}
                       </select>
                     </div>
 
+                    {/* Category */}
                     <div>
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1">
-                        Category *
-                      </label>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500">
+                          Category *
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => setShowQuickCategory((prev) => !prev)}
+                          className="text-[10px] font-semibold text-[#EF2034] hover:underline"
+                        >
+                          {showQuickCategory ? 'Cancel' : '+ New Category'}
+                        </button>
+                      </div>
+
+                      {showQuickCategory && (
+                        <div className="flex items-center gap-1.5 mb-2">
+                          <input
+                            type="text"
+                            value={quickCategoryName}
+                            onChange={(e) => setQuickCategoryName(e.target.value)}
+                            placeholder="Category name..."
+                            className="flex-1 rounded border border-gray-300 px-2 py-1 text-xs outline-none focus:border-[#104360]"
+                            autoFocus
+                          />
+                          <button
+                            type="button"
+                            onClick={handleQuickAddCategory}
+                            className="rounded bg-[#104360] px-2.5 py-1 text-xs font-semibold text-white hover:bg-[#0D2B3E]"
+                          >
+                            Add
+                          </button>
+                        </div>
+                      )}
+
                       <select
                         value={formData.category}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                         className="w-full rounded-lg border border-gray-200 px-3 py-2 text-xs text-[#104360] outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360] bg-white"
                       >
-                        {CATEGORIES.map((c) => (
+                        {Array.from(new Set([...categories, ...products.map((p) => p.category)])).map((c) => (
                           <option key={c} value={c}>{c}</option>
                         ))}
                       </select>

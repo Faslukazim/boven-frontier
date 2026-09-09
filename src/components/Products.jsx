@@ -96,12 +96,12 @@ function ProductCard({ product, index }) {
 }
 
 function Products({ limit, showFilters = true }) {
-  const { products } = useStore()
+  const { products, brands: storeBrands = [], categories: storeCategories = [] } = useStore()
   const [searchParams, setSearchParams] = useSearchParams()
 
   // Extract unique brands and categories
-  const brands = ['ALL', ...new Set(products.map((p) => p.brand))]
-  const categories = ['ALL', ...new Set(products.map((p) => p.category))]
+  const brands = ['ALL', ...new Set([...(storeBrands || []), ...products.map((p) => p.brand)])]
+  const categories = ['ALL', ...new Set([...(storeCategories || []), ...products.map((p) => p.category)])]
 
   const catParam = searchParams.get('category') || ''
   const brandParam = searchParams.get('brand') || ''

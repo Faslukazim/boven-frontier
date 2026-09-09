@@ -12,6 +12,18 @@ const COMPANY_STORAGE_KEY = 'bf_company_v1'
 const ADMIN_PWD_STORAGE_KEY = 'bf_admin_pwd_v1'
 const ADMIN_USERS_STORAGE_KEY = 'bf_admin_users_v1'
 const INQUIRIES_STORAGE_KEY = 'bf_inquiries'
+const BRANDS_STORAGE_KEY = 'bf_brands_v1'
+const CATEGORIES_STORAGE_KEY = 'bf_categories_v1'
+
+const DEFAULT_BRANDS = ['LEXONE', 'FABIE PLUS', 'KARE']
+const DEFAULT_CATEGORIES = [
+  'LAUNDRY CARE',
+  'FLOOR CARE',
+  'SURFACE CARE',
+  'DISINFECTION',
+  'PERSONAL CARE',
+  'FABRIC CARE',
+]
 
 const DEFAULT_ADMIN_USERS = [
   {
@@ -163,9 +175,15 @@ export function StoreProvider({ children }) {
   const resetToDefaults = () => {
     setProducts(INITIAL_PRODUCTS)
     setBanners(INITIAL_BANNERS)
+    const productBrands = INITIAL_PRODUCTS.map((p) => p.brand).filter(Boolean)
+    const productCategories = INITIAL_PRODUCTS.map((p) => p.category).filter(Boolean)
+    setBrands(Array.from(new Set([...DEFAULT_BRANDS, ...productBrands])))
+    setCategories(Array.from(new Set([...DEFAULT_CATEGORIES, ...productCategories])))
     try {
       localStorage.removeItem(PRODUCTS_STORAGE_KEY)
       localStorage.removeItem(BANNERS_STORAGE_KEY)
+      localStorage.removeItem(BRANDS_STORAGE_KEY)
+      localStorage.removeItem(CATEGORIES_STORAGE_KEY)
       localStorage.removeItem('bf_top_badge_v1')
       localStorage.removeItem('bf_quote_v1')
     } catch (e) {
@@ -275,6 +293,151 @@ export function StoreProvider({ children }) {
       return { success: false, error: 'Cannot delete the primary Super Administrator' }
     }
     setAdminUsers((prev) => prev.filter((u) => u.id !== id))
+    return { success: true }
+  }
+
+  // ==========================================================
+  // DYNAMIC BRANDS & CATEGORIES MANAGEMENT
+  // ==========================================================
+  const [brands, setBrands] = useState(() => {
+    try {
+      const cached = localStorage.getItem(BRANDS_STORAGE_KEY)
+      if (cached) {
+        const parsed = JSON.parse(cached)
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed
+      }
+    } catch (e) {
+      console.warn('Failed reading brands from localStorage:', e)
+    }
+    const productBrands = INITIAL_PRODUCTS.map((p) => p.brand).filter(Boolean)
+    return Array.from(new Set([...DEFAULT_BRANDS, ...productBrands]))
+  })
+
+  const [categories, setCategories] = useState(() => {
+    try {
+      const cached = localStorage.getItem(CATEGORIES_STORAGE_KEY)
+      if (cached) {
+        const parsed = JSON.parse(cached)
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed
+      }
+    } catch (e) {
+      console.warn('Failed reading categories from localStorage:', e)
+    }
+    const productCategories = INITIAL_PRODUCTS.map((p) => p.category).filter(Boolean)
+    return Array.from(new Set([...DEFAULT_CATEGORIES, ...productCategories]))
+  })
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(BRANDS_STORAGE_KEY, JSON.stringify(brands))
+    } catch (e) {
+      console.warn('Failed saving brands to localStorage:', e)
+    }
+  }, [brands])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(categories))
+    } catch (e) {
+      console.warn('Failed saving categories to localStorage:', e)
+    }
+  }, [categories])
+
+  const addBrand = (brandName) => {
+    const trimmed = (brandName || '').trim()
+    if (!trimmed) return { success: false, error: 'Brand name is required.' }
+    const exists = brands.some((b) => b.toLowerCase() === trimmed.toLowerCase())
+    if (exists) return { success: false, error: `Brand "${trimmed}" already exists.` }
+
+    const formatted = trimmed.toUpperCase()
+    setBrands((prev) => [...prev, formatted])
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('brands').insert([{ name: formatted }]).catch(console.warn)
+    }
+    return { success: true, brand: formatted }
+  }
+
+  const updateBrand = (oldName, newName) => {
+    const trimmed = (newName || '').trim().toUpperCase()
+    if (!trimmed) return { success: false, error: 'Brand name is required.' }
+    if (trimmed === oldName) return { success: true, brand: trimmed }
+    const exists = brands.some(
+      (b) => b.toLowerCase() === trimmed.toLowerCase() && b.toLowerCase() !== oldName.toLowerCase()
+    )
+    if (exists) return { success: false, error: `Brand "${trimmed}" already exists.` }
+
+    setBrands((prev) => prev.map((b) => (b === oldName ? trimmed : b)))
+    setProducts((prev) =>
+      prev.map((p) => (p.brand === oldName ? { ...p, brand: trimmed } : p))
+    )
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('brands').update({ name: trimmed }).eq('name', oldName).catch(console.warn)
+      supabase.from('products').update({ brand: trimmed }).eq('brand', oldName).catch(console.warn)
+    }
+    return { success: true, brand: trimmed }
+  }
+
+  const deleteBrand = (brandName) => {
+    const associatedCount = products.filter((p) => p.brand === brandName).length
+    if (associatedCount > 0) {
+      return {
+        success: false,
+        error: `Cannot delete "${brandName}" because ${associatedCount} product(s) are assigned to it.`,
+      }
+    }
+    setBrands((prev) => prev.filter((b) => b !== brandName))
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('brands').delete().eq('name', brandName).catch(console.warn)
+    }
+    return { success: true }
+  }
+
+  const addCategory = (categoryName) => {
+    const trimmed = (categoryName || '').trim()
+    if (!trimmed) return { success: false, error: 'Category name is required.' }
+    const exists = categories.some((c) => c.toLowerCase() === trimmed.toLowerCase())
+    if (exists) return { success: false, error: `Category "${trimmed}" already exists.` }
+
+    const formatted = trimmed.toUpperCase()
+    setCategories((prev) => [...prev, formatted])
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('categories').insert([{ name: formatted }]).catch(console.warn)
+    }
+    return { success: true, category: formatted }
+  }
+
+  const updateCategory = (oldName, newName) => {
+    const trimmed = (newName || '').trim().toUpperCase()
+    if (!trimmed) return { success: false, error: 'Category name is required.' }
+    if (trimmed === oldName) return { success: true, category: trimmed }
+    const exists = categories.some(
+      (c) => c.toLowerCase() === trimmed.toLowerCase() && c.toLowerCase() !== oldName.toLowerCase()
+    )
+    if (exists) return { success: false, error: `Category "${trimmed}" already exists.` }
+
+    setCategories((prev) => prev.map((c) => (c === oldName ? trimmed : c)))
+    setProducts((prev) =>
+      prev.map((p) => (p.category === oldName ? { ...p, category: trimmed } : p))
+    )
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('categories').update({ name: trimmed }).eq('name', oldName).catch(console.warn)
+      supabase.from('products').update({ category: trimmed }).eq('category', oldName).catch(console.warn)
+    }
+    return { success: true, category: trimmed }
+  }
+
+  const deleteCategory = (categoryName) => {
+    const associatedCount = products.filter((p) => p.category === categoryName).length
+    if (associatedCount > 0) {
+      return {
+        success: false,
+        error: `Cannot delete "${categoryName}" because ${associatedCount} product(s) are assigned to it.`,
+      }
+    }
+    setCategories((prev) => prev.filter((c) => c !== categoryName))
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('categories').delete().eq('name', categoryName).catch(console.warn)
+    }
     return { success: true }
   }
 
@@ -400,6 +563,22 @@ export function StoreProvider({ children }) {
         if (!compErr && remoteCompany && remoteCompany.data) {
           setCompany(remoteCompany.data)
         }
+
+        const { data: remoteBrands, error: brandErr } = await supabase
+          .from('brands')
+          .select('name')
+
+        if (!brandErr && remoteBrands && remoteBrands.length > 0) {
+          setBrands(remoteBrands.map((b) => b.name))
+        }
+
+        const { data: remoteCategories, error: catErr } = await supabase
+          .from('categories')
+          .select('name')
+
+        if (!catErr && remoteCategories && remoteCategories.length > 0) {
+          setCategories(remoteCategories.map((c) => c.name))
+        }
       } catch (e) {
         console.warn('Supabase sync notice:', e)
       }
@@ -439,6 +618,15 @@ export function StoreProvider({ children }) {
     inquiries,
     deleteInquiry,
     clearInquiries,
+    // Dynamic Brands & Categories
+    brands,
+    addBrand,
+    updateBrand,
+    deleteBrand,
+    categories,
+    addCategory,
+    updateCategory,
+    deleteCategory,
   }
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>

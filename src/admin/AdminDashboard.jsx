@@ -10,6 +10,7 @@ import {
   RotateCcw,
   ShieldCheck,
   CheckCircle,
+  Tags,
   Building2,
   KeyRound,
   Users,
@@ -20,10 +21,11 @@ import ProductManager from './ProductManager'
 import CompanySettings from './CompanySettings'
 import SecuritySettings from './SecuritySettings'
 import UserManager from './UserManager'
+import BrandCategoryManager from './BrandCategoryManager'
 
 function AdminDashboard() {
   const navigate = useNavigate()
-  const { products, adminUsers, inquiries, resetToDefaults } = useStore()
+  const { products, brands = [], categories = [], adminUsers, inquiries, resetToDefaults } = useStore()
 
   const [activeTab, setActiveTab] = useState('products')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -142,6 +144,27 @@ function AdminDashboard() {
             </div>
             <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px]">
               {products.length}
+            </span>
+          </button>
+
+          {/* Brands & Categories Tab */}
+          <button
+            onClick={() => {
+              setActiveTab('brands_categories')
+              setMobileMenuOpen(false)
+            }}
+            className={`flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 transition ${
+              activeTab === 'brands_categories'
+                ? 'bg-[#EF2034] text-white font-semibold shadow-xs'
+                : 'text-white/70 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <Tags size={16} />
+              <span>Brands & Categories</span>
+            </div>
+            <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px]">
+              {brands.length + categories.length}
             </span>
           </button>
 
@@ -416,6 +439,23 @@ function AdminDashboard() {
                   </button>
 
                   <button
+                    onClick={() => setActiveTab('brands_categories')}
+                    className="flex items-start gap-4 rounded-xl border border-gray-200/80 p-4 text-left transition hover:border-[#104360] hover:bg-gray-50/50 group"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#104360] text-white group-hover:bg-[#EF2034] transition">
+                      <Tags size={20} />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold text-[#104360]">
+                        Brands & Categories
+                      </h4>
+                      <p className="mt-1 text-xs text-gray-500 leading-relaxed">
+                        Add wholesale brands ({brands.length}) and customize product categories ({categories.length}).
+                      </p>
+                    </div>
+                  </button>
+
+                  <button
                     onClick={() => setActiveTab('company')}
                     className="flex items-start gap-4 rounded-xl border border-gray-200/80 p-4 text-left transition hover:border-[#104360] hover:bg-gray-50/50 group"
                   >
@@ -471,6 +511,7 @@ function AdminDashboard() {
           )}
 
           {activeTab === 'products' && <ProductManager />}
+          {activeTab === 'brands_categories' && <BrandCategoryManager />}
           {activeTab === 'company' && <CompanySettings />}
           {activeTab === 'users' && <UserManager />}
           {activeTab === 'inquiries' && <SecuritySettings />}
