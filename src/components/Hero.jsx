@@ -205,7 +205,7 @@ function Hero() {
           </div>
 
           {/* RIGHT: ANIMATED PRODUCT SHOWCASE WITH FLOATING & PARALLAX */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-center lg:justify-end z-10 py-4 lg:py-0">
+          <div className="lg:col-span-5 flex flex-col items-start lg:items-center justify-center lg:justify-end z-10 py-4 lg:py-0">
             <div
               className="relative flex items-center justify-center transition-all duration-300 ease-out"
               style={{
