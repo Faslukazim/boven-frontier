@@ -155,7 +155,7 @@ VALUES (
         "emailSales": "sales@bovenfrontier.co.in",
         "operatingHours": "Mon - Sat: 9:00 AM - 6:30 PM (IST)",
         "origin": "Manufactured in India",
-        "markets": "India · Middle East · GCC"
+        "markets": ["India", "Middle East", "GCC"]
     }'::jsonb
 )
 ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data;

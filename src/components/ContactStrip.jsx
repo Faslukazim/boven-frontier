@@ -219,7 +219,11 @@ function ContactStrip() {
                 <span className="text-white/40 text-[9px] uppercase tracking-wider">
                   Target Corridors
                 </span>
-                <span>{company?.markets ? company.markets.join(' · ') : 'India · UAE · GCC'}</span>
+                <span>
+                  {Array.isArray(company?.markets)
+                    ? company.markets.join(' · ')
+                    : (company?.markets || 'India · UAE · GCC')}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white/40 text-[9px] uppercase tracking-wider">

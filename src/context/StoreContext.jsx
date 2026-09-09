@@ -474,7 +474,14 @@ export function StoreProvider({ children }) {
       const cached = localStorage.getItem(COMPANY_STORAGE_KEY)
       if (cached) {
         const parsed = JSON.parse(cached)
-        if (parsed && typeof parsed === 'object') return { ...COMPANY, ...parsed }
+        if (parsed && typeof parsed === 'object') {
+          const markets = Array.isArray(parsed.markets)
+            ? parsed.markets
+            : typeof parsed.markets === 'string'
+            ? parsed.markets.split('·').map((s) => s.trim()).filter(Boolean)
+            : COMPANY.markets
+          return { ...COMPANY, ...parsed, markets }
+        }
       }
     } catch (e) {
       console.warn('Failed reading company from localStorage:', e)
@@ -564,7 +571,13 @@ export function StoreProvider({ children }) {
           .single()
 
         if (!compErr && remoteCompany && remoteCompany.data) {
-          setCompany(remoteCompany.data)
+          const raw = remoteCompany.data
+          const markets = Array.isArray(raw.markets)
+            ? raw.markets
+            : typeof raw.markets === 'string'
+            ? raw.markets.split('·').map((s) => s.trim()).filter(Boolean)
+            : COMPANY.markets
+          setCompany((prev) => ({ ...COMPANY, ...prev, ...raw, markets }))
         }
 
         const { data: remoteBrands, error: brandErr } = await supabase
