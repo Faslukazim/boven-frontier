@@ -89,24 +89,36 @@ CREATE POLICY "Public can view brands"
 CREATE POLICY "Public can view categories" 
     ON public.categories FOR SELECT USING (true);
 
--- POLICIES: AUTHENTICATED / SERVICE MANAGERS FULL ACCESS
-CREATE POLICY "Full access to products for authorized users" 
-    ON public.products FOR ALL USING (true) WITH CHECK (true);
+-- POLICIES: AUTHENTICATED ADMINISTRATOR WRITE & MANAGEMENT ACCESS
+CREATE POLICY "Authenticated admin write access to products" 
+    ON public.products FOR ALL 
+    USING (auth.role() = 'authenticated') 
+    WITH CHECK (auth.role() = 'authenticated');
 
-CREATE POLICY "Full access to company settings for authorized users" 
-    ON public.company_settings FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Authenticated admin write access to company settings" 
+    ON public.company_settings FOR ALL 
+    USING (auth.role() = 'authenticated') 
+    WITH CHECK (auth.role() = 'authenticated');
 
-CREATE POLICY "Full access to admin users" 
-    ON public.admin_users FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Authenticated admin access to admin users" 
+    ON public.admin_users FOR ALL 
+    USING (auth.role() = 'authenticated') 
+    WITH CHECK (auth.role() = 'authenticated');
 
-CREATE POLICY "Full access to inquiries for authorized users" 
-    ON public.inquiries FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Authenticated admin access to inquiries" 
+    ON public.inquiries FOR ALL 
+    USING (auth.role() = 'authenticated') 
+    WITH CHECK (auth.role() = 'authenticated');
 
-CREATE POLICY "Full access to brands for authorized users" 
-    ON public.brands FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Authenticated admin write access to brands" 
+    ON public.brands FOR ALL 
+    USING (auth.role() = 'authenticated') 
+    WITH CHECK (auth.role() = 'authenticated');
 
-CREATE POLICY "Full access to categories for authorized users" 
-    ON public.categories FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Authenticated admin write access to categories" 
+    ON public.categories FOR ALL 
+    USING (auth.role() = 'authenticated') 
+    WITH CHECK (auth.role() = 'authenticated');
 
 -- SEED INITIAL BRANDS
 INSERT INTO public.brands (name) VALUES 

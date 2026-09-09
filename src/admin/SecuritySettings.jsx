@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   KeyRound,
   CheckCircle,
@@ -7,15 +7,28 @@ import {
   Trash2,
 } from 'lucide-react'
 import { useStore } from '../context/useStore'
+import { supabase, isSupabaseConfigured } from '../lib/supabase'
 
 function SecuritySettings() {
-  const { updateAdminPassword, inquiries, deleteInquiry, clearInquiries } = useStore()
+  const { inquiries, deleteInquiry, clearInquiries } = useStore()
+  const [currentUserEmail, setCurrentUserEmail] = useState('aswin@bovenfrontier.co.in')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [updating, setUpdating] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
-  const handlePasswordChange = (e) => {
+  useEffect(() => {
+    if (isSupabaseConfigured && supabase) {
+      supabase.auth.getUser().then(({ data: { user } }) => {
+        if (user && user.email) {
+          setCurrentUserEmail(user.email)
+        }
+      })
+    }
+  }, [])
+
+  const handlePasswordChange = async (e) => {
     e.preventDefault()
     setError('')
     setSuccess('')
@@ -30,14 +43,31 @@ function SecuritySettings() {
       return
     }
 
-    const updated = updateAdminPassword(newPassword)
-    if (updated) {
-      setSuccess('Admin password updated successfully! Use your new password on next login.')
-      setNewPassword('')
-      setConfirmPassword('')
-      setTimeout(() => setSuccess(''), 4000)
-    } else {
-      setError('Failed to update password.')
+    if (!isSupabaseConfigured || !supabase) {
+      setError('Supabase authentication is not configured in this environment.')
+      return
+    }
+
+    setUpdating(true)
+
+    try {
+      const { error: updateErr } = await supabase.auth.updateUser({
+        password: newPassword,
+      })
+
+      setUpdating(false)
+
+      if (updateErr) {
+        setError(updateErr.message || 'Failed to update password in Supabase Auth.')
+      } else {
+        setSuccess('Administrative password successfully updated in Supabase Auth! Use your new password on next login.')
+        setNewPassword('')
+        setConfirmPassword('')
+        setTimeout(() => setSuccess(''), 5000)
+      }
+    } catch (err) {
+      setUpdating(false)
+      setError(err?.message || 'An unexpected error occurred while updating your password.')
     }
   }
 
@@ -54,7 +84,7 @@ function SecuritySettings() {
           </h2>
         </div>
         <p className="mt-1 text-xs text-gray-500">
-          Change your administrative login password. Your new password will take effect immediately.
+          Change your administrative login password. Your new password is encrypted and updated directly in Supabase Auth.
         </p>
       </div>
 
@@ -83,8 +113,8 @@ function SecuritySettings() {
             <input
               type="text"
               disabled
-              value="aswin@bovenfrontier.co.in"
-              className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed font-medium"
+              value={currentUserEmail}
+              className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-xs text-gray-500 cursor-not-allowed font-medium font-mono"
             />
           </div>
 
@@ -117,10 +147,11 @@ function SecuritySettings() {
           <div className="pt-2">
             <button
               type="submit"
-              className="inline-flex items-center gap-2 rounded-lg bg-[#104360] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#EF2034] transition shadow-xs"
+              disabled={updating}
+              className="inline-flex items-center gap-2 rounded-lg bg-[#104360] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-[#EF2034] transition shadow-xs disabled:opacity-50"
             >
               <KeyRound size={14} />
-              Update Password
+              {updating ? 'Updating Password...' : 'Update Password in Supabase'}
             </button>
           </div>
         </form>
@@ -179,7 +210,7 @@ function SecuritySettings() {
 
                 <div className="flex items-center gap-2 self-end sm:self-center">
                   <span className="text-[10px] text-gray-400">
-                    {new Date(inq.submittedAt).toLocaleDateString()}
+                    {inq.submittedAt ? new Date(inq.submittedAt).toLocaleDateString() : 'Recent'}
                   </span>
                   <button
                     type="button"

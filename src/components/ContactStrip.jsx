@@ -8,6 +8,7 @@ import {
   CheckCircle,
 } from 'lucide-react'
 import { useStore } from '../context/useStore'
+import { supabase, isSupabaseConfigured } from '../lib/supabase'
 
 function ContactStrip() {
   const [searchParams] = useSearchParams()
@@ -31,17 +32,39 @@ function ContactStrip() {
     e.preventDefault()
     setLoading(true)
 
+    const newLead = {
+      ...formData,
+      id: `lead-${Date.now()}`,
+      submittedAt: new Date().toISOString(),
+    }
+
     // Persist inquiry to local storage so leads are safely retained
     try {
       const existing = JSON.parse(localStorage.getItem('bf_inquiries') || '[]')
-      const newLead = {
-        ...formData,
-        id: `lead-${Date.now()}`,
-        submittedAt: new Date().toISOString(),
-      }
       localStorage.setItem('bf_inquiries', JSON.stringify([newLead, ...existing]))
     } catch (err) {
       console.warn('Local storage inquiry error:', err)
+    }
+
+    // Insert to Supabase inquiries table if configured (allowed by public INSERT policy)
+    if (isSupabaseConfigured && supabase) {
+      supabase
+        .from('inquiries')
+        .insert([
+          {
+            id: newLead.id,
+            name: newLead.name,
+            company: newLead.company,
+            email: newLead.email,
+            phone: newLead.phone,
+            region: newLead.region,
+            buyer_type: newLead.buyerType,
+            product: newLead.product,
+            message: newLead.message,
+            submitted_at: newLead.submittedAt,
+          },
+        ])
+        .catch(console.warn)
     }
 
     setTimeout(() => {

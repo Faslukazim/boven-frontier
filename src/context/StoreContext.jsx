@@ -9,7 +9,6 @@ import { isSupabaseConfigured, supabase } from '../lib/supabase'
 const PRODUCTS_STORAGE_KEY = 'bf_products_v1'
 const BANNERS_STORAGE_KEY = 'bf_banners_v1'
 const COMPANY_STORAGE_KEY = 'bf_company_v1'
-const ADMIN_PWD_STORAGE_KEY = 'bf_admin_pwd_v1'
 const ADMIN_USERS_STORAGE_KEY = 'bf_admin_users_v1'
 const INQUIRIES_STORAGE_KEY = 'bf_inquiries'
 const BRANDS_STORAGE_KEY = 'bf_brands_v1'
@@ -247,7 +246,7 @@ export function StoreProvider({ children }) {
     }
   }, [adminUsers])
 
-  const addAdminUser = ({ name, email, role = 'Administrator', password = '' }) => {
+  const addAdminUser = ({ name, email, role = 'Administrator' }) => {
     const trimmedEmail = (email || '').trim().toLowerCase()
     if (!trimmedEmail) return { success: false, error: 'Email is required' }
 
@@ -259,12 +258,24 @@ export function StoreProvider({ children }) {
       name: (name || '').trim() || trimmedEmail.split('@')[0],
       email: trimmedEmail,
       role: role || 'Administrator',
-      password: (password || '').trim(),
       createdAt: new Date().toISOString(),
       isPrimary: false,
     }
 
     setAdminUsers((prev) => [...prev, newUser])
+    if (isSupabaseConfigured && supabase) {
+      supabase
+        .from('admin_users')
+        .insert([
+          {
+            id: newUser.id,
+            name: newUser.name,
+            email: newUser.email,
+            role: newUser.role,
+          },
+        ])
+        .catch(console.warn)
+    }
     return { success: true, user: newUser }
   }
 
@@ -277,12 +288,23 @@ export function StoreProvider({ children }) {
             ...user,
             name: updates.name || user.name,
             role: 'Super Admin',
-            password: updates.password !== undefined ? updates.password : user.password,
           }
         }
-        return { ...user, ...updates }
+        return {
+          ...user,
+          name: updates.name !== undefined ? updates.name : user.name,
+          role: updates.role !== undefined ? updates.role : user.role,
+        }
       })
     )
+    if (isSupabaseConfigured && supabase) {
+      const allowedUpdates = {}
+      if (updates.name !== undefined) allowedUpdates.name = updates.name
+      if (updates.role !== undefined) allowedUpdates.role = updates.role
+      if (Object.keys(allowedUpdates).length > 0) {
+        supabase.from('admin_users').update(allowedUpdates).eq('id', id).catch(console.warn)
+      }
+    }
     return { success: true }
   }
 
@@ -293,6 +315,9 @@ export function StoreProvider({ children }) {
       return { success: false, error: 'Cannot delete the primary Super Administrator' }
     }
     setAdminUsers((prev) => prev.filter((u) => u.id !== id))
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('admin_users').delete().eq('id', id).catch(console.warn)
+    }
     return { success: true }
   }
 
@@ -484,31 +509,6 @@ export function StoreProvider({ children }) {
   }
 
   // ==========================================================
-  // ADMIN PASSWORD MANAGEMENT
-  // ==========================================================
-  const [adminPassword, setAdminPassword] = useState(() => {
-    try {
-      const cached = localStorage.getItem(ADMIN_PWD_STORAGE_KEY)
-      if (cached && typeof cached === 'string' && cached.trim().length > 0) return cached
-    } catch (e) {
-      console.warn('Failed reading admin password from localStorage:', e)
-    }
-    return import.meta.env.VITE_ADMIN_PASSWORD || 'Boven@2026'
-  })
-
-  const updateAdminPassword = (newPassword) => {
-    const trimmed = (newPassword || '').trim()
-    if (!trimmed) return false
-    setAdminPassword(trimmed)
-    try {
-      localStorage.setItem(ADMIN_PWD_STORAGE_KEY, trimmed)
-    } catch (e) {
-      console.warn('Failed saving admin password:', e)
-    }
-    return true
-  }
-
-  // ==========================================================
   // INQUIRIES MANAGEMENT
   // ==========================================================
   const [inquiries, setInquiries] = useState(() => {
@@ -530,6 +530,9 @@ export function StoreProvider({ children }) {
       localStorage.setItem(INQUIRIES_STORAGE_KEY, JSON.stringify(filtered))
       return filtered
     })
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('inquiries').delete().eq('id', id).catch(console.warn)
+    }
   }
 
   const clearInquiries = () => {
@@ -579,6 +582,38 @@ export function StoreProvider({ children }) {
         if (!catErr && remoteCategories && remoteCategories.length > 0) {
           setCategories(remoteCategories.map((c) => c.name))
         }
+
+        // Fetch team members if authenticated
+        const { data: remoteUsers, error: userErr } = await supabase
+          .from('admin_users')
+          .select('*')
+
+        if (!userErr && remoteUsers && remoteUsers.length > 0) {
+          setAdminUsers(remoteUsers)
+        }
+
+        // Fetch customer inquiries if authenticated
+        const { data: remoteInquiries, error: inqErr } = await supabase
+          .from('inquiries')
+          .select('*')
+          .order('submitted_at', { ascending: false })
+
+        if (!inqErr && remoteInquiries && remoteInquiries.length > 0) {
+          setInquiries(
+            remoteInquiries.map((inq) => ({
+              id: inq.id,
+              name: inq.name,
+              company: inq.company,
+              email: inq.email,
+              phone: inq.phone,
+              region: inq.region,
+              buyerType: inq.buyer_type,
+              product: inq.product,
+              message: inq.message,
+              submittedAt: inq.submitted_at,
+            }))
+          )
+        }
       } catch (e) {
         console.warn('Supabase sync notice:', e)
       }
@@ -611,9 +646,6 @@ export function StoreProvider({ children }) {
     addAdminUser,
     updateAdminUser,
     deleteAdminUser,
-    // Admin Password
-    adminPassword,
-    updateAdminPassword,
     // Inquiries
     inquiries,
     deleteInquiry,

@@ -17,6 +17,7 @@ import {
   Inbox,
 } from 'lucide-react'
 import { useStore } from '../context/useStore'
+import { supabase, isSupabaseConfigured } from '../lib/supabase'
 import ProductManager from './ProductManager'
 import CompanySettings from './CompanySettings'
 import SecuritySettings from './SecuritySettings'
@@ -31,40 +32,79 @@ function AdminDashboard() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [resetSuccessNotice, setResetSuccessNotice] = useState(false)
-  const [currentUser] = useState(() => {
-    try {
-      const authData = localStorage.getItem('bf_admin_auth')
-      if (authData) {
-        const parsed = JSON.parse(authData)
-        if (parsed && parsed.email) {
-          return {
-            name: parsed.name || 'Aswin',
-            email: parsed.email,
-            role: parsed.role || 'Super Admin',
-          }
-        }
-      }
-    } catch (e) {
-      console.warn('Error reading admin auth data:', e)
-    }
-    return {
-      name: 'Aswin',
-      email: 'aswin@bovenfrontier.co.in',
-      role: 'Super Admin',
-    }
+  const [authLoading, setAuthLoading] = useState(true)
+  const [currentUser, setCurrentUser] = useState({
+    name: 'Administrator',
+    email: '',
+    role: 'Administrator',
   })
 
-  // Auth Guard
+  // Real Supabase Auth Route Guard
   useEffect(() => {
-    const authData = localStorage.getItem('bf_admin_auth')
-    if (!authData) {
-      navigate('/admin/login')
+    if (!isSupabaseConfigured || !supabase) {
+      navigate('/admin/login', { replace: true })
+      return
     }
-  }, [navigate])
 
-  const handleLogout = () => {
-    localStorage.removeItem('bf_admin_auth')
-    navigate('/admin/login')
+    let mounted = true
+
+    const syncUserFromSession = (session) => {
+      if (!session || !session.user) {
+        navigate('/admin/login', { replace: true })
+        return
+      }
+
+      const email = session.user.email || ''
+      const metadata = session.user.user_metadata || {}
+      const matchedProfile = adminUsers?.find(
+        (u) => u.email?.toLowerCase() === email.toLowerCase()
+      )
+
+      setCurrentUser({
+        id: session.user.id,
+        email,
+        name: metadata.name || matchedProfile?.name || email.split('@')[0] || 'Admin',
+        role:
+          metadata.role ||
+          matchedProfile?.role ||
+          (email.toLowerCase() === 'aswin@bovenfrontier.co.in' ? 'Super Admin' : 'Administrator'),
+      })
+      setAuthLoading(false)
+    }
+
+    // Verify initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!mounted) return
+      if (!session) {
+        navigate('/admin/login', { replace: true })
+      } else {
+        syncUserFromSession(session)
+      }
+    })
+
+    // Subscribe to auth state updates
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!mounted) return
+      if (!session) {
+        navigate('/admin/login', { replace: true })
+      } else {
+        syncUserFromSession(session)
+      }
+    })
+
+    return () => {
+      mounted = false
+      subscription?.unsubscribe()
+    }
+  }, [navigate, adminUsers])
+
+  const handleLogout = async () => {
+    if (supabase) {
+      await supabase.auth.signOut().catch(console.warn)
+    }
+    navigate('/admin/login', { replace: true })
   }
 
   const handleResetCatalog = () => {
@@ -72,6 +112,19 @@ function AdminDashboard() {
     setShowResetConfirm(false)
     setResetSuccessNotice(true)
     setTimeout(() => setResetSuccessNotice(false), 3500)
+  }
+
+  if (authLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#F8FAFC]">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-3 border-[#104360] border-t-transparent" />
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#104360]/70">
+            Verifying Administrative Session...
+          </p>
+        </div>
+      </div>
+    )
   }
 
   const activeBrands = [...new Set(products.map((p) => p.brand))]

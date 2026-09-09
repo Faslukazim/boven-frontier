@@ -1,68 +1,74 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react'
-import { useStore } from '../context/useStore'
+import { Lock, Mail, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react'
+import { supabase, isSupabaseConfigured } from '../lib/supabase'
 
 function AdminLogin() {
   const navigate = useNavigate()
-  const { adminPassword, adminUsers } = useStore()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleLogin = (e) => {
+  // Redirect to /admin if already logged in with a valid Supabase session
+  useEffect(() => {
+    if (!isSupabaseConfigured || !supabase) return
+
+    let mounted = true
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (mounted && session) {
+        navigate('/admin', { replace: true })
+      }
+    })
+
+    return () => {
+      mounted = false
+    }
+  }, [navigate])
+
+  const handleLogin = async (e) => {
     e.preventDefault()
     setError('')
+
+    const enteredEmail = email.trim()
+    const enteredPassword = password
+
+    if (!enteredEmail || !enteredPassword) {
+      setError('Please provide both email address and password.')
+      return
+    }
+
+    if (!isSupabaseConfigured || !supabase) {
+      setError(
+        'Supabase authentication is not configured. Please define VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment variables.'
+      )
+      return
+    }
+
     setLoading(true)
 
-    setTimeout(() => {
-      const enteredEmail = email.trim().toLowerCase()
-      const enteredPassword = password.trim()
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email: enteredEmail,
+        password: enteredPassword,
+      })
 
-      // Primary Super Admin is Aswin
-      const isPrimaryAdmin =
-        (enteredEmail === 'aswin@bovenfrontier.co.in' ||
-          enteredEmail === (import.meta.env.VITE_ADMIN_EMAIL || '').trim().toLowerCase()) &&
-        enteredPassword === adminPassword
-
-      // Check if user exists in dynamic adminUsers list
-      const matchedUser = adminUsers?.find(
-        (u) => u.email.toLowerCase() === enteredEmail
-      )
-
-      let authorizedUser = null
-
-      if (isPrimaryAdmin) {
-        authorizedUser = {
-          id: matchedUser?.id || 'usr_aswin_primary',
-          name: matchedUser?.name || 'Aswin',
-          email: 'aswin@bovenfrontier.co.in',
-          role: 'Super Admin',
-        }
-      } else if (matchedUser && matchedUser.password && matchedUser.password === enteredPassword) {
-        authorizedUser = {
-          id: matchedUser.id,
-          name: matchedUser.name,
-          email: matchedUser.email,
-          role: matchedUser.role || 'Administrator',
-        }
+      if (authError) {
+        setError(authError.message || 'Invalid administrative credentials.')
+        setLoading(false)
+        return
       }
 
-      if (authorizedUser) {
-        localStorage.setItem(
-          'bf_admin_auth',
-          JSON.stringify({
-            ...authorizedUser,
-            loggedInAt: new Date().toISOString(),
-          })
-        )
-        navigate('/admin')
+      if (data?.session) {
+        navigate('/admin', { replace: true })
       } else {
-        setError('Invalid credentials. Please verify your administrative email and password.')
+        setError('Login failed. Please verify your administrative credentials.')
+        setLoading(false)
       }
+    } catch (err) {
+      setError(err?.message || 'An unexpected error occurred during authentication.')
       setLoading(false)
-    }, 400)
+    }
   }
 
   return (
@@ -87,13 +93,14 @@ function AdminLogin() {
             Sign in to Dashboard
           </h2>
           <p className="mt-2 text-xs text-[#104360]/60">
-            Manage product catalog, inventory status, and corporate settings.
+            Secure administrative access via Supabase Authentication.
           </p>
         </div>
 
         {error && (
-          <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-700">
-            {error}
+          <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-700">
+            <AlertCircle size={16} className="shrink-0 text-red-600" />
+            <span>{error}</span>
           </div>
         )}
 
@@ -149,9 +156,9 @@ function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="group relative flex w-full justify-center bg-[#104360] py-3.5 px-4 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-all hover:bg-[#EF2034] hover:text-[#104360] disabled:opacity-50"
+            className="group relative flex w-full justify-center bg-[#104360] py-3.5 px-4 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-all hover:bg-[#EF2034] hover:text-white disabled:opacity-50"
           >
-            {loading ? 'Authenticating...' : 'Sign In'}
+            {loading ? 'Verifying Session...' : 'Sign In'}
             {!loading && (
               <ArrowRight
                 size={14}

@@ -4,29 +4,27 @@ import {
   UserPlus,
   ShieldCheck,
   Trash2,
-  KeyRound,
+  Mail,
   X,
   CheckCircle,
   AlertCircle,
   Clock,
-  Mail,
   User,
+  Send,
 } from 'lucide-react'
 import { useStore } from '../context/useStore'
+import { supabase, isSupabaseConfigured } from '../lib/supabase'
 
 function UserManager() {
-  const { adminUsers, addAdminUser, updateAdminUser, deleteAdminUser } = useStore()
+  const { adminUsers, addAdminUser, deleteAdminUser } = useStore()
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
-  const [selectedUser, setSelectedUser] = useState(null)
 
   // Add User Form State
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [role, setRole] = useState('Administrator')
-  const [password, setPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
   // Notifications
   const [error, setError] = useState('')
@@ -36,63 +34,74 @@ function UserManager() {
     setName('')
     setEmail('')
     setRole('Administrator')
-    setPassword('')
     setError('')
     setIsAddModalOpen(true)
   }
 
-  const handleCreateUser = (e) => {
+  const handleCreateUser = async (e) => {
     e.preventDefault()
     setError('')
 
-    if (!name.trim() || !email.trim() || !password.trim()) {
-      setError('Please provide a name, email address, and initial password.')
+    const trimmedName = name.trim()
+    const trimmedEmail = email.trim().toLowerCase()
+
+    if (!trimmedName || !trimmedEmail) {
+      setError('Please provide a name and corporate email address.')
       return
     }
 
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters long.')
-      return
-    }
+    setLoading(true)
 
     const res = addAdminUser({
-      name: name.trim(),
-      email: email.trim().toLowerCase(),
+      name: trimmedName,
+      email: trimmedEmail,
       role,
-      password: password.trim(),
     })
 
     if (!res.success) {
-      setError(res.error || 'Failed to add user')
+      setError(res.error || 'Failed to add user.')
+      setLoading(false)
       return
     }
 
+    // Trigger Supabase Auth invitation / password-setup email if configured
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.auth.resetPasswordForEmail(trimmedEmail, {
+          redirectTo: `${window.location.origin}/admin`,
+        })
+      } catch (authErr) {
+        console.warn('Notice sending initial invite email:', authErr)
+      }
+    }
+
+    setLoading(false)
     setIsAddModalOpen(false)
-    setSuccess(`Team member ${name.trim()} added successfully!`)
-    setTimeout(() => setSuccess(''), 3500)
+    setSuccess(
+      `Team member ${trimmedName} added! An invitation and password setup link has been sent to ${trimmedEmail}.`
+    )
+    setTimeout(() => setSuccess(''), 5000)
   }
 
-  const handleOpenPasswordModal = (user) => {
-    setSelectedUser(user)
-    setNewPassword('')
-    setError('')
-    setIsPasswordModalOpen(true)
-  }
-
-  const handleUpdatePassword = (e) => {
-    e.preventDefault()
-    setError('')
-
-    if (!newPassword.trim() || newPassword.length < 6) {
-      setError('Password must be at least 6 characters long.')
+  const handleSendPasswordReset = async (user) => {
+    if (!isSupabaseConfigured || !supabase) {
+      alert('Supabase authentication is not configured in this environment.')
       return
     }
 
-    if (selectedUser) {
-      updateAdminUser(selectedUser.id, { password: newPassword.trim() })
-      setIsPasswordModalOpen(false)
-      setSuccess(`Password for ${selectedUser.name} updated successfully!`)
-      setTimeout(() => setSuccess(''), 3500)
+    try {
+      const { error: resetErr } = await supabase.auth.resetPasswordForEmail(user.email, {
+        redirectTo: `${window.location.origin}/admin`,
+      })
+
+      if (resetErr) {
+        alert(resetErr.message || 'Failed to dispatch password setup email.')
+      } else {
+        setSuccess(`Password setup / reset link sent to ${user.email}!`)
+        setTimeout(() => setSuccess(''), 4000)
+      }
+    } catch (err) {
+      alert(err.message || 'Error sending password setup email.')
     }
   }
 
@@ -102,13 +111,17 @@ function UserManager() {
       return
     }
 
-    if (window.confirm(`Are you sure you want to remove team access for ${user.name} (${user.email})?`)) {
+    if (
+      window.confirm(
+        `Are you sure you want to remove administrative access for ${user.name} (${user.email})?`
+      )
+    ) {
       const res = deleteAdminUser(user.id)
       if (res.success) {
-        setSuccess(`User ${user.name} removed.`)
+        setSuccess(`User ${user.name} removed from admin team.`)
         setTimeout(() => setSuccess(''), 3000)
       } else {
-        alert(res.error || 'Could not delete user')
+        alert(res.error || 'Could not delete user.')
       }
     }
   }
@@ -173,8 +186,8 @@ function UserManager() {
             <CheckCircle size={18} />
           </div>
           <div>
-            <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400">System Security</p>
-            <p className="text-xs font-semibold text-emerald-700">Protected & Encrypted Session</p>
+            <p className="text-[10px] uppercase font-bold tracking-wider text-gray-400">Supabase Auth Security</p>
+            <p className="text-xs font-semibold text-emerald-700">Encrypted Role-Based Access</p>
           </div>
         </div>
       </div>
@@ -243,15 +256,13 @@ function UserManager() {
 
                     <td className="py-4 pl-3 pr-6 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        {!isPrimary && (
-                          <button
-                            onClick={() => handleOpenPasswordModal(user)}
-                            title="Change Password"
-                            className="rounded p-1.5 text-gray-400 hover:bg-gray-100 hover:text-[#104360] transition"
-                          >
-                            <KeyRound size={14} />
-                          </button>
-                        )}
+                        <button
+                          onClick={() => handleSendPasswordReset(user)}
+                          title={`Send Password Setup / Reset Email to ${user.email}`}
+                          className="rounded p-1.5 text-gray-400 hover:bg-blue-50 hover:text-[#104360] transition"
+                        >
+                          <Send size={14} />
+                        </button>
 
                         {isPrimary ? (
                           <span className="text-[10px] font-semibold text-gray-400 px-2 py-1 bg-gray-100 rounded">
@@ -352,21 +363,11 @@ function UserManager() {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1">
-                  Initial Password * (min. 6 characters)
-                </label>
-                <div className="relative">
-                  <KeyRound size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="w-full rounded-lg border border-gray-200 pl-9 pr-3 py-2.5 text-xs text-[#104360] placeholder-gray-400 outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360]"
-                  />
-                </div>
+              <div className="rounded-lg bg-blue-50 border border-blue-100 p-3 text-[11px] text-blue-900 leading-relaxed">
+                <p className="font-semibold mb-0.5">Secure Passwordless Setup</p>
+                <p className="text-blue-700">
+                  The user will be added to the team roster and sent an email link to securely establish their credentials in Supabase Auth. Plaintext passwords are never stored in the application.
+                </p>
               </div>
 
               <div className="pt-4 flex items-center justify-end gap-3 border-t border-gray-100">
@@ -379,70 +380,10 @@ function UserManager() {
                 </button>
                 <button
                   type="submit"
-                  className="rounded-lg bg-[#104360] px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:bg-[#EF2034] transition shadow-xs"
+                  disabled={loading}
+                  className="rounded-lg bg-[#104360] px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:bg-[#EF2034] transition shadow-xs disabled:opacity-50"
                 >
-                  Create User
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Change Password Modal */}
-      {isPasswordModalOpen && selectedUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
-          <div className="relative w-full max-w-sm rounded-2xl bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 bg-[#F8FAFC]">
-              <div className="flex items-center gap-2 text-[#104360]">
-                <KeyRound size={18} className="text-[#EF2034]" />
-                <h3 className="font-semibold text-sm">
-                  Change Password: {selectedUser.name}
-                </h3>
-              </div>
-              <button
-                onClick={() => setIsPasswordModalOpen(false)}
-                className="rounded-lg p-1 text-gray-400 hover:bg-gray-200"
-              >
-                <X size={16} />
-              </button>
-            </div>
-
-            <form onSubmit={handleUpdatePassword} className="p-6 space-y-4">
-              {error && (
-                <div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-700">
-                  <AlertCircle size={15} className="shrink-0" />
-                  <span>{error}</span>
-                </div>
-              )}
-
-              <div>
-                <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1">
-                  New Password (min. 6 characters)
-                </label>
-                <input
-                  type="password"
-                  required
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full rounded-lg border border-gray-200 px-3 py-2 text-xs text-[#104360] outline-none focus:border-[#104360] focus:ring-1 focus:ring-[#104360]"
-                />
-              </div>
-
-              <div className="pt-2 flex items-center justify-end gap-2 border-t border-gray-100">
-                <button
-                  type="button"
-                  onClick={() => setIsPasswordModalOpen(false)}
-                  className="rounded-lg px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-100"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="rounded-lg bg-[#104360] px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white hover:bg-[#EF2034] transition"
-                >
-                  Update
+                  {loading ? 'Adding User...' : 'Send Invite & Add Member'}
                 </button>
               </div>
             </form>
