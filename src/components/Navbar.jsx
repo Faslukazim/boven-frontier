@@ -5,7 +5,6 @@ import {
   X,
   Phone,
   MessageCircle,
-  ShieldCheck,
 } from 'lucide-react'
 import { useStore } from '../context/useStore'
 
@@ -228,18 +227,10 @@ function Navbar() {
               </a>
             </div>
 
-            <div className="flex items-center justify-between pt-2">
+            <div className="pt-2 text-center">
               <span className="text-[10px] font-medium uppercase tracking-wider text-gray-400">
-                Manufactured in India
+                Manufactured in India · Export Quality
               </span>
-              <Link
-                to="/admin"
-                onClick={() => setMobileMenuOpen(false)}
-                className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-[#104360] hover:text-[#EF2034] hover:underline"
-              >
-                <ShieldCheck size={13} />
-                <span>Admin Portal</span>
-              </Link>
             </div>
           </div>
         </div>
