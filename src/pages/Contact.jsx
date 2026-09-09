@@ -1,146 +1,56 @@
-import { MapPin, Phone, Mail, ShieldCheck, Clock, MessageCircle } from 'lucide-react'
+import { ArrowUpRight, Clock, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from 'lucide-react'
 import ContactStrip from '../components/ContactStrip'
 import Footer from '../components/Footer'
 import { useStore } from '../context/useStore'
 
 function Contact() {
   const { company } = useStore()
+  const phone = company?.phone1?.replace(/\s+/g, '') || '+919633890447'
+  const whatsapp = company?.whatsappUAE?.replace(/[^0-9]/g, '') || '971507355418'
 
   return (
-    <main className="bg-white text-[#104360]">
-      {/* =====================================================
-          CONTACT HEADER
-      ===================================================== */}
-      <section className="bg-[#104360] px-6 py-16 text-white sm:py-20 relative overflow-hidden">
-        <div className="mx-auto max-w-[1600px] px-2 sm:px-10 relative z-10">
-          <span className="text-xs font-semibold uppercase tracking-wider text-[#EF2034] block mb-2">
-            Direct Communication
-          </span>
-
-          <h1 className="text-2xl sm:text-4xl font-semibold tracking-tight">
-            Connect With Our Team
-          </h1>
-
-          <p className="mt-2 max-w-xl text-xs sm:text-sm text-white/70 leading-relaxed font-normal">
-            For retail distributorship, bulk institutional purchase, or Middle East export inquiries, contact our management desk directly.
-          </p>
+    <main className="bg-[#F7F5F0] text-[#104360]">
+      <section className="bg-[#104360] text-white">
+        <div className="mx-auto grid min-h-[60vh] max-w-[1600px] items-end gap-12 px-5 py-16 sm:px-10 lg:grid-cols-12 lg:px-16 lg:py-24">
+          <div className="lg:col-span-8">
+            <p className="mb-8 text-[9px] font-bold uppercase tracking-[0.3em] text-white/40"><span className="mr-4 text-[#EF2034]">04</span> Direct communication</p>
+            <h1 className="text-[clamp(3.4rem,8vw,8rem)] font-medium leading-[0.86] tracking-[-0.07em]">Let's make<br /><span className="text-[#EF2034]">something move.</span></h1>
+          </div>
+          <div className="lg:col-span-3 lg:col-start-10 lg:pb-2"><p className="border-l border-[#EF2034] pl-5 text-sm leading-7 text-white/60">Wholesale distribution, institutional supply, private label and GCC export enquiries start here.</p></div>
         </div>
       </section>
 
-      {/* =====================================================
-          OFFICIAL CORPORATE DETAILS CARDS
-      ===================================================== */}
-      <section className="border-b border-gray-200 bg-[#F8FAFC] py-12 px-6 sm:px-10 lg:px-16">
-        <div className="mx-auto max-w-[1600px] grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          
-          {/* Corporate & Registered Office */}
-          <div className="rounded-xl border border-gray-200/80 bg-white p-6 shadow-2xs">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#104360]/5 border border-[#104360]/10 text-[#EF2034] mb-4">
-              <MapPin size={18} />
-            </div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-              Corporate & Registered Office
-            </p>
-            <p className="mt-2 text-xs font-medium text-gray-800 leading-relaxed">
-              {company?.address || 'Room No. OP 7/452, Manakkadavu, Kozhikode 673019, India'}
-            </p>
-          </div>
-
-          {/* Direct Phone & WhatsApp */}
-          <div className="rounded-xl border border-gray-200/80 bg-white p-6 shadow-2xs">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#104360]/5 border border-[#104360]/10 text-[#EF2034] mb-4">
-              <Phone size={18} />
-            </div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-              Direct Calls & WhatsApp
-            </p>
-            <div className="mt-2 space-y-1 text-xs">
-              {company?.phone1 && (
-                <p>
-                  <a href={`tel:${company.phone1.replace(/\s+/g, '')}`} className="font-semibold text-gray-900 hover:text-[#EF2034] transition">
-                    {company.phone1}
-                  </a>
-                </p>
-              )}
-              {company?.phone2 && (
-                <p>
-                  <a href={`tel:${company.phone2.replace(/\s+/g, '')}`} className="font-semibold text-gray-900 hover:text-[#EF2034] transition">
-                    {company.phone2}
-                  </a>
-                </p>
-              )}
-              <p className="pt-1">
-                <a
-                  href={`https://wa.me/${company?.whatsappUAE?.replace(/[^0-9]/g, '') || '971507355418'}?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-emerald-600 hover:text-emerald-700 inline-flex items-center gap-1 transition"
-                >
-                  <MessageCircle size={13} />
-                  <span>{company?.whatsappUAE || '+971 50 735 5418'} (UAE)</span>
-                </a>
-              </p>
-            </div>
-          </div>
-
-          {/* Email Communications */}
-          <div className="rounded-xl border border-gray-200/80 bg-white p-6 shadow-2xs">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#104360]/5 border border-[#104360]/10 text-[#EF2034] mb-4">
-              <Mail size={18} />
-            </div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-              Email Communications
-            </p>
-            <div className="mt-2 space-y-1 text-xs">
-              {company?.email1 && (
-                <p>
-                  <a href={`mailto:${company.email1}`} className="font-medium text-gray-900 hover:text-[#EF2034] transition">
-                    {company.email1}
-                  </a>
-                </p>
-              )}
-              {company?.email2 && (
-                <p>
-                  <a href={`mailto:${company.email2}`} className="font-medium text-gray-900 hover:text-[#EF2034] transition">
-                    {company.email2}
-                  </a>
-                </p>
-              )}
-              {company?.email3 && (
-                <p>
-                  <a href={`mailto:${company.email3}`} className="font-medium text-gray-900 hover:text-[#EF2034] transition">
-                    {company.email3}
-                  </a>
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Entity Registration & Hours */}
-          <div className="rounded-xl border border-gray-200/80 bg-white p-6 shadow-2xs">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#104360]/5 border border-[#104360]/10 text-[#EF2034] mb-4">
-              <ShieldCheck size={18} />
-            </div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-              Entity Registration
-            </p>
-            <div className="mt-2 text-xs space-y-1 text-gray-800">
-              <p className="font-semibold text-gray-900">LLP ID: {company?.llpId || 'ACE-5349'}</p>
-              <p className="font-mono text-[11px] text-gray-600">GSTIN: {company?.gstin || '32ABCFB2913N1ZN'}</p>
-              <div className="pt-2 text-[10px] text-gray-500 flex items-center gap-1">
-                <Clock size={12} className="text-[#104360]" />
-                <span>{company?.operatingHours || 'Mon – Sat: 9:00 AM – 6:30 PM (IST)'}</span>
-              </div>
-            </div>
-          </div>
-
+      <section className="border-b border-[#104360]/10 bg-white">
+        <div className="mx-auto grid max-w-[1600px] divide-y divide-[#104360]/10 px-5 sm:px-10 lg:grid-cols-4 lg:divide-x lg:divide-y-0 lg:px-16">
+          {[
+            [MapPin, 'Office', company?.address || 'Kozhikode, Kerala, India'],
+            [Phone, 'Direct', company?.phone1 || '+91 96338 90447'],
+            [MessageCircle, 'WhatsApp', company?.whatsappUAE || '+971 50 735 5418'],
+            [Mail, 'Email', company?.email1 || 'info@bovenfrontier.co.in'],
+          ].map(([Icon, label, value]) => <div key={label} className="group py-7 lg:px-7 first:lg:pl-0 last:lg:pr-0"><Icon size={17} className="text-[#EF2034]" /><p className="mt-5 text-[8px] font-bold uppercase tracking-[0.25em] text-[#104360]/35">{label}</p><p className="mt-2 text-xs leading-5 text-[#104360]/75">{value}</p></div>)}
         </div>
       </section>
 
-      {/* Main Interactive Contact Section */}
+      <section className="mx-auto max-w-[1600px] px-5 py-24 sm:px-10 lg:px-16 lg:py-32">
+        <div className="grid gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-4"><p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#EF2034]">05 — Before you enquire</p><h2 className="mt-5 text-4xl font-medium leading-[0.95] tracking-[-0.05em] sm:text-6xl">Give us the right brief.</h2><p className="mt-6 max-w-sm text-sm leading-7 text-[#104360]/55">The more context you provide, the faster our team can route your enquiry to the right commercial conversation.</p></div>
+          <div className="lg:col-span-7 lg:col-start-6">
+            <div className="divide-y divide-[#104360]/10 border-y border-[#104360]/10">
+              {[
+                ['01', 'What are you buying?', 'Product, category, private label or general catalogue.'],
+                ['02', 'Where are you buying for?', 'Country, region, distributor territory or institutional market.'],
+                ['03', 'What scale do you need?', 'Approximate cartons, pallets, containers or recurring requirement.'],
+                ['04', 'How should we reach you?', 'Email, phone or WhatsApp — whichever is fastest for you.'],
+              ].map(([n, title, desc]) => <div key={n} className="grid gap-4 py-7 sm:grid-cols-[50px_1fr_1fr] sm:items-center"><span className="font-mono text-[9px] text-[#EF2034]">{n}</span><h3 className="text-base font-medium tracking-tight">{title}</h3><p className="text-xs leading-6 text-[#104360]/50">{desc}</p></div>)}
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3"><a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-[#104360] px-5 py-3 text-[9px] font-bold uppercase tracking-[0.2em] text-white">WhatsApp export desk <ArrowUpRight size={14} /></a><a href={`tel:${phone}`} className="inline-flex items-center gap-3 border border-[#104360]/15 px-5 py-3 text-[9px] font-bold uppercase tracking-[0.2em]">Call direct <Phone size={14} /></a></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#104360] text-white"><div className="mx-auto grid max-w-[1600px] gap-10 px-5 py-20 sm:px-10 lg:grid-cols-12 lg:px-16 lg:py-28"><div className="lg:col-span-7"><p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#EF2034]">06 — Official details</p><h2 className="mt-5 text-4xl font-medium tracking-[-0.05em] sm:text-6xl">A direct line to the business.</h2></div><div className="lg:col-span-4 lg:col-start-9"><div className="divide-y divide-white/10 border-y border-white/10 text-xs">{[[ShieldCheck, 'LLP registration', company?.llpId || 'ACE-5349'], [ShieldCheck, 'GSTIN', company?.gstin || '32ABCFB2913N1ZN'], [Clock, 'Operating hours', company?.operatingHours || 'Mon – Sat: 9:00 AM – 6:30 PM (IST)']].map(([Icon, label, value]) => <div key={label} className="flex gap-4 py-5"><Icon size={15} className="mt-0.5 shrink-0 text-[#EF2034]" /><div><p className="text-[8px] uppercase tracking-[0.2em] text-white/30">{label}</p><p className="mt-1 text-white/70">{value}</p></div></div>)}</div></div></div></section>
+
       <ContactStrip />
-
-      {/* Footer */}
       <Footer />
     </main>
   )
