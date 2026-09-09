@@ -10,11 +10,11 @@ function Hero() {
       ? products.filter((p) => p.is_featured)
       : products
 
-  // Ensure LexOne Bathroom Cleaner (from client mockup) is the initial flagship product
+  // Ensure LexOne Bathroom Cleaner is the initial flagship product, and trim to 4 flagship slides
   const heroProductsList = [
     ...featuredProducts.filter((p) => (p.image || '').toLowerCase().includes('bathroomcleaner')),
     ...featuredProducts.filter((p) => !(p.image || '').toLowerCase().includes('bathroomcleaner')),
-  ]
+  ].slice(0, 4)
 
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -170,8 +170,15 @@ function Hero() {
               </span>
             </h1>
 
-            {/* Action Links with Entrance Animation */}
-            <div className="hero-fade-in mt-6 sm:mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 sm:gap-10 lg:gap-14">
+            {/* Action CTA Buttons with tactile shape and high tap affordance */}
+            <div className="hero-fade-in mt-6 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center rounded-xl bg-[#EF2034] px-5 sm:px-6 py-3 text-xs sm:text-sm font-bold tracking-wider uppercase text-white shadow-lg hover:bg-[#d8192c] active:scale-98 transition duration-200"
+              >
+                <span>WHOLESALE ENQUIRY</span>
+              </Link>
+
               <a
                 href="#products"
                 onClick={(e) => {
@@ -183,30 +190,17 @@ function Hero() {
                     window.scrollTo({ top, behavior: 'smooth' })
                   }
                 }}
-                className="group relative text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white hover:text-[#EF2034] transition-colors duration-200 py-1"
+                className="inline-flex items-center justify-center rounded-xl border border-white/25 bg-white/10 px-5 sm:px-6 py-3 text-xs sm:text-sm font-semibold tracking-wider uppercase text-white backdrop-blur-xs hover:bg-white/20 active:scale-98 transition duration-200"
               >
                 <span>EXPLORE PRODUCTS</span>
-                <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1.5px] bg-[#EF2034] mt-0.5" />
               </a>
-
-              <Link
-                to="/contact"
-                className="group relative text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white hover:text-[#EF2034] transition-colors duration-200 py-1"
-              >
-                <span>WHOLESALE ENQUIRY</span>
-                <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1.5px] bg-[#EF2034] mt-0.5" />
-              </Link>
             </div>
 
-            {/* Gold Cursive Script Tagline with Entrance Animation */}
-            <div className="hero-script-in mt-6 sm:mt-8 lg:mt-10">
-              <p
-                className="font-script text-xl sm:text-2xl lg:text-[1.75rem] xl:text-[2rem] text-[#e5b741] font-normal leading-relaxed tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)] whitespace-normal lg:whitespace-nowrap"
-              >
-                Connecting Quality. <br className="block sm:hidden" />
-                Creating Markets. <br className="block sm:hidden" />
-                Growing Together.
-              </p>
+            {/* Architectural Industrial/Procurement Tagline */}
+            <div className="hero-fade-in mt-6 sm:mt-8">
+              <div className="inline-flex items-center border-l-2 border-[#EF2034] pl-3 py-0.5 text-xs sm:text-sm md:text-base font-medium tracking-wide text-white/85 leading-relaxed">
+                <span>Connecting Quality. Creating Markets. Growing Together.</span>
+              </div>
             </div>
           </div>
 
@@ -277,6 +271,25 @@ function Hero() {
               </div>
             </div>
 
+            {/* View All Products Link */}
+            <div className="w-full max-w-[360px] mt-2 flex justify-end">
+              <a
+                href="#products"
+                onClick={(e) => {
+                  const target = document.getElementById('products')
+                  if (target) {
+                    e.preventDefault()
+                    const navHeight = 74
+                    const top = target.getBoundingClientRect().top + window.scrollY - navHeight
+                    window.scrollTo({ top, behavior: 'smooth' })
+                  }
+                }}
+                className="text-[10px] uppercase font-semibold tracking-wider text-white/50 hover:text-white transition flex items-center gap-1"
+              >
+                <span>View all products ({products.length})</span>
+                <span>→</span>
+              </a>
+            </div>
           </div>
 
         </div>

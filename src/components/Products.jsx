@@ -18,19 +18,8 @@ function ProductCard({ product, index }) {
       className={`reveal-on-scroll ${staggerClass} group flex flex-col justify-between rounded-xl border border-gray-200/80 bg-white p-4 transition-all duration-300 hover:border-[#EF2034]/40 hover:shadow-lg`}
     >
       <div>
-        {/* Product Image Stage */}
+        {/* Product Image Stage (Unobstructed bottle photo) */}
         <div className="relative aspect-square overflow-hidden rounded-lg bg-[#f8f8f6]">
-          {/* Quick WhatsApp Action */}
-          <a
-            href={`https://wa.me/${whatsappDigits}?text=${whatsappMessage}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute right-2.5 bottom-2.5 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-emerald-600 shadow-xs backdrop-blur-xs transition hover:scale-110 hover:bg-emerald-600 hover:text-white"
-            title={`Enquire on WhatsApp for ${product.name}`}
-          >
-            <MessageCircle size={15} />
-          </a>
-
           {/* Centered Image */}
           <div className="absolute inset-0 flex items-center justify-center p-6">
             <img
@@ -64,7 +53,7 @@ function ProductCard({ product, index }) {
         </div>
       </div>
 
-      {/* Footer: Sizes & Clean Enquire Link */}
+      {/* Footer: Sizes & Actions (WhatsApp + Formal Enquiry) */}
       <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
         <div className="flex flex-wrap gap-1">
           {Array.isArray(product.variants) &&
@@ -78,18 +67,30 @@ function ProductCard({ product, index }) {
             ))}
         </div>
 
-        <Link
-          to={`/contact?product=${encodeURIComponent(
-            `${product.brand} ${product.name}`
-          )}`}
-          className="group/btn inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#104360] hover:text-[#EF2034] transition-colors"
-        >
-          Enquire
-          <ArrowUpRight
-            size={12}
-            className="transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5"
-          />
-        </Link>
+        <div className="flex items-center gap-2.5">
+          <a
+            href={`https://wa.me/${whatsappDigits}?text=${whatsappMessage}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white transition shadow-2xs"
+            title={`WhatsApp Enquiry for ${product.name}`}
+          >
+            <MessageCircle size={13} />
+          </a>
+
+          <Link
+            to={`/contact?product=${encodeURIComponent(
+              `${product.brand} ${product.name}`
+            )}`}
+            className="group/btn inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#104360] hover:text-[#EF2034] transition-colors"
+          >
+            Enquire
+            <ArrowUpRight
+              size={12}
+              className="transition-transform duration-300 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5"
+            />
+          </Link>
+        </div>
       </div>
     </article>
   )
@@ -201,42 +202,52 @@ function Products({ limit, showFilters = true }) {
         ===================================================== */}
         {showFilters && (
           <div className="reveal-on-scroll stagger-1 border-b border-[#104360]/10 py-5 space-y-4">
-            {/* Category Pills */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => handleCategorySelect(cat)}
-                  className={`shrink-0 rounded-full px-3.5 py-1 text-xs font-semibold transition ${
-                    selectedCategory === cat
-                      ? 'bg-[#104360] text-white shadow-xs'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+            {/* Category Filter Row with Mobile Scroll Hint */}
+            <div className="relative">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1.5 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pr-6">
+                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#104360]/60 shrink-0 mr-1">
+                  CATEGORY:
+                </span>
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => handleCategorySelect(cat)}
+                    className={`shrink-0 rounded-full px-3.5 py-1 text-xs font-semibold transition ${
+                      selectedCategory === cat
+                        ? 'bg-[#104360] text-white shadow-xs'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {cat === 'ALL' ? 'ALL CATEGORIES' : cat}
+                  </button>
+                ))}
+              </div>
+              {/* Subtle gradient scroll hint for mobile */}
+              <div
+                className="pointer-events-none absolute right-0 top-0 bottom-1.5 w-10 bg-gradient-to-l from-white via-white/80 to-transparent sm:hidden z-10"
+                aria-hidden="true"
+              />
             </div>
 
             {/* Brand Filter Row */}
-            <div className="flex items-center justify-between pt-1">
-              <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto no-scrollbar">
-                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#104360]/40 mr-1">
-                  BRANDS:
+            <div className="flex items-center justify-between pt-1 border-t border-gray-100">
+              <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#104360]/60 mr-1 shrink-0">
+                  BRAND:
                 </span>
                 {brands.map((brand) => (
                   <button
                     key={brand}
                     type="button"
                     onClick={() => handleBrandSelect(brand)}
-                    className={`text-[11px] font-semibold uppercase tracking-wider transition ${
+                    className={`text-[11px] font-semibold uppercase tracking-wider shrink-0 transition ${
                       selectedBrand === brand
-                        ? 'text-[#EF2034] border-b-2 border-[#EF2034] pb-0.5'
+                        ? 'text-[#EF2034] border-b-2 border-[#EF2034] pb-0.5 font-bold'
                         : 'text-gray-500 hover:text-[#104360]'
                     }`}
                   >
-                    {brand}
+                    {brand === 'ALL' ? 'ALL BRANDS' : brand}
                   </button>
                 ))}
               </div>
