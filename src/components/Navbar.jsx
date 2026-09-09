@@ -1,237 +1,77 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import {
-  Menu,
-  X,
-  Phone,
-  MessageCircle,
-} from 'lucide-react'
+import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { useStore } from '../context/useStore'
 
 function Navbar() {
   const { company } = useStore()
   const location = useLocation()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  const [prevPath, setPrevPath] = useState(location.pathname)
-  if (prevPath !== location.pathname) {
-    setPrevPath(location.pathname)
-    setMobileMenuOpen(false)
-  }
-
-  // Prevent background scroll when mobile menu is open
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [mobileMenuOpen])
-
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const isActive = (path) => location.pathname === path
+  useEffect(() => setOpen(false), [location.pathname])
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [open])
+
+  const active = (path) => location.pathname === path
+  const whatsapp = company?.whatsappUAE?.replace(/[^0-9]/g, '') || '971507355418'
+  const phone = company?.phone1?.replace(/\s+/g, '') || '+919633890447'
 
   return (
-    <header
-      className={`sticky top-0 z-40 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_20px_-4px_rgba(16,67,96,0.08)]'
-          : 'bg-white'
-      }`}
-    >
-      {/* =======================================================
-          MAIN NAVIGATION BAR
-      ======================================================= */}
-      <nav className="mx-auto flex h-16 sm:h-[72px] max-w-[1600px] items-center justify-between px-4 sm:px-8 lg:px-12 xl:px-16">
-        {/* Brand Logo - Seamlessly blended on white */}
-        <Link to="/" className="flex items-center gap-3 shrink-0">
-          <img
-            src="/assets/branding/bovenlogo2.jpeg"
-            alt="Boven Frontier International LLP"
-            className="h-[32px] sm:h-[42px] max-w-[170px] sm:max-w-none w-auto object-contain"
-          />
+    <header className={`sticky top-0 z-50 border-b border-[#104360]/10 transition-all duration-500 ${scrolled ? 'bg-white/90 backdrop-blur-xl' : 'bg-white'}`}>
+      <nav className="mx-auto flex h-[72px] max-w-[1600px] items-center justify-between px-5 sm:px-8 lg:px-12 xl:px-16">
+        <Link to="/" className="flex shrink-0 items-center">
+          <img src="/assets/branding/bovenlogo2.jpeg" alt="Boven Frontier International LLP" className="h-9 w-auto object-contain sm:h-11" />
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <div className="hidden items-center gap-7 lg:gap-9 md:flex">
-          <Link
-            to="/about"
-            className={`py-1 text-xs uppercase tracking-[0.2em] transition-colors duration-200 ${
-              isActive('/about')
-                ? 'font-bold text-[#EF2034]'
-                : 'font-semibold text-[#104360] hover:text-[#EF2034]'
-            }`}
-          >
-            About
-          </Link>
-
-          <Link
-            to="/products"
-            className={`py-1 text-xs uppercase tracking-[0.2em] transition-colors duration-200 ${
-              isActive('/products')
-                ? 'font-bold text-[#EF2034]'
-                : 'font-semibold text-[#104360] hover:text-[#EF2034]'
-            }`}
-          >
-            Products
-          </Link>
-
-          <Link
-            to="/contact"
-            className={`py-1 text-xs uppercase tracking-[0.2em] transition-colors duration-200 ${
-              isActive('/contact')
-                ? 'font-bold text-[#EF2034]'
-                : 'font-semibold text-[#104360] hover:text-[#EF2034]'
-            }`}
-          >
-            Contact
-          </Link>
-
-          <Link
-            to="/contact"
-            className="py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#104360] hover:text-[#EF2034] transition-colors duration-200"
-          >
+        <div className="hidden items-center gap-10 md:flex">
+          {[['/about', 'About'], ['/products', 'Products'], ['/contact', 'Contact']].map(([path, label]) => (
+            <Link key={path} to={path} className={`relative py-2 text-[10px] font-semibold uppercase tracking-[0.24em] transition-colors ${active(path) ? 'text-[#EF2034]' : 'text-[#104360]/65 hover:text-[#104360]'}`}>
+              {label}
+              <span className={`absolute bottom-0 left-0 h-px bg-[#EF2034] transition-all ${active(path) ? 'w-full' : 'w-0'}`} />
+            </Link>
+          ))}
+          <Link to="/contact" className="group flex items-center gap-3 border-l border-[#104360]/10 pl-10 text-[10px] font-bold uppercase tracking-[0.22em] text-[#104360]">
             Enquire
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#EF2034] text-white transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"><ArrowUpRight size={14} /></span>
           </Link>
         </div>
 
-        {/* Mobile Header Controls */}
         <div className="flex items-center gap-2 md:hidden">
-          <Link
-            to="/contact"
-            className="rounded-md bg-[#EF2034] px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-xs active:bg-[#104360]"
-          >
-            Enquire
-          </Link>
-
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#104360]/15 bg-white text-[#104360] transition active:scale-95 shadow-2xs"
-          >
-            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          <Link to="/contact" className="bg-[#EF2034] px-3.5 py-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white">Enquire</Link>
+          <button onClick={() => setOpen(!open)} aria-label={open ? 'Close menu' : 'Open menu'} className="flex h-9 w-9 items-center justify-center border border-[#104360]/15 text-[#104360]">
+            {open ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </nav>
+      <div className="h-[2px] bg-gradient-to-r from-[#104360] via-[#104360] to-[#EF2034]" />
 
-      {/* Signature Brand Accent Line (Boven Navy flowing to Frontier Red) */}
-      <div className="h-[2.5px] w-full bg-gradient-to-r from-[#104360] via-[#104360] to-[#EF2034]" />
-
-      {/* =======================================================
-          MOBILE NAVIGATION DRAWER
-      ======================================================= */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 top-[66px] sm:top-[74px] z-50 flex flex-col bg-white/98 backdrop-blur-xl px-6 py-6 md:hidden animate-in fade-in slide-in-from-top-2 duration-200 overflow-y-auto">
-          <div className="flex flex-col gap-2 text-left">
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#EF2034] mb-2">
-              Navigation Menu
-            </span>
-
-            <Link
-              to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight transition ${
-                isActive('/')
-                  ? 'bg-[#104360]/5 text-[#EF2034] font-semibold'
-                  : 'text-[#104360] hover:bg-gray-50'
-              }`}
-            >
-              <span>Home</span>
-            </Link>
-
-            <Link
-              to="/about"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight transition ${
-                isActive('/about')
-                  ? 'bg-[#104360]/5 text-[#EF2034] font-semibold'
-                  : 'text-[#104360] hover:bg-gray-50'
-              }`}
-            >
-              <span>About Boven Frontier</span>
-            </Link>
-
-            <Link
-              to="/products"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight transition ${
-                isActive('/products')
-                  ? 'bg-[#104360]/5 text-[#EF2034] font-semibold'
-                  : 'text-[#104360] hover:bg-gray-50'
-              }`}
-            >
-              <span>Products & Brands</span>
-            </Link>
-
-            <Link
-              to="/#markets"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight text-[#104360] hover:bg-gray-50 transition"
-            >
-              <span>Logistics & Export Markets</span>
-            </Link>
-
-            <Link
-              to="/#faq"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight text-[#104360] hover:bg-gray-50 transition"
-            >
-              <span>Wholesale FAQ</span>
-            </Link>
-
-            <Link
-              to="/contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-between rounded-lg px-3 py-3 text-lg font-medium tracking-tight transition ${
-                isActive('/contact')
-                  ? 'bg-[#104360]/5 text-[#EF2034] font-semibold'
-                  : 'text-[#104360] hover:bg-gray-50'
-              }`}
-            >
-              <span>B2B & Export Enquiries</span>
-            </Link>
+      {open && (
+        <div className="fixed inset-0 top-[74px] z-40 flex flex-col bg-[#F7F5F0] px-6 py-8 md:hidden">
+          <div className="mb-8 flex items-center justify-between border-b border-[#104360]/10 pb-4">
+            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#EF2034]">Navigation</span>
+            <span className="font-mono text-[9px] text-[#104360]/35">BF / 01</span>
           </div>
-
-          {/* Direct Quick Actions */}
-          <div className="mt-auto space-y-4 border-t border-gray-100 pt-6">
-            <div className="grid grid-cols-2 gap-3">
-              <a
-                href={`https://wa.me/${company?.whatsappUAE?.replace(/[^0-9]/g, '') || '971507355418'}?text=Hello%20Boven%20Frontier%2C%20I%20have%20an%20enquiry%20regarding%20cleaning%20products.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 rounded-lg border border-[#104360]/15 py-3 text-xs font-semibold text-[#104360] hover:bg-gray-50 active:bg-gray-100"
-              >
-                <MessageCircle size={16} className="text-emerald-600" />
-                <span>WhatsApp</span>
-              </a>
-
-              <a
-                href={`tel:${company?.phone1?.replace(/\s+/g, '') || '+919633890447'}`}
-                className="flex items-center justify-center gap-2 rounded-lg bg-[#EF2034] py-3 text-xs font-semibold text-white hover:bg-[#d8192c] active:scale-98 shadow-xs"
-              >
-                <Phone size={15} />
-                <span>Call Direct</span>
-              </a>
-            </div>
-
-            <div className="pt-2 text-center">
-              <span className="text-[10px] font-medium uppercase tracking-wider text-gray-400">
-                Manufactured in India · Export Quality
-              </span>
-            </div>
+          <div className="flex flex-col">
+            {[['/', 'Home'], ['/about', 'About Boven Frontier'], ['/products', 'Products & Brands'], ['/#markets', 'Export Markets'], ['/#faq', 'Wholesale FAQ'], ['/contact', 'B2B Enquiries']].map(([to, label], i) => (
+              <Link key={`${to}-${label}`} to={to} className="group flex items-center justify-between border-b border-[#104360]/10 py-5 text-xl font-medium tracking-tight text-[#104360]">
+                <span><span className="mr-4 font-mono text-[9px] text-[#EF2034]">0{i + 1}</span>{label}</span>
+                <ArrowUpRight size={18} className="opacity-30 transition group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:opacity-100" />
+              </Link>
+            ))}
+          </div>
+          <div className="mt-auto grid grid-cols-2 gap-2 border-t border-[#104360]/10 pt-5">
+            <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="border border-[#104360]/15 py-3 text-center text-[9px] font-bold uppercase tracking-[0.18em] text-[#104360]">WhatsApp</a>
+            <a href={`tel:${phone}`} className="bg-[#104360] py-3 text-center text-[9px] font-bold uppercase tracking-[0.18em] text-white">Call Direct</a>
           </div>
         </div>
       )}
