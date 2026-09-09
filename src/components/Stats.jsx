@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useStore } from '../context/useStore'
 
 function AnimatedCounter({ target, isVisible }) {
   const [val, setVal] = useState(0)
@@ -27,6 +28,7 @@ function AnimatedCounter({ target, isVisible }) {
 }
 
 function Stats() {
+  const { products = [], brands = [] } = useStore()
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef(null)
 
@@ -48,11 +50,35 @@ function Stats() {
     return () => observer.disconnect()
   }, [])
 
+  const skuCount = products.length > 0 ? products.length : 14
+  const brandCount = brands.length > 0 ? brands.length : 3
+
   const stats = [
-    { num: 3, label: 'Consumer Brands' },
-    { num: 14, label: 'Current SKUs' },
-    { num: 2, label: 'Core Markets' },
-    { num: 1, label: 'Manufacturing Partner' },
+    {
+      num: brandCount,
+      suffix: '',
+      label: 'Consumer Brands',
+      subtext: 'In-house formulated',
+    },
+    {
+      num: skuCount,
+      suffix: '+',
+      label: 'Current SKUs',
+      subtext: 'Bottled & export ready',
+    },
+    {
+      num: 24,
+      prefix: '< ',
+      suffix: 'h',
+      label: 'Quote Response SLA',
+      subtext: 'Direct management desk',
+    },
+    {
+      num: 50,
+      suffix: '+',
+      label: 'Cartons MOQ / SKU',
+      subtext: 'Flexible container mix',
+    },
   ]
 
   return (
@@ -70,7 +96,7 @@ function Stats() {
               At a glance
             </p>
             <h2 className="text-2xl sm:text-4xl font-medium tracking-tight text-white">
-              One manufacturing partner. Multiple possibilities.
+              Engineered for wholesale. Built for scale.
             </h2>
           </div>
           <p className="hidden sm:block text-xs sm:text-sm text-white/60 max-w-sm leading-relaxed">
@@ -93,8 +119,17 @@ function Stats() {
               >
                 {/* Number with Counter */}
                 <div className="text-3xl sm:text-5xl font-light tracking-tight text-white flex items-baseline gap-1">
+                  {stat.prefix && (
+                    <span className="text-xl sm:text-3xl font-light text-white/60">
+                      {stat.prefix}
+                    </span>
+                  )}
                   <AnimatedCounter target={stat.num} isVisible={isVisible} />
-                  <span className="text-lg font-bold text-[#EF2034]">+</span>
+                  {stat.suffix && (
+                    <span className="text-lg font-bold text-[#EF2034]">
+                      {stat.suffix}
+                    </span>
+                  )}
                 </div>
 
                 {/* Label */}
@@ -102,6 +137,11 @@ function Stats() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-white/80">
                     {stat.label}
                   </p>
+                  {stat.subtext && (
+                    <p className="mt-1 text-[10px] text-white/40 font-normal">
+                      {stat.subtext}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
