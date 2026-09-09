@@ -159,3 +159,229 @@ VALUES (
     }'::jsonb
 )
 ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data;
+
+
+-- SEED INITIAL PRODUCTS
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'lexone-liquid-detergent',
+    'Liquid Detergent',
+    'LEXONE',
+    'LAUNDRY CARE',
+    'High-efficiency liquid wash for all fabric types',
+    'Advanced low-suds formulation engineered for front load, top load, and manual bucket wash. Leaves clothes impeccably clean with a fresh lasting aroma.',
+    '["1 L","2 L","5 L"]'::jsonb,
+    '/assets/products/lexoneliquiddetergent.png',
+    0.82,
+    true,
+    true,
+    1
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'lexone-dishwash-liquid',
+    'Yellow Dish Wash Liquid',
+    'LEXONE',
+    'SURFACE CARE',
+    'Grease-cutting concentrated dishwashing formula',
+    'Fast-action lime formula removes tough grease, burnt oil stains, and food odours without leaving any white residue on utensils.',
+    '["250 ml","500 ml","1 L"]'::jsonb,
+    '/assets/products/LexOneDishwash250ml5001lt.png',
+    0.82,
+    true,
+    true,
+    2
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'lexone-floor-cleaner',
+    'Floor Cleaner',
+    'LEXONE',
+    'FLOOR CARE',
+    'Gleaming surface finish with lasting floral fragrance',
+    'All-surface antibacterial floor cleaner suitable for tiles, marble, granite, and mosaic surfaces. Available in Rose and Lavender fragrances.',
+    '["500 ml","1 L","5 L"]'::jsonb,
+    '/assets/products/LexoneFloorcleaner500ml.png',
+    0.82,
+    true,
+    true,
+    3
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'lexone-bathroom-cleaner',
+    'Bathroom Cleaner',
+    'LEXONE',
+    'SURFACE CARE',
+    'Powerful limescale and soap scum remover',
+    'Deep penetrating formula cuts through tough water marks, soap scum, and grime on bathroom tiles, sinks, and chrome fittings.',
+    '["250 ml","500 ml"]'::jsonb,
+    '/assets/products/LexoneBathroomcleaner.png',
+    0.82,
+    true,
+    true,
+    4
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'lexone-disinfectant-cleaner',
+    'Disinfectant Cleaner',
+    'LEXONE',
+    'DISINFECTION',
+    'Hospital-grade sanitization for high-touch areas',
+    'Broad-spectrum disinfectant formulated to neutralize germs, pathogens, and bacteria. Infused with natural lemongrass and lavender oils.',
+    '["500 ml","1 L"]'::jsonb,
+    '/assets/products/LexoneDisinfectantCleaner.png',
+    0.82,
+    true,
+    true,
+    5
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'lexone-fabric-conditioner',
+    'Fabric Conditioner',
+    'LEXONE',
+    'FABRIC CARE',
+    'Plush fiber softness with microscopic fragrance pearls',
+    'Conditions garment fibers, prevents static cling, and locks in a luxurious fresh scent that reactivates throughout the day.',
+    '["250 ml","500 ml"]'::jsonb,
+    '/assets/products/LexoneFabricconditioner.png',
+    0.82,
+    true,
+    true,
+    6
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'lexone-handwash-5l',
+    'Handwash Economy',
+    'LEXONE',
+    'PERSONAL CARE',
+    'Gentle on skin, tough on microbes',
+    'pH-balanced institutional and bulk packaging handwash with soothing moisturizers for frequent hand hygiene.',
+    '["5 L"]'::jsonb,
+    '/assets/products/Lexonehandwash5ltr.png',
+    0.82,
+    true,
+    true,
+    7
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'fabie-plus-detergent-powder',
+    'Detergent Powder',
+    'FABIE PLUS',
+    'LAUNDRY CARE',
+    'Heavy-duty stain release detergent powder',
+    'Active enzyme granules dissolve instantly even in hard or cold water, removing deep-seated soil without degrading fabrics.',
+    '["500 g","1 kg"]'::jsonb,
+    '/assets/products/FabiePlusDetergentpowder.png',
+    0.82,
+    true,
+    true,
+    8
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'fabie-plus-liquid-detergent',
+    'Liquid Detergent',
+    'FABIE PLUS',
+    'LAUNDRY CARE',
+    'Everyday high-efficiency laundry liquid',
+    'Engineered for optimal wash economy in commercial laundries and large households. Concentrated cleaning power.',
+    '["1 L","2 L","5 L"]'::jsonb,
+    '/assets/products/Fabieplusliquid125.png',
+    0.82,
+    true,
+    true,
+    9
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'fabie-plus-liquid-pouch',
+    'Liquid Detergent Pouch',
+    'FABIE PLUS',
+    'LAUNDRY CARE',
+    'Eco-conscious bulk refill pouch packaging',
+    'Reduced-plastic spouted pouch offering high value and convenience for retail refill and export distribution.',
+    '["2 L","5 L"]'::jsonb,
+    '/assets/products/fABIEpLUSlIQUIDDETERGENTPOUCH.png',
+    0.82,
+    true,
+    true,
+    10
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'fabie-plus-glass-cleaner',
+    'Glass Cleaner',
+    'FABIE PLUS',
+    'SURFACE CARE',
+    'Streak-free crystal clear shine',
+    'Instant evaporation formula removes finger smudges, dust, and oily grime from mirrors, glass facades, and windshields.',
+    '["750 ml"]'::jsonb,
+    '/assets/products/FabieplusGlasscleaner.png',
+    0.82,
+    true,
+    true,
+    11
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'fabie-plus-handwash',
+    'Handwash Soft Clean',
+    'FABIE PLUS',
+    'PERSONAL CARE',
+    'Silky foam with floral and antibacterial defense',
+    'Lathers smoothly to flush away grease and contaminants while keeping palms hydrated. Available in Lavender and Floral scents.',
+    '["250 ml","500 ml"]'::jsonb,
+    '/assets/products/FabiePlusHandwash.png',
+    0.82,
+    true,
+    true,
+    12
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'kare-phenyl-perfumed',
+    'Perfumed Phenyl Disinfectant',
+    'KARE',
+    'DISINFECTION',
+    'Long-lasting fragrance & hygienic floor protection',
+    'Formulated with pine and fragrant aromatics (Misty Bliss, Chembabam, Lemongrass, Lavender) for superior floor hygiene in homes and clinics.',
+    '["1 L","5 L"]'::jsonb,
+    '/assets/products/LexoneFloorcleaner500ml.png',
+    0.82,
+    false,
+    true,
+    13
+) ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO public.products (id, name, brand, category, tagline, description, variants, image, scale, is_featured, in_stock, sort_order)
+VALUES (
+    'kare-floor-cleaner-5l',
+    'Heavy Duty Floor Cleaner Can',
+    'KARE',
+    'FLOOR CARE',
+    'Institutional size for hotels, schools, and offices',
+    'Concentrated industrial floor sanitizer capable of handling massive square footage and high foot-traffic corridors.',
+    '["5 L"]'::jsonb,
+    '/assets/products/Lexonehandwash5ltr.png',
+    0.82,
+    false,
+    true,
+    14
+) ON CONFLICT (id) DO NOTHING;
