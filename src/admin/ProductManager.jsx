@@ -655,10 +655,21 @@ function ProductManager() {
                 Cancel
               </button>
               <button
-                onClick={() => {
-                  deleteProduct(deleteConfirmationId)
+                type="button"
+                onClick={(event) => {
+                  event.preventDefault()
+                  event.stopPropagation()
+
+                  const productId = deleteConfirmationId
                   setDeleteConfirmationId(null)
-                  showToast('Product deleted.')
+
+                  try {
+                    deleteProduct(productId)
+                    showToast('Product deleted.')
+                  } catch (error) {
+                    console.error('Delete product error:', error)
+                    showToast('Unable to delete the product.', 'error')
+                  }
                 }}
                 className="rounded-lg bg-red-600 px-4 py-2 text-xs font-semibold text-white hover:bg-red-700 shadow-xs"
               >
