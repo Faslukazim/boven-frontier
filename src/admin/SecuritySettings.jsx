@@ -10,7 +10,7 @@ import { useStore } from '../context/useStore'
 import { supabase, isSupabaseConfigured } from '../lib/supabase'
 
 function SecuritySettings() {
-  const { inquiries, deleteInquiry, clearInquiries } = useStore()
+  const { inquiries, deleteInquiry, clearInquiries, showToast } = useStore()
   const [currentUserEmail, setCurrentUserEmail] = useState('aswin@bovenfrontier.co.in')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -59,15 +59,20 @@ function SecuritySettings() {
 
       if (updateErr) {
         setError(updateErr.message || 'Failed to update password in Supabase Auth.')
+        showToast(updateErr.message || 'Failed to update password.', 'error')
       } else {
-        setSuccess('Administrative password successfully updated in Supabase Auth! Use your new password on next login.')
+        const msg = 'Administrative password successfully updated in Supabase Auth!'
+        setSuccess(msg)
+        showToast(msg)
         setNewPassword('')
         setConfirmPassword('')
         setTimeout(() => setSuccess(''), 5000)
       }
     } catch (err) {
       setUpdating(false)
-      setError(err?.message || 'An unexpected error occurred while updating your password.')
+      const msg = err?.message || 'An unexpected error occurred while updating your password.'
+      setError(msg)
+      showToast(msg, 'error')
     }
   }
 
@@ -170,7 +175,10 @@ function SecuritySettings() {
           {inquiries.length > 0 && (
             <button
               type="button"
-              onClick={clearInquiries}
+              onClick={() => {
+                clearInquiries()
+                showToast('All customer inquiries cleared.')
+              }}
               className="text-[11px] font-medium text-gray-400 hover:text-red-600 transition"
             >
               Clear All
@@ -214,7 +222,10 @@ function SecuritySettings() {
                   </span>
                   <button
                     type="button"
-                    onClick={() => deleteInquiry(inq.id)}
+                    onClick={() => {
+                      deleteInquiry(inq.id)
+                      showToast('Inquiry removed.')
+                    }}
                     className="p-1 text-gray-400 hover:text-red-600"
                     title="Delete inquiry"
                   >

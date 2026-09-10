@@ -7,9 +7,7 @@ import {
   Trash2,
   Check,
   X,
-  AlertCircle,
   Package,
-  CheckCircle2,
   Info,
 } from 'lucide-react'
 import { useStore } from '../context/useStore'
@@ -25,6 +23,7 @@ export default function BrandCategoryManager() {
     addCategory,
     updateCategory,
     deleteCategory,
+    showToast,
   } = useStore()
 
   // New item input states
@@ -39,16 +38,6 @@ export default function BrandCategoryManager() {
 
   // Delete modal state
   const [deleteModal, setDeleteModal] = useState(null) // { type: 'brand' | 'category', name: string, count: number }
-
-  // Toast notification state
-  const [toast, setToast] = useState({ show: false, message: '', type: 'success' })
-
-  const showToast = (message, type = 'success') => {
-    setToast({ show: true, message, type })
-    setTimeout(() => {
-      setToast({ show: false, message: '', type: 'success' })
-    }, 3500)
-  }
 
   // Count products for each brand
   const getProductCountForBrand = (brandName) => {
@@ -136,19 +125,6 @@ export default function BrandCategoryManager() {
 
   return (
     <div className="space-y-6">
-      {/* Toast Alert */}
-      {toast.show && (
-        <div className="fixed bottom-5 right-5 z-50 animate-in fade-in slide-in-from-bottom-5 duration-300">
-          <div
-            className={`flex items-center gap-2.5 rounded-xl px-4 py-3 shadow-xl text-xs font-semibold text-white ${
-              toast.type === 'error' ? 'bg-red-600' : 'bg-[#104360]'
-            }`}
-          >
-            {toast.type === 'error' ? <AlertCircle size={16} /> : <CheckCircle2 size={16} className="text-emerald-400" />}
-            <span>{toast.message}</span>
-          </div>
-        </div>
-      )}
 
       {/* Header & Overview */}
       <div className="rounded-2xl border border-gray-200/80 bg-white p-6 shadow-xs">

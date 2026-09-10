@@ -9,6 +9,7 @@ import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
 import ScrollProgress from './components/ScrollProgress'
 import BackToTopButton from './components/BackToTopButton'
+import Toast from './components/Toast'
 import AdminLogin from './admin/AdminLogin'
 import AdminDashboard from './admin/AdminDashboard'
 
@@ -30,6 +31,7 @@ function App() {
     <StoreProvider>
       <BrowserRouter>
         <ScrollToTop />
+        <Toast />
         <Routes>
           {/* Public Pages with Main Header */}
           <Route element={<PublicLayout />}>

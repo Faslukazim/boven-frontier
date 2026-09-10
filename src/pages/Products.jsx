@@ -1,7 +1,7 @@
 import ProductsGrid from '../components/Products'
 import ContactStrip from '../components/ContactStrip'
 import Footer from '../components/Footer'
-import { ArrowUpRight, MessageCircle } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { useStore } from '../context/useStore'
 import { COMPANY } from '../constants'
 

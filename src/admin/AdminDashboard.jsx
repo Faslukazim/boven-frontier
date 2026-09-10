@@ -28,12 +28,19 @@ import BannerManager from './BannerManager'
 
 function AdminDashboard() {
   const navigate = useNavigate()
-  const { products, brands = [], categories = [], adminUsers, inquiries, resetToDefaults } = useStore()
+  const {
+    products,
+    brands = [],
+    categories = [],
+    adminUsers,
+    inquiries,
+    resetToDefaults,
+    showToast,
+  } = useStore()
 
   const [activeTab, setActiveTab] = useState('products')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
-  const [resetSuccessNotice, setResetSuccessNotice] = useState(false)
   const [authLoading, setAuthLoading] = useState(true)
   const [currentUser, setCurrentUser] = useState({
     name: 'Administrator',
@@ -109,8 +116,7 @@ function AdminDashboard() {
   const handleResetCatalog = () => {
     resetToDefaults()
     setShowResetConfirm(false)
-    setResetSuccessNotice(true)
-    setTimeout(() => setResetSuccessNotice(false), 3500)
+    showToast('Catalog data has been successfully reset to initial factory defaults.')
   }
 
   if (authLoading) {

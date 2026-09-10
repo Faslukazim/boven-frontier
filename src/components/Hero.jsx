@@ -5,19 +5,8 @@ import { useStore } from '../context/useStore'
 
 function Hero() {
   const { products } = useStore()
-  const featuredProducts =
-    products.filter((p) => p.is_featured).length > 0
-      ? products.filter((p) => p.is_featured)
-      : products
-
-  const heroProductsList = [
-    ...featuredProducts.filter((p) =>
-      (p.image || '').toLowerCase().includes('bathroomcleaner')
-    ),
-    ...featuredProducts.filter(
-      (p) => !(p.image || '').toLowerCase().includes('bathroomcleaner')
-    ),
-  ].slice(0, 4)
+  const featured = products.filter((p) => p.is_featured)
+  const heroProductsList = (featured.length > 0 ? featured : products.slice(0, 1)).slice(0, 4)
 
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -656,53 +645,57 @@ function Hero() {
 
                 {/* MOBILE ARROWS */}
 
-                <button
-                  onClick={handlePrev}
-                  type="button"
-                  aria-label="Previous product"
-                  className="
-                    absolute
-                    left-0
-                    flex
-                    h-9
-                    w-9
-                    items-center
-                    justify-center
-                    rounded-full
-                    border
-                    border-white/15
-                    bg-white/[0.04]
-                    text-white
-                    backdrop-blur-xl
-                    sm:hidden
-                  "
-                >
-                  <ChevronLeft size={16} />
-                </button>
+                {heroProductsList.length > 1 && (
+                  <>
+                    <button
+                      onClick={handlePrev}
+                      type="button"
+                      aria-label="Previous product"
+                      className="
+                        absolute
+                        left-0
+                        flex
+                        h-9
+                        w-9
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-white/15
+                        bg-white/[0.04]
+                        text-white
+                        backdrop-blur-xl
+                        sm:hidden
+                      "
+                    >
+                      <ChevronLeft size={16} />
+                    </button>
 
-                <button
-                  onClick={handleNext}
-                  type="button"
-                  aria-label="Next product"
-                  className="
-                    absolute
-                    right-0
-                    flex
-                    h-9
-                    w-9
-                    items-center
-                    justify-center
-                    rounded-full
-                    border
-                    border-white/15
-                    bg-white/[0.04]
-                    text-white
-                    backdrop-blur-xl
-                    sm:hidden
-                  "
-                >
-                  <ChevronRight size={16} />
-                </button>
+                    <button
+                      onClick={handleNext}
+                      type="button"
+                      aria-label="Next product"
+                      className="
+                        absolute
+                        right-0
+                        flex
+                        h-9
+                        w-9
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-white/15
+                        bg-white/[0.04]
+                        text-white
+                        backdrop-blur-xl
+                        sm:hidden
+                      "
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </>
+                )}
               </div>
             </div>
 
@@ -724,12 +717,12 @@ function Hero() {
               <div>
                 <p
                   className="
-                    text-[10px]
+                    text-xs
                     font-semibold
                     uppercase
-                    tracking-[0.13em]
+                    tracking-[0.15em]
                     text-white
-                    sm:text-[11px]
+                    sm:text-sm
                   "
                 >
                   {activeProduct.name}
@@ -755,32 +748,34 @@ function Hero() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-1.5">
-                {heroProductsList.map(
-                  (_, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      aria-label={`Slide ${index + 1}`}
-                      onClick={() =>
-                        changeProduct(index)
-                      }
-                      className={`
-                        h-[2px]
-                        rounded-full
-                        transition-all
-                        duration-700
-                        ease-out
-                        ${
-                          index === safeIndex
-                            ? 'w-7 bg-[#EF2034]'
-                            : 'w-2 bg-white/20 hover:bg-white/50'
+              {heroProductsList.length > 1 && (
+                <div className="flex items-center gap-1.5">
+                  {heroProductsList.map(
+                    (_, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        aria-label={`Slide ${index + 1}`}
+                        onClick={() =>
+                          changeProduct(index)
                         }
-                      `}
-                    />
-                  )
-                )}
-              </div>
+                        className={`
+                          h-[2px]
+                          rounded-full
+                          transition-all
+                          duration-700
+                          ease-out
+                          ${
+                            index === safeIndex
+                              ? 'w-7 bg-[#EF2034]'
+                              : 'w-2 bg-white/20 hover:bg-white/50'
+                          }
+                        `}
+                      />
+                    )
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="mt-1.5 flex justify-end">

@@ -23,6 +23,7 @@ function BannerManager() {
     updateBanner,
     deleteBanner,
     toggleBanner,
+    showToast,
   } = useStore()
 
   // Local state for Top Badge form
@@ -68,6 +69,7 @@ function BannerManager() {
     })
 
     setSavedSuccess(true)
+    showToast('Top announcement and hero badge saved successfully!')
     setTimeout(() => setSavedSuccess(false), 3500)
   }
 
@@ -86,6 +88,7 @@ function BannerManager() {
     updateTopBadge(defaultSettings)
     setShowResetConfirm(false)
     setSavedSuccess(true)
+    showToast('Announcement and Hero badge restored to defaults.')
     setTimeout(() => setSavedSuccess(false), 3500)
   }
 
@@ -120,22 +123,38 @@ function BannerManager() {
 
   const handleSavePromo = (e) => {
     e.preventDefault()
-    const payload = {
-      title: promoForm.title.trim(),
-      subtitle: promoForm.subtitle.trim(),
-      ctaText: promoForm.ctaText.trim(),
-      ctaLink: promoForm.ctaLink.trim() || '/contact',
-      position: promoForm.position,
-      theme: promoForm.theme,
-      is_active: promoForm.is_active,
-    }
+    try {
+      const title = (promoForm.title || '').trim()
+      if (!title) {
+        showToast('Banner title is required.', 'error')
+        return
+      }
 
-    if (editingPromo) {
-      updateBanner(editingPromo.id, payload)
-    } else {
-      addBanner(payload)
+      const payload = {
+        title,
+        subtitle: (promoForm.subtitle || '').trim(),
+        ctaText: (promoForm.ctaText || 'Enquire Now').trim(),
+        ctaLink: (promoForm.ctaLink || '/contact').trim(),
+        position: promoForm.position || 'top-bar',
+        theme: promoForm.theme || 'gold',
+        is_active: promoForm.is_active !== false,
+      }
+
+      if (editingPromo) {
+        updateBanner(editingPromo.id, payload)
+        showToast(`Banner "${title}" updated successfully!`)
+      } else {
+        addBanner(payload)
+        showToast(`Added new banner "${title}"!`)
+      }
+      setIsPromoModalOpen(false)
+      setEditingPromo(null)
+    } catch (err) {
+      console.error('Error saving banner:', err)
+      showToast('Error saving banner. Please check fields.', 'error')
+      setIsPromoModalOpen(false)
+      setEditingPromo(null)
     }
-    setIsPromoModalOpen(false)
   }
 
   return (
@@ -743,6 +762,7 @@ function BannerManager() {
                 onClick={() => {
                   deleteBanner(deletePromoId)
                   setDeletePromoId(null)
+                  showToast('Promotional banner removed.')
                 }}
                 className="rounded-lg bg-red-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-red-700"
               >

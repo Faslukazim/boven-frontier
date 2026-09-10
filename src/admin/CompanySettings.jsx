@@ -3,7 +3,6 @@ import {
   Phone,
   Mail,
   MapPin,
-  CheckCircle,
   RotateCcw,
   Save,
   Building2,
@@ -11,24 +10,21 @@ import {
 import { useStore } from '../context/useStore'
 
 function CompanySettings() {
-  const { company, updateCompany, resetCompany } = useStore()
+  const { company, updateCompany, resetCompany, showToast } = useStore()
   const [form, setForm] = useState({ ...company })
-  const [savedSuccess, setSavedSuccess] = useState(false)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
 
   const handleSave = (e) => {
     e.preventDefault()
     updateCompany(form)
-    setSavedSuccess(true)
-    setTimeout(() => setSavedSuccess(false), 3000)
+    showToast('Company settings published successfully across the website!')
   }
 
   const handleReset = () => {
     resetCompany()
     setForm({ ...company })
     setShowResetConfirm(false)
-    setSavedSuccess(true)
-    setTimeout(() => setSavedSuccess(false), 3000)
+    showToast('Company settings restored to factory defaults.')
   }
 
   return (
@@ -60,16 +56,6 @@ function CompanySettings() {
           </button>
         </div>
       </div>
-
-      {/* Success Notification */}
-      {savedSuccess && (
-        <div className="flex items-center gap-2.5 rounded-xl bg-emerald-600 px-4 py-3 text-white shadow-sm transition-all">
-          <CheckCircle size={18} className="shrink-0 text-white" />
-          <p className="text-xs font-semibold">
-            Company and contact information updated successfully across the website!
-          </p>
-        </div>
-      )}
 
       {/* Reset Confirmation Modal */}
       {showResetConfirm && (

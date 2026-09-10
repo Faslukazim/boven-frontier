@@ -8,7 +8,6 @@ import {
   X,
   Star,
   Copy,
-  CheckCircle,
   Package,
   Image as ImageIcon,
 } from 'lucide-react'
@@ -28,8 +27,10 @@ function ProductManager() {
     deleteProduct,
     cloneProduct,
     toggleProductFeatured,
+    setSoleHeroProduct,
     toggleProductStock,
     processImageUpload,
+    showToast,
   } = useStore()
 
   const [searchTerm, setSearchTerm] = useState('')
@@ -40,7 +41,6 @@ function ProductManager() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
   const [deleteConfirmationId, setDeleteConfirmationId] = useState(null)
-  const [toastMessage, setToastMessage] = useState('')
 
   // Quick Inline Add states inside modal
   const [showQuickBrand, setShowQuickBrand] = useState(false)
@@ -61,12 +61,8 @@ function ProductManager() {
     in_stock: true,
   })
   const [imageProcessing, setImageProcessing] = useState(false)
+  const [isSoleHero, setIsSoleHero] = useState(false)
   const fileInputRef = useRef(null)
-
-  const showToast = (msg) => {
-    setToastMessage(msg)
-    setTimeout(() => setToastMessage(''), 3500)
-  }
 
   // Filtered Products
   const filteredProducts = products.filter((product) => {
@@ -82,6 +78,7 @@ function ProductManager() {
   // Open Add Modal
   const handleOpenAdd = () => {
     setEditingProduct(null)
+    setIsSoleHero(false)
     setFormData({
       name: '',
       brand: brands[0] || 'LEXONE',
@@ -124,9 +121,26 @@ function ProductManager() {
     }
   }
 
+  // Toggle single size preset badge
+  const handleToggleSizePreset = (size) => {
+    let current = []
+    if (Array.isArray(formData.variants)) {
+      current = formData.variants.map((v) => String(v).trim()).filter(Boolean)
+    } else if (typeof formData.variants === 'string') {
+      current = formData.variants.split(',').map((s) => s.trim()).filter(Boolean)
+    }
+    const exists = current.includes(size)
+    const updated = exists ? current.filter((s) => s !== size) : [...current, size]
+    setFormData({
+      ...formData,
+      variants: updated.join(', '),
+    })
+  }
+
   // Open Edit Modal
   const handleOpenEdit = (product) => {
     setEditingProduct(product)
+    setIsSoleHero(Boolean(product.is_featured) && products.filter((p) => p.is_featured).length === 1)
     setFormData({
       name: product.name,
       brand: product.brand,
@@ -151,22 +165,6 @@ function ProductManager() {
     }
   }
 
-  // Size Preset Toggle
-  const handleToggleSizePreset = (size) => {
-    const currentSizes = formData.variants
-      .split(',')
-      .map((s) => s.trim())
-      .filter(Boolean)
-
-    let updated
-    if (currentSizes.includes(size)) {
-      updated = currentSizes.filter((s) => s !== size)
-    } else {
-      updated = [...currentSizes, size]
-    }
-    setFormData((prev) => ({ ...prev, variants: updated.join(', ') }))
-  }
-
   // Image Upload Handler
   const handleImageFileChange = async (e) => {
     const file = e.target.files?.[0]
@@ -179,7 +177,7 @@ function ProductManager() {
       showToast('Image uploaded and optimized successfully!')
     } catch (err) {
       console.error('Image compression error:', err)
-      alert('Failed to process image. Please try a smaller file.')
+      showToast('Failed to process image. Please try a smaller file.', 'error')
     } finally {
       setImageProcessing(false)
     }
@@ -189,33 +187,65 @@ function ProductManager() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const parsedVariants = formData.variants
-      .split(',')
-      .map((v) => v.trim())
-      .filter(Boolean)
+    try {
+      const name = (formData.name || '').trim()
+      if (!name) {
+        showToast('Product name is required.', 'error')
+        return
+      }
 
-    const payload = {
-      name: formData.name.trim(),
-      brand: formData.brand.trim(),
-      category: formData.category,
-      tagline: formData.tagline.trim(),
-      description: formData.description.trim(),
-      variants: parsedVariants.length > 0 ? parsedVariants : ['Standard Bottle'],
-      image: formData.image.trim() || '/assets/products/lexoneliquiddetergent.png',
-      scale: 0.82, // auto-preset for gold standard visual ratio
-      is_featured: formData.is_featured,
-      in_stock: formData.in_stock,
+      let parsedVariants = []
+      if (Array.isArray(formData.variants)) {
+        parsedVariants = formData.variants.map((v) => String(v).trim()).filter(Boolean)
+      } else if (typeof formData.variants === 'string') {
+        parsedVariants = formData.variants.split(',').map((v) => v.trim()).filter(Boolean)
+      }
+      if (parsedVariants.length === 0) parsedVariants = ['Standard Bottle']
+
+      const payload = {
+        name,
+        brand: (formData.brand || brands[0] || 'LEXONE').trim(),
+        category: (formData.category || categories[0] || 'LAUNDRY CARE').trim(),
+        tagline: (formData.tagline || '').trim(),
+        description: (formData.description || '').trim(),
+        variants: parsedVariants,
+        image: (formData.image || '').trim() || '/assets/products/lexoneliquiddetergent.png',
+        scale: 0.82, // auto-preset for gold standard visual ratio
+        is_featured: Boolean(formData.is_featured),
+        in_stock: formData.in_stock !== false,
+      }
+
+      if (editingProduct) {
+        updateProduct(editingProduct.id, payload)
+        if (isSoleHero) {
+          setSoleHeroProduct(editingProduct.id)
+        }
+        showToast(
+          isSoleHero
+            ? `Updated "${payload.name}" and designated as Sole Hero product!`
+            : `Updated "${payload.name}" successfully!`
+        )
+      } else {
+        const created = addProduct(payload)
+        if (isSoleHero && created?.id) {
+          setSoleHeroProduct(created.id)
+        }
+        showToast(
+          isSoleHero
+            ? `Added "${payload.name}" and designated as Sole Hero product!`
+            : `Added "${payload.name}" to catalog!`
+        )
+      }
+
+      // ALWAYS AUTOMATICALLY CLOSE MODAL UPON SUCCESS
+      setIsModalOpen(false)
+      setEditingProduct(null)
+    } catch (err) {
+      console.error('Error saving product:', err)
+      showToast('Error saving product. Please check fields.', 'error')
+      setIsModalOpen(false)
+      setEditingProduct(null)
     }
-
-    if (editingProduct) {
-      updateProduct(editingProduct.id, payload)
-      showToast(`Updated "${payload.name}"`)
-    } else {
-      addProduct(payload)
-      showToast(`Added "${payload.name}" to catalog`)
-    }
-
-    setIsModalOpen(false)
   }
 
   const brandOptions = ['ALL', ...new Set([...brands, ...products.map((p) => p.brand)])]
@@ -223,13 +253,6 @@ function ProductManager() {
 
   return (
     <div className="space-y-6">
-      {/* Toast Alert */}
-      {toastMessage && (
-        <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-xs font-semibold text-emerald-800 shadow-sm animate-in fade-in">
-          <CheckCircle size={16} className="text-emerald-600 shrink-0" />
-          <span>{toastMessage}</span>
-        </div>
-      )}
 
       {/* Top Header & Fast Action */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-gray-200/80 bg-white p-6 shadow-2xs">
@@ -386,27 +409,57 @@ function ProductManager() {
 
                     {/* Hero Featured 1-Click Toggle */}
                     <td className="px-3 py-3.5 text-center">
-                      <button
-                        onClick={() => toggleProductFeatured(product.id)}
-                        title={product.is_featured ? 'Click to remove from Hero' : 'Click to showcase in Hero'}
-                        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium transition ${
-                          product.is_featured
-                            ? 'bg-amber-50 border border-amber-200 text-amber-800'
-                            : 'bg-gray-50 text-gray-400 hover:text-amber-600 hover:bg-amber-50/50'
-                        }`}
-                      >
-                        <Star
-                          size={11}
-                          className={product.is_featured ? 'fill-amber-500 text-amber-500' : 'text-gray-400'}
-                        />
-                        <span>{product.is_featured ? 'Hero' : 'Standard'}</span>
-                      </button>
+                      <div className="inline-flex items-center gap-1.5 justify-center">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            toggleProductFeatured(product.id)
+                            showToast(
+                              product.is_featured
+                                ? `Removed "${product.name}" from homepage Hero`
+                                : `Featured "${product.name}" in homepage Hero!`
+                            )
+                          }}
+                          title={product.is_featured ? 'Click to remove from Hero' : 'Click to showcase in Hero'}
+                          className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium transition ${
+                            product.is_featured
+                              ? 'bg-amber-50 border border-amber-200 text-amber-800'
+                              : 'bg-gray-50 text-gray-400 hover:text-amber-600 hover:bg-amber-50/50'
+                          }`}
+                        >
+                          <Star
+                            size={11}
+                            className={product.is_featured ? 'fill-amber-500 text-amber-500' : 'text-gray-400'}
+                          />
+                          <span>{product.is_featured ? 'Hero' : 'Standard'}</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSoleHeroProduct(product.id)
+                            showToast(`"${product.name}" is now the sole hero product on the homepage!`)
+                          }}
+                          title="Set as the ONLY product shown in homepage Hero"
+                          className="rounded-md px-1.5 py-0.5 text-[9px] font-semibold bg-gray-100 text-gray-500 hover:bg-[#104360] hover:text-white transition"
+                        >
+                          Sole Hero
+                        </button>
+                      </div>
                     </td>
 
                     {/* Stock Status 1-Click Toggle */}
                     <td className="px-3 py-3.5 text-center">
                       <button
-                        onClick={() => toggleProductStock(product.id)}
+                        type="button"
+                        onClick={() => {
+                          toggleProductStock(product.id)
+                          showToast(
+                            product.in_stock !== false
+                              ? `Paused "${product.name}" from public catalog`
+                              : `Activated "${product.name}" in public catalog`
+                          )
+                        }}
                         title="Click to toggle Active / Paused status"
                         className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-medium transition ${
                           product.in_stock !== false
@@ -527,10 +580,19 @@ function ProductManager() {
                       ))}
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5">
                     <button
-                      onClick={() => toggleProductFeatured(product.id)}
-                      className="text-xs"
+                      type="button"
+                      onClick={() => {
+                        toggleProductFeatured(product.id)
+                        showToast(
+                          product.is_featured
+                            ? `Removed "${product.name}" from Hero`
+                            : `Featured "${product.name}" in Hero!`
+                        )
+                      }}
+                      title={product.is_featured ? 'Click to remove from Hero' : 'Click to showcase in Hero'}
+                      className="p-1 text-xs hover:bg-gray-100 rounded"
                     >
                       <Star
                         size={14}
@@ -538,7 +600,26 @@ function ProductManager() {
                       />
                     </button>
                     <button
-                      onClick={() => toggleProductStock(product.id)}
+                      type="button"
+                      onClick={() => {
+                        setSoleHeroProduct(product.id)
+                        showToast(`"${product.name}" set as sole Hero product!`)
+                      }}
+                      title="Set as the ONLY product in Hero"
+                      className="rounded px-1.5 py-0.5 text-[8px] font-semibold bg-gray-100 text-gray-500 hover:bg-[#104360] hover:text-white"
+                    >
+                      Sole
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        toggleProductStock(product.id)
+                        showToast(
+                          product.in_stock !== false
+                            ? `Paused "${product.name}" from catalog`
+                            : `Activated "${product.name}" in catalog`
+                        )
+                      }}
                       className={`rounded-full px-2 py-0.5 text-[9px] font-semibold ${
                         product.in_stock !== false ? 'bg-emerald-50 text-emerald-700' : 'bg-gray-100 text-gray-500'
                       }`}
@@ -847,7 +928,11 @@ function ProductManager() {
                       <input
                         type="checkbox"
                         checked={formData.is_featured}
-                        onChange={(e) => setFormData({ ...formData, is_featured: e.target.checked })}
+                        onChange={(e) => {
+                          const val = e.target.checked
+                          setFormData({ ...formData, is_featured: val })
+                          if (!val) setIsSoleHero(false)
+                        }}
                         className="h-4 w-4 rounded border-gray-300 text-[#EF2034] focus:ring-[#EF2034]"
                       />
                       <div>
@@ -855,7 +940,28 @@ function ProductManager() {
                           Showcase in Hero Banner
                         </span>
                         <span className="block text-[10px] text-gray-500">
-                          Featured in top rotating 3D visual showcase
+                          Included in homepage visual showcase
+                        </span>
+                      </div>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer select-none pt-2 border-t border-gray-200">
+                      <input
+                        type="checkbox"
+                        checked={isSoleHero}
+                        onChange={(e) => {
+                          const val = e.target.checked
+                          setIsSoleHero(val)
+                          if (val) setFormData((prev) => ({ ...prev, is_featured: true }))
+                        }}
+                        className="h-4 w-4 rounded border-gray-300 text-[#104360] focus:ring-[#104360]"
+                      />
+                      <div>
+                        <span className="block text-xs font-semibold text-gray-900">
+                          Designate as Sole Hero Product
+                        </span>
+                        <span className="block text-[10px] text-gray-500">
+                          Turns off other hero products so only this product appears statically with no animation
                         </span>
                       </div>
                     </label>

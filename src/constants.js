@@ -48,7 +48,7 @@ export const INITIAL_PRODUCTS = [
     variants: ['1 L', '2 L', '5 L'],
     image: '/assets/products/lexoneliquiddetergent.png',
     scale: 0.85,
-    is_featured: true,
+    is_featured: false,
     sort_order: 2,
   },
   {
@@ -62,7 +62,7 @@ export const INITIAL_PRODUCTS = [
     variants: ['250 ml', '500 ml', '1 L'],
     image: '/assets/products/LexOneDishwash250ml5001lt.png',
     scale: 0.85,
-    is_featured: true,
+    is_featured: false,
     sort_order: 3,
   },
   {
@@ -76,7 +76,7 @@ export const INITIAL_PRODUCTS = [
     variants: ['500 ml', '1 L', '5 L'],
     image: '/assets/products/LexoneFloorcleaner500ml.png',
     scale: 0.85,
-    is_featured: true,
+    is_featured: false,
     sort_order: 4,
   },
 ]

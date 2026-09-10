@@ -108,6 +108,12 @@ CREATE POLICY "Authenticated admin access to admin_users"
     WITH CHECK (auth.role() = 'authenticated');
 
 -- ==============================================================================
+-- OPTIONAL: NORMALIZE DEFAULT HERO PRODUCT (1 SOLE HERO PRODUCT)
+-- ==============================================================================
+-- UPDATE public.products SET is_featured = false;
+-- UPDATE public.products SET is_featured = true WHERE id = 'lexone-bathroom-cleaner';
+
+-- ==============================================================================
 -- VERIFICATION QUERY
 -- Run this query to inspect all active policies and ensure no public write exists:
 -- ==============================================================================

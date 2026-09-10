@@ -16,7 +16,7 @@ import { useStore } from '../context/useStore'
 import { supabase, isSupabaseConfigured } from '../lib/supabase'
 
 function UserManager() {
-  const { adminUsers, addAdminUser, deleteAdminUser } = useStore()
+  const { adminUsers, addAdminUser, deleteAdminUser, showToast } = useStore()
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
 
@@ -28,7 +28,6 @@ function UserManager() {
 
   // Notifications
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
 
   const handleOpenAdd = () => {
     setName('')
@@ -77,15 +76,12 @@ function UserManager() {
 
     setLoading(false)
     setIsAddModalOpen(false)
-    setSuccess(
-      `Team member ${trimmedName} added! An invitation and password setup link has been sent to ${trimmedEmail}.`
-    )
-    setTimeout(() => setSuccess(''), 5000)
+    showToast(`Team member "${trimmedName}" added! Invitation email dispatched to ${trimmedEmail}.`)
   }
 
   const handleSendPasswordReset = async (user) => {
     if (!isSupabaseConfigured || !supabase) {
-      alert('Supabase authentication is not configured in this environment.')
+      showToast('Supabase authentication is not configured in this environment.', 'error')
       return
     }
 
@@ -95,19 +91,18 @@ function UserManager() {
       })
 
       if (resetErr) {
-        alert(resetErr.message || 'Failed to dispatch password setup email.')
+        showToast(resetErr.message || 'Failed to dispatch password setup email.', 'error')
       } else {
-        setSuccess(`Password setup / reset link sent to ${user.email}!`)
-        setTimeout(() => setSuccess(''), 4000)
+        showToast(`Password setup / reset link sent to ${user.email}!`)
       }
     } catch (err) {
-      alert(err.message || 'Error sending password setup email.')
+      showToast(err.message || 'Error sending password setup email.', 'error')
     }
   }
 
   const handleDeleteUser = (user) => {
     if (user.isPrimary || user.email.toLowerCase() === 'aswin@bovenfrontier.co.in') {
-      alert('The primary Super Administrator account (Aswin) cannot be deleted.')
+      showToast('The primary Super Administrator account (Aswin) cannot be deleted.', 'error')
       return
     }
 
@@ -118,10 +113,9 @@ function UserManager() {
     ) {
       const res = deleteAdminUser(user.id)
       if (res.success) {
-        setSuccess(`User ${user.name} removed from admin team.`)
-        setTimeout(() => setSuccess(''), 3000)
+        showToast(`User "${user.name}" removed from admin team.`)
       } else {
-        alert(res.error || 'Could not delete user.')
+        showToast(res.error || 'Could not delete user.', 'error')
       }
     }
   }
@@ -150,14 +144,6 @@ function UserManager() {
           <span>Add Team Member</span>
         </button>
       </div>
-
-      {/* Success Alert */}
-      {success && (
-        <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-xs font-medium text-emerald-800 animate-in fade-in">
-          <CheckCircle size={16} className="text-emerald-600 shrink-0" />
-          <span>{success}</span>
-        </div>
-      )}
 
       {/* Users Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

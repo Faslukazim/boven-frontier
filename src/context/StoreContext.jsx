@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import imageCompression from 'browser-image-compression'
 import { StoreContext } from './storeContextInstance'
 import { INITIAL_PRODUCTS } from '../data/productsData'
@@ -62,6 +62,23 @@ export function StoreProvider({ children }) {
     return INITIAL_BANNERS
   })
 
+  // Global Toast Notification System
+  const [toast, setToast] = useState({ show: false, message: '', type: 'success' })
+  const toastTimerRef = useRef(null)
+
+  const showToast = (message, type = 'success') => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current)
+    setToast({ show: true, message, type })
+    toastTimerRef.current = setTimeout(() => {
+      setToast({ show: false, message: '', type: 'success' })
+    }, 3800)
+  }
+
+  const hideToast = () => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current)
+    setToast({ show: false, message: '', type: 'success' })
+  }
+
   // Persist products
   useEffect(() => {
     try {
@@ -100,7 +117,14 @@ export function StoreProvider({ children }) {
       prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item))
     )
     if (isSupabaseConfigured && supabase) {
-      supabase.from('products').update(updatedFields).eq('id', id).catch(console.warn)
+      supabase
+        .from('products')
+        .update(updatedFields)
+        .eq('id', id)
+        .then(({ error }) => {
+          if (error) console.warn('Supabase updateProduct error:', error)
+        })
+        .catch(console.warn)
     }
   }
 
@@ -121,23 +145,80 @@ export function StoreProvider({ children }) {
       sort_order: products.length + 1,
     }
     setProducts((prev) => [cloned, ...prev])
+    if (isSupabaseConfigured && supabase) {
+      supabase.from('products').insert([cloned]).catch(console.warn)
+    }
     return cloned
   }
 
   const toggleProductFeatured = (id) => {
+    const target = products.find((p) => p.id === id)
+    const nextValue = target ? !target.is_featured : false
+
     setProducts((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, is_featured: !item.is_featured } : item
+        item.id === id ? { ...item, is_featured: nextValue } : item
       )
     )
+    if (isSupabaseConfigured && supabase) {
+      supabase
+        .from('products')
+        .update({ is_featured: nextValue })
+        .eq('id', id)
+        .then(({ error }) => {
+          if (error) console.warn('Supabase toggleProductFeatured error:', error)
+        })
+        .catch(console.warn)
+    }
+    return nextValue
+  }
+
+  const setSoleHeroProduct = (id) => {
+    setProducts((prev) =>
+      prev.map((item) => ({
+        ...item,
+        is_featured: item.id === id,
+      }))
+    )
+    if (isSupabaseConfigured && supabase) {
+      supabase
+        .from('products')
+        .update({ is_featured: false })
+        .neq('id', id)
+        .then(({ error: clearErr }) => {
+          if (clearErr) console.warn('Supabase setSoleHeroProduct clear error:', clearErr)
+          return supabase
+            .from('products')
+            .update({ is_featured: true })
+            .eq('id', id)
+        })
+        .then((res) => {
+          if (res?.error) console.warn('Supabase setSoleHeroProduct set error:', res.error)
+        })
+        .catch(console.warn)
+    }
   }
 
   const toggleProductStock = (id) => {
+    const target = products.find((p) => p.id === id)
+    const nextValue = target ? target.in_stock === false : true
+
     setProducts((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, in_stock: item.in_stock === false } : item
+        item.id === id ? { ...item, in_stock: nextValue } : item
       )
     )
+    if (isSupabaseConfigured && supabase) {
+      supabase
+        .from('products')
+        .update({ in_stock: nextValue })
+        .eq('id', id)
+        .then(({ error }) => {
+          if (error) console.warn('Supabase toggleProductStock error:', error)
+        })
+        .catch(console.warn)
+    }
+    return nextValue
   }
 
   // Banner CRUD
@@ -643,6 +724,7 @@ export function StoreProvider({ children }) {
     deleteProduct,
     cloneProduct,
     toggleProductFeatured,
+    setSoleHeroProduct,
     toggleProductStock,
     addBanner,
     updateBanner,
@@ -650,6 +732,10 @@ export function StoreProvider({ children }) {
     toggleBanner,
     resetToDefaults,
     processImageUpload,
+    // Global Toast Notification
+    toast,
+    showToast,
+    hideToast,
     // Editable Company Settings
     company,
     updateCompany,
