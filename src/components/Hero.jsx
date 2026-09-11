@@ -415,12 +415,7 @@ function Hero() {
                   md:text-base
                 "
               >
-                Connecting quality brands with growing markets.
-                <span className="hidden sm:inline">
-                  {' '}
-                  Creating long-term partnerships through
-                  distribution, trust and scale.
-                </span>
+                Connecting Quality · Creating Markets · Growing Together
               </div>
             </div>
 
