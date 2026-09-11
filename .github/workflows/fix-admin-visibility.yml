@@ -1,0 +1,39 @@
+name: Fix admin visibility
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove stale admin runtime reference
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('src/admin/AdminDashboard.jsx')
+          s = p.read_text()
+          old = """        {resetSuccessNotice && (\n          <div className=\"mx-4 mt-4 flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-800 shadow-sm sm:mx-8\">\n            <CheckCircle size={16} className=\"shrink-0 text-emerald-600\" />\n            <span>Catalog data has been successfully reset to initial factory defaults.</span>\n          </div>\n        )}\n\n"""
+          if old not in s:
+              raise SystemExit('Expected stale reset notice block not found')
+          p.write_text(s.replace(old, ''))
+          PY
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('src/admin/AdminDashboard.jsx')
+          s = p.read_text()
+          s = s.replace('  CheckCircle,\n', '')
+          p.write_text(s)
+          PY
+      - name: Commit fix and remove workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/admin/AdminDashboard.jsx
+          git rm .github/workflows/fix-admin-visibility.yml
+          git commit -m "fix: restore admin dashboard visibility"
+          git push origin main
