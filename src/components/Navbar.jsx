@@ -28,9 +28,9 @@ function Navbar() {
 
   return (
     <header className={`sticky top-0 z-50 border-b border-[#104360]/10 transition-all duration-500 ${scrolled ? 'bg-white/90 backdrop-blur-xl' : 'bg-white'}`}>
-      <nav className="mx-auto flex h-[72px] max-w-[1600px] items-center justify-between px-5 sm:px-8 lg:px-12 xl:px-16">
+      <nav className="mx-auto flex h-[72px] sm:h-20 max-w-[1600px] items-center justify-between px-5 sm:px-8 lg:px-12 xl:px-16">
         <Link to="/" className="flex shrink-0 items-center">
-          <img src="/assets/branding/bovenlogo2.jpeg" alt="Boven Frontier International LLP" className="h-9 w-auto object-contain sm:h-11" />
+          <img src="/assets/branding/bovenlogo2.jpeg" alt="Boven Frontier International LLP" className="h-11 w-auto object-contain sm:h-14 lg:h-[58px] transition-all" />
         </Link>
 
         <div className="hidden items-center gap-10 md:flex">
