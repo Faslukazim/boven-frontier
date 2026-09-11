@@ -9,7 +9,6 @@ import {
   X,
   RotateCcw,
   ShieldCheck,
-  CheckCircle,
   Tags,
   Building2,
   KeyRound,
@@ -276,13 +275,6 @@ function AdminDashboard() {
             </Link>
           </div>
         </header>
-
-        {resetSuccessNotice && (
-          <div className="mx-4 mt-4 flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-800 shadow-sm sm:mx-8">
-            <CheckCircle size={16} className="shrink-0 text-emerald-600" />
-            <span>Catalog data has been successfully reset to initial factory defaults.</span>
-          </div>
-        )}
 
         <main className="mx-auto w-full max-w-[1600px] flex-1 p-4 sm:p-8">
           {activeTab === 'overview' && (
