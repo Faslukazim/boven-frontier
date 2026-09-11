@@ -18,10 +18,10 @@ function Markets() {
             </h2>
           </div>
 
-          <p className="hidden sm:block max-w-md text-xs sm:text-sm leading-relaxed text-white/60">
+          <p className="hidden sm:block max-w-md text-sm sm:text-base leading-relaxed text-white/85">
             Boven Frontier serves pan-India commercial distribution networks and direct containerized ocean freight to GCC wholesale import partners.
           </p>
-          <p className="block sm:hidden text-xs leading-relaxed text-white/60">
+          <p className="block sm:hidden text-xs sm:text-sm leading-relaxed text-white/85">
             Pan-India commercial distribution and direct container ocean freight to GCC markets.
           </p>
         </div>
@@ -34,7 +34,7 @@ function Markets() {
           <div className="hidden lg:flex absolute left-1/2 top-10 -translate-x-1/2 z-20 items-center justify-center pointer-events-none">
             <div className="flex items-center gap-2 rounded-full border border-white/20 bg-[#104360] px-4 py-1.5 shadow-xl backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-[#EF2034] animate-pulse" />
-              <span className="text-[11px] font-semibold tracking-wide text-white">
+              <span className="text-xs font-bold tracking-wider text-white">
                 Direct Export Corridor
               </span>
               <Navigation size={12} className="text-[#EF2034] rotate-90" />
@@ -51,7 +51,7 @@ function Markets() {
             <div className="group relative rounded-xl lg:rounded-none lg:rounded-l-xl border border-white/10 bg-white/[0.02] p-6 sm:p-8 lg:p-12 transition-colors duration-300 hover:bg-white/[0.04]">
               <div className="flex items-start justify-between">
                 <div>
-                  <span className="text-xs font-mono tracking-wider text-white/40">
+                  <span className="text-xs sm:text-sm font-mono font-bold tracking-wider text-white/70">
                     01
                   </span>
 
@@ -65,10 +65,10 @@ function Markets() {
                 </div>
 
                 <div className="text-right">
-                  <span className="block text-[11px] font-medium text-white/40 uppercase tracking-wider">
+                  <span className="block text-xs font-semibold text-white/70 uppercase tracking-wider">
                     Origin Base
                   </span>
-                  <span className="block text-xs font-medium text-white/80 mt-0.5">
+                  <span className="block text-sm font-bold text-white mt-0.5">
                     India
                   </span>
                 </div>
@@ -78,12 +78,12 @@ function Markets() {
                 Domestic Supply Network
               </h3>
 
-              <p className="mt-2.5 sm:mt-3 max-w-md text-xs sm:text-sm leading-relaxed text-white/60 line-clamp-2 sm:line-clamp-none">
+              <p className="mt-2.5 sm:mt-3 max-w-md text-xs sm:text-sm leading-relaxed text-white/85 line-clamp-2 sm:line-clamp-none">
                 Direct factory dispatch across India for wholesale distributors, institutional housekeeping facilities, and commercial supermarket partners.
               </p>
 
-              <div className="mt-6 sm:mt-8 flex items-center gap-2 text-xs text-white/50">
-                <span className="h-1 w-1 rounded-full bg-[#EF2034]" />
+              <div className="mt-6 sm:mt-8 flex items-center gap-2 text-xs sm:text-sm font-medium text-white/75">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#EF2034]" />
                 <span>Pan-India surface freight & dispatch</span>
               </div>
             </div>
@@ -94,7 +94,7 @@ function Markets() {
             <div className="group relative rounded-xl lg:rounded-none lg:rounded-r-xl border border-white/10 lg:border-l-0 bg-white/[0.02] p-6 sm:p-8 lg:p-12 transition-colors duration-300 hover:bg-white/[0.04]">
               <div className="flex items-start justify-between">
                 <div>
-                  <span className="text-xs font-mono tracking-wider text-white/40">
+                  <span className="text-xs sm:text-sm font-mono font-bold tracking-wider text-white/70">
                     02
                   </span>
 
@@ -108,10 +108,10 @@ function Markets() {
                 </div>
 
                 <div className="text-right">
-                  <span className="block text-[11px] font-medium text-[#EF2034] uppercase tracking-wider">
+                  <span className="block text-xs font-bold text-[#EF2034] uppercase tracking-wider">
                     Ocean & Air Freight
                   </span>
-                  <span className="block text-xs font-medium text-white/80 mt-0.5">
+                  <span className="block text-sm font-bold text-white mt-0.5">
                     UAE · KSA · Oman · GCC
                   </span>
                 </div>
@@ -121,14 +121,14 @@ function Markets() {
                 Middle East & GCC Export
               </h3>
 
-              <p className="mt-2.5 sm:mt-3 max-w-md text-xs sm:text-sm leading-relaxed text-white/60 line-clamp-2 sm:line-clamp-none">
+              <p className="mt-2.5 sm:mt-3 max-w-md text-xs sm:text-sm leading-relaxed text-white/85 line-clamp-2 sm:line-clamp-none">
                 High-stability chemical formulations built for tropical climates, packed in palletized export-grade cartons with full COA and shipping documentation.
               </p>
 
               <div className="mt-6 sm:mt-8">
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 text-xs font-medium text-white hover:text-[#EF2034] transition-colors"
+                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-white hover:text-[#EF2034] transition-colors"
                 >
                   <span>Inquire for export container pricing</span>
                   <ArrowUpRight size={14} />
@@ -141,7 +141,7 @@ function Markets() {
         {/* =====================================================
             BOTTOM STATEMENT
         ===================================================== */}
-        <div className="hidden sm:flex mt-10 flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between text-xs text-white/40">
+        <div className="hidden sm:flex mt-10 flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between text-xs text-white/70 font-medium">
           <p>
             Domestic & International Commercial Trade
           </p>

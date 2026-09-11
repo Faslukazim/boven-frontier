@@ -80,19 +80,19 @@ function AdminLogin() {
               <ShieldCheck size={22} />
             </div>
             <div className="text-left">
-              <span className="block text-sm font-semibold tracking-[0.1em] text-[#104360]">
+              <span className="block text-sm font-bold tracking-[0.1em] text-[#104360]">
                 BOVEN FRONTIER
               </span>
-              <span className="block text-[8px] tracking-[0.25em] text-[#EF2034]">
+              <span className="block text-xs font-bold tracking-wider text-[#EF2034]">
                 ADMIN PORTAL
               </span>
             </div>
           </Link>
 
-          <h2 className="mt-6 text-2xl font-medium tracking-tight text-[#104360]">
+          <h2 className="mt-6 text-2xl font-semibold tracking-tight text-[#104360]">
             Sign in to Dashboard
           </h2>
-          <p className="mt-2 text-xs text-[#104360]/60">
+          <p className="mt-2 text-xs sm:text-sm text-gray-600">
             Secure administrative access via Supabase Authentication.
           </p>
         </div>
@@ -109,7 +109,7 @@ function AdminLogin() {
             <div>
               <label
                 htmlFor="admin-email"
-                className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70"
+                className="block text-xs font-bold uppercase tracking-wider text-[#104360]/85 mb-1.5"
               >
                 Email Address
               </label>
@@ -132,7 +132,7 @@ function AdminLogin() {
             <div>
               <label
                 htmlFor="admin-password"
-                className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70"
+                className="block text-xs font-bold uppercase tracking-wider text-[#104360]/85 mb-1.5"
               >
                 Password
               </label>
@@ -156,12 +156,12 @@ function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="group relative flex w-full justify-center bg-[#104360] py-3.5 px-4 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-all hover:bg-[#EF2034] hover:text-white disabled:opacity-50"
+            className="group relative flex w-full justify-center bg-[#104360] py-3.5 px-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white transition-all hover:bg-[#EF2034] hover:text-white disabled:opacity-50"
           >
             {loading ? 'Verifying Session...' : 'Sign In'}
             {!loading && (
               <ArrowRight
-                size={14}
+                size={16}
                 className="ml-2 transition-transform group-hover:translate-x-1"
               />
             )}
@@ -171,7 +171,7 @@ function AdminLogin() {
         <div className="text-center">
           <Link
             to="/"
-            className="text-[11px] text-[#104360]/60 hover:text-[#104360]"
+            className="text-xs font-semibold text-[#104360]/80 hover:text-[#104360] transition-colors"
           >
             ← Return to public website
           </Link>

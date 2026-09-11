@@ -106,7 +106,7 @@ function ContactStrip() {
               Let's build something together.
             </h2>
 
-            <p className="mt-4 max-w-lg text-xs sm:text-sm leading-relaxed text-gray-500">
+            <p className="mt-4 max-w-lg text-sm sm:text-base leading-relaxed text-gray-600">
               Direct factory supply for wholesale distributors, institutional facilities, and GCC container export.
             </p>
           </div>
@@ -124,10 +124,10 @@ function ContactStrip() {
                     <Phone size={16} />
                   </div>
                   <div>
-                    <p className="text-[8px] uppercase tracking-[0.25em] text-[#104360]/40">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#104360]/75">
                       Direct Phone
                     </p>
-                    <p className="mt-0.5 text-sm font-semibold text-gray-900">
+                    <p className="mt-0.5 text-sm sm:text-base font-bold text-gray-900">
                       {company?.phone1 || '+91 96338 90447'}{company?.phone2 ? ` · ${company.phone2}` : ''}
                     </p>
                   </div>
@@ -150,10 +150,10 @@ function ContactStrip() {
                     <MessageCircle size={16} className="text-emerald-600" />
                   </div>
                   <div>
-                    <p className="text-[8px] uppercase tracking-[0.25em] text-[#104360]/40">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#104360]/75">
                       WhatsApp Quick Chat
                     </p>
-                    <p className="mt-0.5 text-sm font-semibold text-gray-900">
+                    <p className="mt-0.5 text-sm sm:text-base font-bold text-gray-900">
                       {company?.whatsappUAE || '+971 50 735 5418'}
                     </p>
                   </div>
@@ -174,10 +174,10 @@ function ContactStrip() {
                     <Mail size={16} />
                   </div>
                   <div>
-                    <p className="text-[8px] uppercase tracking-[0.25em] text-[#104360]/40">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#104360]/75">
                       Official Email
                     </p>
-                    <p className="mt-0.5 text-sm font-semibold text-gray-900">
+                    <p className="mt-0.5 text-sm sm:text-base font-bold text-gray-900">
                       {company?.email1 || 'info@bovenfrontier.co.in'}{company?.email2 ? ` · ${company.email2}` : ''}
                     </p>
                   </div>
@@ -206,33 +206,33 @@ function ContactStrip() {
                 Tell us your requirement.
               </h3>
 
-              <p className="mt-3 text-xs sm:text-sm text-white/60 leading-relaxed">
+              <p className="mt-3 text-sm text-white/80 leading-relaxed">
                 Wholesale supply, private label (OEM) formulation, custom bottle packaging, or bulk freight export.
               </p>
             </div>
 
-            <div className="mt-10 space-y-4 border-t border-white/10 pt-6 text-xs text-white/80">
-              <div className="flex justify-between">
-                <span className="text-white/40 text-[10px] uppercase tracking-wider">
+            <div className="mt-10 space-y-4 border-t border-white/10 pt-6 text-xs sm:text-sm text-white/90">
+              <div className="flex justify-between items-center">
+                <span className="text-white/70 text-xs font-semibold uppercase tracking-wider">
                   Origin
                 </span>
-                <span>{company?.origin || 'India'}</span>
+                <span className="font-medium">{company?.origin || 'India'}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-white/40 text-[9px] uppercase tracking-wider">
+              <div className="flex justify-between items-center">
+                <span className="text-white/70 text-xs font-semibold uppercase tracking-wider">
                   Target Corridors
                 </span>
-                <span>
+                <span className="font-medium text-right">
                   {Array.isArray(company?.markets)
                     ? company.markets.join(' · ')
                     : (company?.markets || 'India · UAE · GCC')}
                 </span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-white/40 text-[9px] uppercase tracking-wider">
+              <div className="flex justify-between items-center">
+                <span className="text-white/70 text-xs font-semibold uppercase tracking-wider">
                   Response Window
                 </span>
-                <span className="text-[#EF2034]">Within 24 Hours</span>
+                <span className="text-[#EF2034] font-bold">Within 24 Hours</span>
               </div>
             </div>
           </div>
@@ -284,7 +284,7 @@ function ContactStrip() {
                   <div>
                     <label
                       htmlFor="contact-name"
-                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1"
+                      className="block text-xs font-bold uppercase tracking-wider text-[#104360]/85 mb-1.5"
                     >
                       Your Name *
                     </label>
@@ -297,14 +297,14 @@ function ContactStrip() {
                         setFormData({ ...formData, name: e.target.value })
                       }
                       placeholder="e.g. Rahul Sharma"
-                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#104360]"
+                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#104360]"
                     />
                   </div>
 
                   <div>
                     <label
                       htmlFor="contact-company"
-                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1"
+                      className="block text-xs font-bold uppercase tracking-wider text-[#104360]/85 mb-1.5"
                     >
                       Company / Organization
                     </label>
@@ -316,7 +316,7 @@ function ContactStrip() {
                         setFormData({ ...formData, company: e.target.value })
                       }
                       placeholder="e.g. Gulf Trading LLC"
-                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#104360]"
+                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#104360]"
                     />
                   </div>
                 </div>
@@ -325,7 +325,7 @@ function ContactStrip() {
                   <div>
                     <label
                       htmlFor="contact-email"
-                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1"
+                      className="block text-xs font-bold uppercase tracking-wider text-[#104360]/85 mb-1.5"
                     >
                       Email Address *
                     </label>
@@ -338,14 +338,14 @@ function ContactStrip() {
                         setFormData({ ...formData, email: e.target.value })
                       }
                       placeholder="you@company.com"
-                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#104360]"
+                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#104360]"
                     />
                   </div>
 
                   <div>
                     <label
                       htmlFor="contact-phone"
-                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1"
+                      className="block text-xs font-bold uppercase tracking-wider text-[#104360]/85 mb-1.5"
                     >
                       Phone / WhatsApp Number
                     </label>
@@ -357,7 +357,7 @@ function ContactStrip() {
                         setFormData({ ...formData, phone: e.target.value })
                       }
                       placeholder="+91 / +971..."
-                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#104360]"
+                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#104360]"
                     />
                   </div>
                 </div>
@@ -366,7 +366,7 @@ function ContactStrip() {
                   <div>
                     <label
                       htmlFor="contact-region"
-                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1"
+                      className="block text-xs font-bold uppercase tracking-wider text-[#104360]/85 mb-1.5"
                     >
                       Country / Region
                     </label>
@@ -378,14 +378,14 @@ function ContactStrip() {
                         setFormData({ ...formData, region: e.target.value })
                       }
                       placeholder="e.g. UAE, Saudi Arabia, India..."
-                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#104360]"
+                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#104360]"
                     />
                   </div>
 
                   <div>
                     <label
                       htmlFor="contact-buyer-type"
-                      className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1"
+                      className="block text-xs font-bold uppercase tracking-wider text-[#104360]/85 mb-1.5"
                     >
                       Buyer Profile
                     </label>
@@ -395,7 +395,7 @@ function ContactStrip() {
                       onChange={(e) =>
                         setFormData({ ...formData, buyerType: e.target.value })
                       }
-                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#104360]"
+                      className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm text-gray-900 outline-none transition focus:border-[#104360]"
                     >
                       <option value="">Select Buyer Type</option>
                       <option value="Export Importer">Export Importer / Trader</option>
@@ -411,7 +411,7 @@ function ContactStrip() {
                 <div>
                   <label
                     htmlFor="contact-product"
-                    className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1"
+                    className="block text-xs font-bold uppercase tracking-wider text-[#104360]/85 mb-1.5"
                   >
                     Product Interest
                   </label>
@@ -421,7 +421,7 @@ function ContactStrip() {
                     onChange={(e) =>
                       setFormData({ ...formData, product: e.target.value })
                     }
-                    className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#104360]"
+                    className="w-full border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm text-gray-900 outline-none transition focus:border-[#104360]"
                   >
                     <option value="">Select product or general range</option>
                     <option value="All Products Portfolio">Complete Portfolio (Container Load)</option>
@@ -439,7 +439,7 @@ function ContactStrip() {
                 <div>
                   <label
                     htmlFor="contact-message"
-                    className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#104360]/70 mb-1"
+                    className="block text-xs font-bold uppercase tracking-wider text-[#104360]/85 mb-1.5"
                   >
                     Estimated Quantity & Requirements
                   </label>
@@ -451,7 +451,7 @@ function ContactStrip() {
                       setFormData({ ...formData, message: e.target.value })
                     }
                     placeholder="Tell us about order volumes, destination port, or specific variants needed..."
-                    className="w-full resize-none border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm outline-none transition focus:border-[#104360]"
+                    className="w-full resize-none border-b border-[#104360]/20 bg-transparent py-2.5 text-base sm:text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-[#104360]"
                   />
                 </div>
 
@@ -460,16 +460,16 @@ function ContactStrip() {
                   <button
                     type="button"
                     onClick={handleWhatsAppDirect}
-                    className="inline-flex items-center justify-center gap-2 rounded border border-emerald-600 bg-emerald-50 px-5 py-3.5 text-xs font-semibold text-emerald-800 transition hover:bg-emerald-100"
+                    className="inline-flex items-center justify-center gap-2 rounded border border-emerald-600 bg-emerald-50 px-5 py-3.5 text-xs sm:text-sm font-bold text-emerald-800 transition hover:bg-emerald-100"
                   >
-                    <MessageCircle size={15} />
+                    <MessageCircle size={16} />
                     Send via WhatsApp
                   </button>
 
                   <button
                     type="submit"
                     disabled={loading}
-                    className="group inline-flex items-center justify-center gap-3 bg-[#104360] px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-[#EF2034] hover:text-white disabled:opacity-50"
+                    className="group inline-flex items-center justify-center gap-3 bg-[#104360] px-7 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white transition hover:bg-[#EF2034] hover:text-white disabled:opacity-50"
                   >
                     <span>{loading ? 'Submitting...' : 'Submit Enquiry'}</span>
                     <ArrowUpRight

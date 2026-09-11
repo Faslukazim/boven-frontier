@@ -339,12 +339,11 @@ function Hero() {
 
               <span
                 className="
-                  text-[8px]
-                  font-semibold
+                  text-xs
+                  font-bold
                   uppercase
-                  tracking-[0.28em]
-                  text-white/45
-                  sm:text-[9px]
+                  tracking-[0.22em]
+                  text-white/80
                 "
               >
                 BOVEN FRONTIER / GLOBAL DISTRIBUTION
@@ -409,11 +408,11 @@ function Hero() {
                   border-l-2
                   border-[#EF2034]
                   pl-4
-                  text-[11px]
+                  text-xs
                   leading-relaxed
-                  text-white/60
-                  sm:text-xs
-                  md:text-sm
+                  text-white/85
+                  sm:text-sm
+                  md:text-base
                 "
               >
                 Connecting quality brands with growing markets.
@@ -448,10 +447,10 @@ function Hero() {
                   gap-4
                   bg-[#EF2034]
                   px-5
-                  text-[9px]
+                  text-xs
                   font-bold
                   uppercase
-                  tracking-[0.16em]
+                  tracking-wider
                   text-white
                   transition-all
                   duration-500
@@ -461,7 +460,7 @@ function Hero() {
                   hover:text-[#071B35]
                   sm:h-12
                   sm:px-6
-                  sm:text-[10px]
+                  sm:text-sm
                 "
               >
                 <span>
@@ -490,15 +489,15 @@ function Hero() {
                   items-center
                   gap-3
                   py-2
-                  text-[9px]
-                  font-semibold
+                  text-xs
+                  font-bold
                   uppercase
-                  tracking-[0.2em]
-                  text-white/50
+                  tracking-wider
+                  text-white/80
                   transition-colors
                   duration-500
                   hover:text-white
-                  sm:text-[10px]
+                  sm:text-sm
                 "
               >
                 <span>
@@ -731,11 +730,12 @@ function Hero() {
                 <p
                   className="
                     mt-1
-                    text-[8px]
+                    text-xs
+                    font-medium
                     uppercase
-                    tracking-[0.12em]
-                    text-white/35
-                    sm:text-[9px]
+                    tracking-wider
+                    text-white/75
+                    sm:text-sm
                   "
                 >
                   {activeProduct.brand}
@@ -768,7 +768,7 @@ function Hero() {
                           ${
                             index === safeIndex
                               ? 'w-7 bg-[#EF2034]'
-                              : 'w-2 bg-white/20 hover:bg-white/50'
+                              : 'w-2 bg-white/40 hover:bg-white/70'
                           }
                         `}
                       />
@@ -778,20 +778,19 @@ function Hero() {
               )}
             </div>
 
-            <div className="mt-1.5 flex justify-end">
+            <div className="mt-2 flex justify-end">
               <a
                 href="#products"
                 onClick={scrollToProducts}
                 className="
-                  text-[8px]
+                  text-xs
                   font-semibold
                   uppercase
-                  tracking-[0.18em]
-                  text-white/25
+                  tracking-wider
+                  text-white/70
                   transition-colors
                   duration-300
                   hover:text-white
-                  sm:text-[9px]
                 "
               >
                 View all products ({products.length}) →
@@ -815,10 +814,10 @@ function Hero() {
           hidden
           items-center
           justify-between
-          text-[8px]
+          text-xs
           uppercase
-          tracking-[0.25em]
-          text-white/20
+          tracking-[0.2em]
+          text-white/60
           sm:flex
           lg:left-12
           lg:right-12

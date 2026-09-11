@@ -58,15 +58,15 @@ export default function WholesaleFAQ() {
               Frequently Asked Questions for B2B Buyers.
             </h2>
 
-            <p className="mt-4 text-xs sm:text-sm text-gray-500 leading-relaxed font-normal">
+            <p className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed font-normal">
               Find quick answers regarding our minimum order volumes, private label capabilities, international shipping corridors, and compliance standards.
             </p>
 
             <div className="mt-8 rounded-xl border border-gray-200/80 bg-[#F8FAFC] p-6 shadow-2xs">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#104360]">
+              <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#104360]">
                 Need a Custom Formulation or Pricing?
               </h3>
-              <p className="mt-2 text-xs text-gray-600 leading-relaxed">
+              <p className="mt-2 text-xs sm:text-sm text-gray-700 leading-relaxed">
                 Speak directly with our B2B Export Desk for custom container pricing, bulk drums (20L/200L), and OEM packaging schedules.
               </p>
 
@@ -116,7 +116,7 @@ export default function WholesaleFAQ() {
                   </button>
 
                   {isOpen && (
-                    <div className="px-5 pb-6 sm:px-6 text-xs sm:text-sm leading-relaxed text-[#4D4B4C] border-t border-gray-100 bg-gray-50/40 animate-in fade-in duration-200">
+                    <div className="px-5 pb-6 sm:px-6 text-sm leading-relaxed text-gray-700 border-t border-gray-100 bg-gray-50/40 animate-in fade-in duration-200">
                       {faq.a}
                     </div>
                   )}

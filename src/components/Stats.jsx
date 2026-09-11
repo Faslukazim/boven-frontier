@@ -99,10 +99,10 @@ function Stats() {
               Engineered for wholesale. Built for scale.
             </h2>
           </div>
-          <p className="hidden sm:block text-xs sm:text-sm text-white/60 max-w-sm leading-relaxed">
+          <p className="hidden sm:block text-sm text-white/80 max-w-sm leading-relaxed">
             Formulated and bottled in India with certified active chemical purity for institutional buyers and global container exports.
           </p>
-          <p className="block sm:hidden text-xs text-white/60 leading-relaxed">
+          <p className="block sm:hidden text-xs text-white/80 leading-relaxed">
             Formulated & bottled in India for wholesale and container exports.
           </p>
         </div>
@@ -134,11 +134,11 @@ function Stats() {
 
                 {/* Label */}
                 <div className="mt-2 sm:mt-3">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-white/80">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-white/90">
                     {stat.label}
                   </p>
                   {stat.subtext && (
-                    <p className="mt-1 text-[10px] text-white/40 font-normal">
+                    <p className="mt-1 text-xs text-white/70 font-medium">
                       {stat.subtext}
                     </p>
                   )}
@@ -152,13 +152,13 @@ function Stats() {
             BOTTOM CONTEXT
         ===================================================== */}
         <div className="hidden sm:flex mt-10 flex-col gap-4 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-md text-[9px] uppercase leading-5 tracking-[0.25em] text-white/30">
+          <p className="max-w-md text-xs uppercase leading-5 tracking-[0.2em] text-white/65">
             Cleaning solutions
             <span className="mx-2 text-[#EF2034]">·</span>
             Manufactured in India
           </p>
 
-          <p className="text-[9px] uppercase tracking-[0.25em] text-white/30">
+          <p className="text-xs uppercase tracking-[0.2em] text-white/65">
             India
             <span className="mx-2 text-[#EF2034]">·</span>
             Middle East

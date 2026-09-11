@@ -61,7 +61,7 @@ function WhyUs() {
             </h2>
           </div>
 
-          <p className="max-w-md text-xs sm:text-sm text-gray-500 leading-relaxed">
+          <p className="max-w-md text-sm sm:text-base text-gray-600 leading-relaxed">
             Consistent formulations, export compliance, and direct factory pricing.
           </p>
         </div>
@@ -85,26 +85,26 @@ function WhyUs() {
                       <Icon size={20} strokeWidth={1.75} />
                     </div>
 
-                    <span className="text-xs font-bold tabular-nums tracking-wider text-[#104360]/30 group-hover:text-[#EF2034]">
+                    <span className="text-xs sm:text-sm font-bold tabular-nums tracking-wider text-[#104360]/50 group-hover:text-[#EF2034]">
                       {item.number}
                     </span>
                   </div>
 
-                  <h3 className="mt-5 sm:mt-6 text-base font-bold tracking-tight text-[#104360] group-hover:text-[#EF2034] transition-colors">
+                  <h3 className="mt-5 sm:mt-6 text-base sm:text-lg font-bold tracking-tight text-[#104360] group-hover:text-[#EF2034] transition-colors">
                     {item.title}
                   </h3>
 
-                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-[#EF2034]">
+                  <p className="mt-1 text-xs font-bold uppercase tracking-wider text-[#EF2034]">
                     {item.subtitle}
                   </p>
 
-                  <p className="mt-2.5 sm:mt-3 text-xs leading-relaxed text-[#4D4B4C] line-clamp-3 sm:line-clamp-none">
+                  <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm leading-relaxed text-gray-600 line-clamp-3 sm:line-clamp-none">
                     {item.text}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-gray-200/60 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-[#104360]/60 group-hover:text-[#104360]">
-                  <CheckCircle2 size={13} className="text-emerald-600" />
+                <div className="mt-6 pt-4 border-t border-gray-200/60 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#104360]/80 group-hover:text-[#104360]">
+                  <CheckCircle2 size={14} className="text-emerald-600" />
                   <span>Guaranteed SLA</span>
                 </div>
               </div>
