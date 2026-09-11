@@ -1,0 +1,9 @@
+.hero-line {
+  font-size: clamp(2.8rem, 5.6vw, 5.6rem);
+}
+
+@media (min-width: 1024px) {
+  .hero-product-float img {
+    height: 435px !important;
+  }
+}
