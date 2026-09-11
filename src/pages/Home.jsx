@@ -1,5 +1,4 @@
 import Hero from '../components/Hero'
-import TrustMarquee from '../components/TrustMarquee'
 import Stats from '../components/Stats'
 import ProductGrid from '../components/Products'
 import WhyUs from '../components/WhyUs'
@@ -12,7 +11,6 @@ function Home() {
   return (
     <>
       <Hero />
-      <TrustMarquee />
       <Stats />
       <ProductGrid />
       <WhyUs />
