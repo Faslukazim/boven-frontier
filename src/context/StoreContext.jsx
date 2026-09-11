@@ -35,6 +35,20 @@ const DEFAULT_ADMIN_USERS = [
   },
 ]
 
+// Safely executes a Supabase query or mutation without throwing if PostgrestBuilder lacks .catch()
+const safeSupabase = (queryPromise, label = 'Supabase operation') => {
+  if (!queryPromise) return
+  Promise.resolve(queryPromise)
+    .then((res) => {
+      if (res?.error) {
+        console.warn(`${label} notice:`, res.error.message || res.error)
+      }
+    })
+    .catch((err) => {
+      console.warn(`${label} exception:`, err)
+    })
+}
+
 export function StoreProvider({ children }) {
   const [products, setProducts] = useState(() => {
     try {
@@ -107,7 +121,7 @@ export function StoreProvider({ children }) {
     }
     setProducts((prev) => [newProduct, ...prev])
     if (isSupabaseConfigured && supabase) {
-      supabase.from('products').insert([newProduct]).catch(console.warn)
+      safeSupabase(supabase.from('products').insert([newProduct]), 'addProduct')
     }
     return newProduct
   }
@@ -117,21 +131,17 @@ export function StoreProvider({ children }) {
       prev.map((item) => (item.id === id ? { ...item, ...updatedFields } : item))
     )
     if (isSupabaseConfigured && supabase) {
-      supabase
-        .from('products')
-        .update(updatedFields)
-        .eq('id', id)
-        .then(({ error }) => {
-          if (error) console.warn('Supabase updateProduct error:', error)
-        })
-        .catch(console.warn)
+      safeSupabase(
+        supabase.from('products').update(updatedFields).eq('id', id),
+        'updateProduct'
+      )
     }
   }
 
   const deleteProduct = (id) => {
     setProducts((prev) => prev.filter((item) => item.id !== id))
     if (isSupabaseConfigured && supabase) {
-      supabase.from('products').delete().eq('id', id).catch(console.warn)
+      safeSupabase(supabase.from('products').delete().eq('id', id), 'deleteProduct')
     }
   }
 
@@ -146,7 +156,7 @@ export function StoreProvider({ children }) {
     }
     setProducts((prev) => [cloned, ...prev])
     if (isSupabaseConfigured && supabase) {
-      supabase.from('products').insert([cloned]).catch(console.warn)
+      safeSupabase(supabase.from('products').insert([cloned]), 'cloneProduct')
     }
     return cloned
   }
@@ -161,14 +171,10 @@ export function StoreProvider({ children }) {
       )
     )
     if (isSupabaseConfigured && supabase) {
-      supabase
-        .from('products')
-        .update({ is_featured: nextValue })
-        .eq('id', id)
-        .then(({ error }) => {
-          if (error) console.warn('Supabase toggleProductFeatured error:', error)
-        })
-        .catch(console.warn)
+      safeSupabase(
+        supabase.from('products').update({ is_featured: nextValue }).eq('id', id),
+        'toggleProductFeatured'
+      )
     }
     return nextValue
   }
@@ -181,21 +187,20 @@ export function StoreProvider({ children }) {
       }))
     )
     if (isSupabaseConfigured && supabase) {
-      supabase
-        .from('products')
-        .update({ is_featured: false })
-        .neq('id', id)
-        .then(({ error: clearErr }) => {
-          if (clearErr) console.warn('Supabase setSoleHeroProduct clear error:', clearErr)
-          return supabase
-            .from('products')
-            .update({ is_featured: true })
-            .eq('id', id)
-        })
-        .then((res) => {
-          if (res?.error) console.warn('Supabase setSoleHeroProduct set error:', res.error)
-        })
-        .catch(console.warn)
+      safeSupabase(
+        supabase
+          .from('products')
+          .update({ is_featured: false })
+          .neq('id', id)
+          .then(({ error: clearErr }) => {
+            if (clearErr) console.warn('Supabase setSoleHeroProduct clear error:', clearErr)
+            return supabase
+              .from('products')
+              .update({ is_featured: true })
+              .eq('id', id)
+          }),
+        'setSoleHeroProduct'
+      )
     }
   }
 
@@ -209,14 +214,10 @@ export function StoreProvider({ children }) {
       )
     )
     if (isSupabaseConfigured && supabase) {
-      supabase
-        .from('products')
-        .update({ in_stock: nextValue })
-        .eq('id', id)
-        .then(({ error }) => {
-          if (error) console.warn('Supabase toggleProductStock error:', error)
-        })
-        .catch(console.warn)
+      safeSupabase(
+        supabase.from('products').update({ in_stock: nextValue }).eq('id', id),
+        'toggleProductStock'
+      )
     }
     return nextValue
   }
@@ -345,17 +346,17 @@ export function StoreProvider({ children }) {
 
     setAdminUsers((prev) => [...prev, newUser])
     if (isSupabaseConfigured && supabase) {
-      supabase
-        .from('admin_users')
-        .insert([
+      safeSupabase(
+        supabase.from('admin_users').insert([
           {
             id: newUser.id,
             name: newUser.name,
             email: newUser.email,
             role: newUser.role,
           },
-        ])
-        .catch(console.warn)
+        ]),
+        'addAdminUser'
+      )
     }
     return { success: true, user: newUser }
   }
@@ -383,7 +384,10 @@ export function StoreProvider({ children }) {
       if (updates.name !== undefined) allowedUpdates.name = updates.name
       if (updates.role !== undefined) allowedUpdates.role = updates.role
       if (Object.keys(allowedUpdates).length > 0) {
-        supabase.from('admin_users').update(allowedUpdates).eq('id', id).catch(console.warn)
+        safeSupabase(
+          supabase.from('admin_users').update(allowedUpdates).eq('id', id),
+          'updateAdminUser'
+        )
       }
     }
     return { success: true }
@@ -397,7 +401,10 @@ export function StoreProvider({ children }) {
     }
     setAdminUsers((prev) => prev.filter((u) => u.id !== id))
     if (isSupabaseConfigured && supabase) {
-      supabase.from('admin_users').delete().eq('id', id).catch(console.warn)
+      safeSupabase(
+        supabase.from('admin_users').delete().eq('id', id),
+        'deleteAdminUser'
+      )
     }
     return { success: true }
   }
@@ -458,7 +465,10 @@ export function StoreProvider({ children }) {
     const formatted = trimmed.toUpperCase()
     setBrands((prev) => [...prev, formatted])
     if (isSupabaseConfigured && supabase) {
-      supabase.from('brands').insert([{ name: formatted }]).catch(console.warn)
+      safeSupabase(
+        supabase.from('brands').insert([{ name: formatted }]),
+        'addBrand'
+      )
     }
     return { success: true, brand: formatted }
   }
@@ -477,8 +487,14 @@ export function StoreProvider({ children }) {
       prev.map((p) => (p.brand === oldName ? { ...p, brand: trimmed } : p))
     )
     if (isSupabaseConfigured && supabase) {
-      supabase.from('brands').update({ name: trimmed }).eq('name', oldName).catch(console.warn)
-      supabase.from('products').update({ brand: trimmed }).eq('brand', oldName).catch(console.warn)
+      safeSupabase(
+        supabase.from('brands').update({ name: trimmed }).eq('name', oldName),
+        'updateBrand'
+      )
+      safeSupabase(
+        supabase.from('products').update({ brand: trimmed }).eq('brand', oldName),
+        'updateBrandProducts'
+      )
     }
     return { success: true, brand: trimmed }
   }
@@ -493,7 +509,10 @@ export function StoreProvider({ children }) {
     }
     setBrands((prev) => prev.filter((b) => b !== brandName))
     if (isSupabaseConfigured && supabase) {
-      supabase.from('brands').delete().eq('name', brandName).catch(console.warn)
+      safeSupabase(
+        supabase.from('brands').delete().eq('name', brandName),
+        'deleteBrand'
+      )
     }
     return { success: true }
   }
@@ -507,7 +526,10 @@ export function StoreProvider({ children }) {
     const formatted = trimmed.toUpperCase()
     setCategories((prev) => [...prev, formatted])
     if (isSupabaseConfigured && supabase) {
-      supabase.from('categories').insert([{ name: formatted }]).catch(console.warn)
+      safeSupabase(
+        supabase.from('categories').insert([{ name: formatted }]),
+        'addCategory'
+      )
     }
     return { success: true, category: formatted }
   }
@@ -526,8 +548,14 @@ export function StoreProvider({ children }) {
       prev.map((p) => (p.category === oldName ? { ...p, category: trimmed } : p))
     )
     if (isSupabaseConfigured && supabase) {
-      supabase.from('categories').update({ name: trimmed }).eq('name', oldName).catch(console.warn)
-      supabase.from('products').update({ category: trimmed }).eq('category', oldName).catch(console.warn)
+      safeSupabase(
+        supabase.from('categories').update({ name: trimmed }).eq('name', oldName),
+        'updateCategory'
+      )
+      safeSupabase(
+        supabase.from('products').update({ category: trimmed }).eq('category', oldName),
+        'updateCategoryProducts'
+      )
     }
     return { success: true, category: trimmed }
   }
@@ -542,7 +570,10 @@ export function StoreProvider({ children }) {
     }
     setCategories((prev) => prev.filter((c) => c !== categoryName))
     if (isSupabaseConfigured && supabase) {
-      supabase.from('categories').delete().eq('name', categoryName).catch(console.warn)
+      safeSupabase(
+        supabase.from('categories').delete().eq('name', categoryName),
+        'deleteCategory'
+      )
     }
     return { success: true }
   }
@@ -582,10 +613,12 @@ export function StoreProvider({ children }) {
     setCompany((prev) => {
       const updated = { ...prev, ...newFields }
       if (isSupabaseConfigured && supabase) {
-        supabase
-          .from('company_settings')
-          .upsert({ id: 'default', data: updated, updated_at: new Date().toISOString() })
-          .catch(console.warn)
+        safeSupabase(
+          supabase
+            .from('company_settings')
+            .upsert({ id: 'default', data: updated, updated_at: new Date().toISOString() }),
+          'updateCompany'
+        )
       }
       return updated
     })
@@ -619,7 +652,10 @@ export function StoreProvider({ children }) {
       return filtered
     })
     if (isSupabaseConfigured && supabase) {
-      supabase.from('inquiries').delete().eq('id', id).catch(console.warn)
+      safeSupabase(
+        supabase.from('inquiries').delete().eq('id', id),
+        'deleteInquiry'
+      )
     }
   }
 

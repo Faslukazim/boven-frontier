@@ -159,9 +159,14 @@ function ProductManager() {
 
   // Quick Duplicate
   const handleClone = (productId) => {
-    const cloned = cloneProduct(productId)
-    if (cloned) {
-      showToast(`Duplicated "${cloned.name}". Ready for quick customization.`)
+    try {
+      const cloned = cloneProduct(productId)
+      if (cloned) {
+        showToast(`Duplicated "${cloned.name}". Ready for quick customization.`)
+      }
+    } catch (error) {
+      console.error('Duplicate product error:', error)
+      showToast('Unable to duplicate the product.', 'error')
     }
   }
 

@@ -48,9 +48,8 @@ function ContactStrip() {
 
     // Insert to Supabase inquiries table if configured (allowed by public INSERT policy)
     if (isSupabaseConfigured && supabase) {
-      supabase
-        .from('inquiries')
-        .insert([
+      Promise.resolve(
+        supabase.from('inquiries').insert([
           {
             id: newLead.id,
             name: newLead.name,
@@ -64,6 +63,10 @@ function ContactStrip() {
             submitted_at: newLead.submittedAt,
           },
         ])
+      )
+        .then(({ error }) => {
+          if (error) console.warn('Supabase inquiry submission notice:', error.message || error)
+        })
         .catch(console.warn)
     }
 
